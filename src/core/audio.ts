@@ -55,6 +55,7 @@ export interface AudioBackend {
 
   /* rendering */
   exportWav(p: Project, settings?: WavSettings): Promise<Blob>;
+  exportStems(p: Project, settings?: WavSettings): Promise<{ fileName: string; blob: Blob }[]>;
 
   /* mixer — channel strips, return buses, master bus, metering */
   getChannelMeter(trackId: string): MeterReading;
@@ -139,6 +140,15 @@ class WebAudioBackend implements AudioBackend {
 
   exportWav(p: Project, settings?: WavSettings): Promise<Blob> {
     return this.e.exportWav(p, settings);
+  }
+
+  async exportStems(p: Project, settings?: WavSettings): Promise<{ fileName: string; blob: Blob }[]> {
+    const { renderStems } = await import("../audio/render");
+    const stems = await renderStems(p, {
+      sampleRate: settings?.sampleRate ?? 48000,
+      bitDepth: settings?.bitDepth ?? 24,
+    });
+    return stems.map((s) => ({ fileName: s.fileName, blob: s.blob }));
   }
 
   getChannelMeter(trackId: string): MeterReading {

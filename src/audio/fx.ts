@@ -46,7 +46,8 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v
 /* ---------------- the FxNode contract ---------------- */
 
 export type FxKind =
-  | "eq" | "compressor" | "limiter" | "reverb" | "delay" | "distortion" | "utility";
+  | "eq" | "compressor" | "limiter" | "reverb" | "delay" | "distortion" | "utility"
+  | "softclipper" | "chorus" | "gate" | "stereoshaper";
 
 export interface FxNode {
   readonly kind: FxKind;
@@ -65,7 +66,7 @@ export interface FxNode {
 
 /* ---------------- shared base: I/O gains + true bypass ---------------- */
 
-abstract class FxBase implements FxNode {
+export abstract class FxBase implements FxNode {
   abstract readonly kind: FxKind;
   abstract readonly label: string;
 

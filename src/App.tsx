@@ -18,6 +18,13 @@ import FxRack from "./components/FxRack";
 import VocalWorkspace from "./components/VocalWorkspace";
 import AIPanel from "./components/AIPanel";
 import Browser from "./components/Browser";
+import BrowserPro from "./components/BrowserPro";
+import MenuBar from "./components/MenuBar";
+import StatusBar from "./components/StatusBar";
+import SettingsModal from "./components/SettingsModal";
+import { HintProvider } from "./state/hintContext";
+import { createProjectBundle, openProjectBundle } from "./core/bundle";
+import { parseProjectFile } from "./core";
 import RecoveryPrompt from "./components/RecoveryPrompt";
 
 const NOTE_KEYS: Record<string, number> = { a: 0, w: 1, s: 2, e: 3, d: 4, f: 5, t: 6, g: 7, y: 8, h: 9, u: 10, j: 11, k: 12, o: 13, l: 14, p: 15 };
@@ -28,9 +35,13 @@ let toastId = 0;
 
 export default function App() {
   return (
-    <AccountProvider><StoreProvider>
-      <Workbench />
-    </StoreProvider></AccountProvider>
+    <AccountProvider>
+      <StoreProvider>
+        <HintProvider>
+          <Workbench />
+        </HintProvider>
+      </StoreProvider>
+    </AccountProvider>
   );
 }
 
@@ -218,9 +229,105 @@ function Workbench() {
   const selectedTrack = state.project.tracks.find((t) => t.id === state.selectedTrackId);
   const isDrum = selectedTrack?.instrument === "drumkit";
 
+  const [settingsTab, setSettingsTab] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExportStems = async () => {
+    onToast("Rendering separate stems for all tracks...");
+    try {
+      const stems = await audio.exportStems(state.project);
+      for (const stem of stems) {
+        const url = URL.createObjectURL(stem.blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = stem.fileName;
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+      }
+      onToast(`Rendered ${stems.length} track stems`);
+    } catch (err) {
+      onToast(err instanceof Error ? err.message : "Stem export failed");
+    }
+  };
+
+  const handleExportWav = async () => {
+    try {
+      const blob = await audio.exportWav(state.project, { sampleRate: 48000, bitDepth: 24 });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${state.project.name.replace(/[^\w\- ]+/g, "") || "cadence-mix"}.wav`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      onToast("Rendered 24-bit WAV at 48 kHz");
+    } catch (err) {
+      onToast(err instanceof Error ? err.message : "Export failed");
+    }
+  };
+
+  const handleSaveFile = async () => {
+    try {
+      const blob = await createProjectBundle(state.project);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${state.project.name.replace(/[^\w\- ]+/g, "").trim() || "session"}.cadenceproject`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      onToast("Project backup downloaded with all recorded takes.");
+    } catch (err) {
+      onToast(err instanceof Error ? err.message : "Project backup failed");
+    }
+  };
+
+  const handleOpenFile = async (file: File) => {
+    try {
+      if (file.name.toLowerCase().endsWith(".cadenceproject")) {
+        if (file.size > 256 * 1024 * 1024) { onToast("Project backup is too large (max 256 MB)"); return; }
+        const project = await openProjectBundle(await file.arrayBuffer());
+        audio.stop();
+        store.loadProject(project);
+        onToast("Opened project and restored its recordings");
+        return;
+      }
+      if (file.size > 8 * 1024 * 1024) { onToast("Project file is too large (max 8 MB)"); return; }
+      const text = await file.text();
+      const res = parseProjectFile(text);
+      if (!res.ok) { onToast(`Can't open file: ${res.error}`); return; }
+      store.loadProject(res.project);
+      onToast(`Opened "${res.project.name}"`);
+    } catch (err) {
+      onToast(err instanceof Error ? err.message : "Couldn't read file");
+    }
+  };
+
   return (
     <div className="h-screen flex flex-col overflow-hidden relative">
       <TopBar onToast={onToast} playing={playing} />
+
+      {/* Pro DAW Menu Bar */}
+      <MenuBar
+        onOpenSettings={(tab) => setSettingsTab(tab || "audio")}
+        onOpenShortcuts={() => setSettingsTab("shortcuts")}
+        onToast={onToast}
+        onTriggerImport={() => fileInputRef.current?.click()}
+        onTriggerSaveFile={handleSaveFile}
+        onTriggerOpenFile={() => fileInputRef.current?.click()}
+        onTriggerExportWav={handleExportWav}
+        onTriggerExportStems={handleExportStems}
+      />
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json,.cadence,.cadenceproject,audio/*"
+        className="hidden"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) void handleOpenFile(f);
+          e.target.value = "";
+        }}
+      />
 
       {/* transport bar — persistent, spans the top of the work area */}
       <div className="px-2 pt-2 shrink-0">
@@ -237,7 +344,7 @@ function Workbench() {
 
       {/* persistent regions: browser (left) · workspace (center) · copilot (right) */}
       <div className="flex-1 min-h-0 flex gap-2 px-2 py-2">
-        <fieldset disabled={recordingBusy} className="contents"><Browser onToast={onToast} /></fieldset>
+        <fieldset disabled={recordingBusy} className="contents"><BrowserPro onToast={onToast} /></fieldset>
 
         <main className="flex-1 min-w-0 flex flex-col gap-2">
           <WorkspaceSwitcher />
@@ -256,18 +363,17 @@ function Workbench() {
         <fieldset disabled={recordingBusy} className="contents"><AIPanel /></fieldset>
       </div>
 
-      {/* status bar */}
-      <footer className="h-7 shrink-0 border-t border-ink-700 bg-ink-900/90 flex items-center gap-4 px-3 text-[10px] font-mono text-ink-400">
-        <span className={`flex items-center gap-1.5 ${playing ? "text-teal" : ""}`}>
-          <span className={`w-1.5 h-1.5 rounded-full ${playing ? "bg-teal shadow-[0_0_6px_rgba(62,207,178,0.9)]" : "bg-ink-600"}`} />
-          {playing ? (recording ? "REC · live" : "playing") : "ready"}
-        </span>
-        <span className="hidden sm:inline">{state.project.lengthBars} bars · {state.project.bpm} BPM</span>
-        <span className="flex-1" />
-        <AutosaveStatus />
-        <span className="hidden md:inline opacity-80">Space play · A–K piano · Z–B drums · Ctrl+Z undo</span>
-        <span className="text-amber-glow/80 uppercase tracking-widest">{state.mode}</span>
-      </footer>
+      {/* status bar with reactive hint panel */}
+      <StatusBar playing={playing} recording={recording} />
+
+      {/* Settings Modal */}
+      {settingsTab && (
+        <SettingsModal
+          initialTab={settingsTab}
+          onClose={() => setSettingsTab(null)}
+          onToast={onToast}
+        />
+      )}
 
       {/* orphaned-recovery prompt (restore / discard) */}
       <RecoveryPrompt />
@@ -284,58 +390,7 @@ function Workbench() {
   );
 }
 
-/** Live autosave indicator + cadence control for the status bar. */
-function AutosaveStatus() {
-  const { state, setAutosaveInterval, gate } = useStore();
-  const { status, intervalMs, lastSavedAt } = state.autosave;
-  const showControl = gate("producer");
 
-  const label =
-    status === "saving" ? "autosaving…"
-    : status === "saved" ? `autosaved ${new Date(lastSavedAt).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}`
-    : status === "dirty" ? "autosave · pending"
-    : status === "error" ? "autosave failed"
-    : "autosave on";
-
-  const dotClass =
-    status === "saving" ? "bg-amber-glow animate-pulse"
-    : status === "saved" ? "bg-teal shadow-[0_0_6px_rgba(62,207,178,0.9)]"
-    : status === "dirty" ? "bg-amber-glow"
-    : status === "error" ? "bg-rec shadow-[0_0_6px_rgba(255,111,97,0.9)]"
-    : "bg-ink-600";
-
-  return (
-    <span className="flex items-center gap-2">
-      <span className={`flex items-center gap-1.5 transition-colors ${
-        status === "saved" ? "text-teal"
-        : status === "error" ? "text-rec"
-        : status === "saving" || status === "dirty" ? "text-amber-glow"
-        : "opacity-60"
-      }`}>
-        <span className={`w-1.5 h-1.5 rounded-full ${dotClass}`} />
-        {label}
-      </span>
-
-      {showControl && (
-        <label className="flex items-center gap-1 text-ink-400" title="Autosave cadence — recovery snapshots only, never your save">
-          every
-          <select
-            value={intervalMs}
-            onChange={(e) => setAutosaveInterval(Number(e.target.value))}
-            className="bg-ink-800 border border-ink-700 rounded px-1 py-0.5 text-[10px] font-mono text-ink-200 focus:outline-none focus:border-amber-glow/60"
-            aria-label="Autosave interval"
-          >
-            <option value={15000}>15s</option>
-            <option value={30000}>30s</option>
-            <option value={60000}>1m</option>
-            <option value={120000}>2m</option>
-            <option value={300000}>5m</option>
-          </select>
-        </label>
-      )}
-    </span>
-  );
-}
 
 
 

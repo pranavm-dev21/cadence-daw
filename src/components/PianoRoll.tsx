@@ -24,6 +24,7 @@ import { SCALES, genMelody, mulberry32 } from "../theory";
 import { useStore } from "../state/store";
 import { useEditorClip } from "../state/useEditorClip";
 import { audio, QUANTIZE_GRIDS, quantizeAppNotes } from "../core";
+import { applyStrum, applyArp, applyHumanize, applyFlam, CHORD_TEMPLATES } from "../core/proTools";
 import { IconEraser, IconMinus, IconPlus, IconSparkles, IconZap } from "./icons";
 
 const KEY_W = 64;
@@ -186,6 +187,68 @@ export default function PianoRoll() {
     const rng = mulberry32((Date.now() ^ Math.floor(Math.random() * 1e9)) >>> 0);
     setNotes(genMelody(rng, p.rootMidi, p.scale, clip.lengthBars, 1), "Copilot: sketch melody");
     setSelection(new Set());
+    markDirty();
+  };
+
+  const getTargetNotes = () => {
+    if (!clip) return [];
+    if (selection.size > 0) return clip.notes.filter((n) => selection.has(n.id));
+    return [...clip.notes];
+  };
+
+  const doStrum = () => {
+    if (!clip || clip.notes.length === 0) return;
+    const target = getTargetNotes();
+    const targetIds = new Set(target.map((n) => n.id));
+    const strummed = applyStrum(target, 0.25, "up");
+    const otherNotes = clip.notes.filter((n) => !targetIds.has(n.id));
+    setNotes([...otherNotes, ...strummed], "Strum notes");
+    markDirty();
+  };
+
+  const doArp = () => {
+    if (!clip || clip.notes.length === 0) return;
+    const target = getTargetNotes();
+    const targetIds = new Set(target.map((n) => n.id));
+    const arped = applyArp(target, "up", snapGrid, 1);
+    const otherNotes = clip.notes.filter((n) => !targetIds.has(n.id));
+    setNotes([...otherNotes, ...arped], "Arpeggiate notes");
+    markDirty();
+  };
+
+  const doHumanize = () => {
+    if (!clip || clip.notes.length === 0) return;
+    const target = getTargetNotes();
+    const targetIds = new Set(target.map((n) => n.id));
+    const humanized = applyHumanize(target, 0.08, 0.12);
+    const otherNotes = clip.notes.filter((n) => !targetIds.has(n.id));
+    setNotes([...otherNotes, ...humanized], "Humanize velocity & timing");
+    markDirty();
+  };
+
+  const doFlam = () => {
+    if (!clip || clip.notes.length === 0) return;
+    const target = getTargetNotes();
+    const targetIds = new Set(target.map((n) => n.id));
+    const flammed = applyFlam(target, 0.25, 0.6);
+    const otherNotes = clip.notes.filter((n) => !targetIds.has(n.id));
+    setNotes([...otherNotes, ...flammed], "Add flam grace notes");
+    markDirty();
+  };
+
+  const stampChord = (templateName: string) => {
+    if (!clip) return;
+    const t = CHORD_TEMPLATES.find((x) => x.name === templateName) || CHORD_TEMPLATES[0];
+    const root = p.rootMidi + 12; // C4 default or root
+    const step = Math.floor(audio.getCurrentStep()) % (clip.lengthBars * 16);
+    const newNotes: Note[] = t.intervals.map((semitone) => ({
+      id: uid("n"),
+      pitch: root + semitone,
+      start: step,
+      dur: 4,
+      vel: 0.85,
+    }));
+    setNotes([...clip.notes, ...newNotes], `Stamp ${t.name}`);
     markDirty();
   };
 
@@ -791,6 +854,50 @@ export default function PianoRoll() {
                 <input type="range" min={0} max={100} step={5} value={qSwing} onChange={(e) => setQSwing(Number(e.target.value))} className="w-14 h-3" />
               </label>
               <button className="btn py-0.5! px-2! text-[11px]!" onClick={doQuantize} title="Apply quantize (undoable)">Apply</button>
+            </div>
+
+            {/* FL Pro Editing Suite */}
+            <div className="flex items-center gap-1 border-l border-ink-700/80 pl-2">
+              <select
+                onChange={(e) => { if (e.target.value) stampChord(e.target.value); e.target.value = ""; }}
+                className="bg-ink-800 border border-ink-700 rounded px-1.5 py-0.5 text-[10px] font-semibold text-amber-glow focus:outline-none"
+                title="Stamp chord at playhead"
+                defaultValue=""
+              >
+                <option value="" disabled>+ Chord...</option>
+                {CHORD_TEMPLATES.map((t) => (
+                  <option key={t.name} value={t.name}>{t.name}</option>
+                ))}
+              </select>
+
+              <button
+                className="btn py-0.5! px-1.5! text-[10px]!"
+                onClick={doStrum}
+                title="Strum chords — staggers note onsets"
+              >
+                Strum
+              </button>
+              <button
+                className="btn py-0.5! px-1.5! text-[10px]!"
+                onClick={doArp}
+                title="Arpeggiate selected notes"
+              >
+                Arp
+              </button>
+              <button
+                className="btn py-0.5! px-1.5! text-[10px]!"
+                onClick={doHumanize}
+                title="Humanize micro-timing and velocity"
+              >
+                Humanize
+              </button>
+              <button
+                className="btn py-0.5! px-1.5! text-[10px]!"
+                onClick={doFlam}
+                title="Add flam / grace notes"
+              >
+                Flam
+              </button>
             </div>
           </>
         )}
