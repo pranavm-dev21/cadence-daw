@@ -215,3 +215,21 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 3px; padding: 1.5px 3px;
   pointer-events: none;
 }
+
+/* ---------- mobile touch & scroll utilities ---------- */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a, input[type="range"] {
+  touch-action: manipulation;
+}
+

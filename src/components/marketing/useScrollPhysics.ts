@@ -19,8 +19,9 @@ export function subscribeScrollPhysics(listener: PhysicsListener): () => void {
 
 /**
  * High-performance kinetic inertia scroll engine.
- * Implements smooth spring-lerp momentum physics, velocity tracking,
- * and passes kinetic energy to visual canvas and UI layers.
+ * - On desktop: smooth spring-lerp momentum physics with velocity calculation.
+ * - On mobile phones/touch screens: native 120Hz ProMotion touch scrolling, with continuous
+ *   velocity tracking and energy propagation to the visual canvas & 3D console layers.
  */
 export function useScrollPhysics(enabled: boolean = true) {
   const stateRef = useRef<ScrollPhysicsState>({
@@ -34,24 +35,43 @@ export function useScrollPhysics(enabled: boolean = true) {
     if (!enabled || typeof window === "undefined") return;
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) {
-      // Reduced motion: purely observe native scroll without momentum overriding
-      const onNativeScroll = () => {
+    const isTouch = window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
+
+    // Mobile / Touch Optimization:
+    // Do not intercept or override native touch scrolling. Instead, track real finger momentum
+    // each animation frame and broadcast velocity to harmonic physics layers.
+    if (isTouch || prefersReducedMotion) {
+      let lastTouchY = window.scrollY;
+      let animId: number;
+
+      const tickTouch = () => {
+        const currentY = window.scrollY;
+        const rawVel = currentY - lastTouchY;
+        lastTouchY = currentY;
+
+        // Smooth velocity dampening
+        const velocity = prefersReducedMotion ? 0 : rawVel * 0.85;
         const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-        const y = window.scrollY;
+        const progress = Math.min(1, Math.max(0, currentY / maxScroll));
+        const direction = velocity > 0.2 ? "down" : velocity < -0.2 ? "up" : "idle";
+
         const state: ScrollPhysicsState = {
-          scrollY: y,
-          velocity: 0,
-          progress: Math.min(1, Math.max(0, y / maxScroll)),
-          direction: "idle",
+          scrollY: currentY,
+          velocity,
+          progress,
+          direction,
         };
         stateRef.current = state;
         listeners.forEach((l) => l(state));
+
+        animId = requestAnimationFrame(tickTouch);
       };
-      window.addEventListener("scroll", onNativeScroll, { passive: true });
-      return () => window.removeEventListener("scroll", onNativeScroll);
+
+      animId = requestAnimationFrame(tickTouch);
+      return () => cancelAnimationFrame(animId);
     }
 
+    // Desktop: Kinetic Spring-Lerp Inertia Scroll Engine
     let targetY = window.scrollY;
     let currentY = window.scrollY;
     let lastY = window.scrollY;
@@ -62,7 +82,6 @@ export function useScrollPhysics(enabled: boolean = true) {
     const getMaxScroll = () =>
       Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 
-    // Synchronize targetY on native/touch scroll
     const onScroll = () => {
       if (!isMoving) {
         targetY = window.scrollY;
@@ -73,7 +92,6 @@ export function useScrollPhysics(enabled: boolean = true) {
 
     // Kinetic Wheel Interception
     const onWheel = (e: WheelEvent) => {
-      // If user is inside a scrollable child (e.g., code block or modal), let it scroll
       let target = e.target as HTMLElement | null;
       let hasScrollableParent = false;
       while (target && target !== document.body && target !== document.documentElement) {
@@ -91,12 +109,10 @@ export function useScrollPhysics(enabled: boolean = true) {
 
       e.preventDefault();
 
-      // Normalize wheel delta across mouse models and touchpads
       let delta = e.deltaY;
-      if (e.deltaMode === 1) delta *= 32; // lines
-      if (e.deltaMode === 2) delta *= window.innerHeight; // pages
+      if (e.deltaMode === 1) delta *= 32;
+      if (e.deltaMode === 2) delta *= window.innerHeight;
 
-      // Soft clamp max step for buttery momentum
       const maxDelta = 180;
       const clampedDelta = Math.max(-maxDelta, Math.min(maxDelta, delta * 0.95));
 
@@ -106,16 +122,14 @@ export function useScrollPhysics(enabled: boolean = true) {
 
     window.addEventListener("wheel", onWheel, { passive: false });
 
-    // Physics Animation Loop
+    // Desktop Physics Loop
     const tick = () => {
       const maxScroll = getMaxScroll();
       targetY = Math.max(0, Math.min(maxScroll, targetY));
 
-      // Damped spring-lerp (0.09 = weighty, luxurious physical instrument feel)
       const diff = targetY - currentY;
       currentY += diff * 0.092;
 
-      // Track velocity
       velocity = currentY - lastY;
       lastY = currentY;
 

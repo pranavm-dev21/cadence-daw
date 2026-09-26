@@ -24,16 +24,16 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCadence }) => {
         </div>
 
         {/* Links Grid */}
-        <div className="flex flex-wrap items-center gap-6 sm:gap-10 text-[#94A3B8]">
+        <div className="flex flex-wrap items-center gap-x-6 sm:gap-x-10 gap-y-3 text-[#94A3B8]">
           <button
             onClick={onOpenCadence}
-            className="hover:text-[#00F5FF] transition-colors cursor-pointer"
+            className="hover:text-[#00F5FF] transition-colors cursor-pointer py-1"
           >
             Launch Web DAW
           </button>
           <a
             href={downloadUrl}
-            className="hover:text-[#00F5FF] transition-colors"
+            className="hover:text-[#00F5FF] transition-colors py-1"
           >
             Download for Windows
           </a>
@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCadence }) => {
             href={repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#00F5FF] transition-colors"
+            className="hover:text-[#00F5FF] transition-colors py-1"
           >
             GitHub
           </a>
@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCadence }) => {
             href={guideUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#00F5FF] transition-colors"
+            className="hover:text-[#00F5FF] transition-colors py-1"
           >
             Documentation
           </a>
@@ -57,7 +57,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCadence }) => {
             href={`${repoUrl}/blob/master/LICENSE`}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#00F5FF] transition-colors"
+            className="hover:text-[#00F5FF] transition-colors py-1"
           >
             License (MIT)
           </a>

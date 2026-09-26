@@ -203,17 +203,17 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
             </div>
             <div className="flex-1 h-12 rounded bg-[#080B10] border border-[#141A26] relative overflow-hidden flex items-center p-1.5 gap-1.5">
               {/* Waveform Blocks */}
-              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61]">
-                [ 808 Hit A ]
+              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61] px-1 overflow-hidden">
+                <span className="truncate">[ 808 Hit A ]</span>
               </div>
-              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61]">
-                [ 808 Slide ]
+              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61] px-1 overflow-hidden">
+                <span className="truncate">[ 808 Slide ]</span>
               </div>
-              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61]">
-                [ 808 Hit B ]
+              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61] px-1 overflow-hidden">
+                <span className="truncate">[ 808 Hit B ]</span>
               </div>
-              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61]">
-                [ Sub Drop ]
+              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61] px-1 overflow-hidden">
+                <span className="truncate">[ Sub Drop ]</span>
               </div>
             </div>
           </div>
@@ -260,13 +260,13 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
               <span className="text-[9px] font-mono text-[#64748B]">TRK 3</span>
             </div>
             <div className="flex-1 h-12 rounded bg-[#080B10] border border-[#141A26] relative overflow-hidden p-1.5 flex items-center gap-2">
-              <div className="w-1/2 h-full rounded bg-[#A78BFA]/15 border border-[#A78BFA]/40 flex flex-col justify-center px-2 text-[10px] font-mono text-[#A78BFA]">
-                <span>Am7 ➔ Fmaj7 (Strummed)</span>
-                <span className="text-[8px] text-[#A78BFA]/60">15-voice polyphony</span>
+              <div className="w-1/2 h-full rounded bg-[#A78BFA]/15 border border-[#A78BFA]/40 flex flex-col justify-center px-2 text-[10px] font-mono text-[#A78BFA] overflow-hidden">
+                <span className="truncate">Am7 ➔ Fmaj7 (Strummed)</span>
+                <span className="text-[8px] text-[#A78BFA]/60 truncate">15-voice polyphony</span>
               </div>
-              <div className="w-1/2 h-full rounded bg-[#A78BFA]/15 border border-[#A78BFA]/40 flex flex-col justify-center px-2 text-[10px] font-mono text-[#A78BFA]">
-                <span>Cmaj7 ➔ Gsus4 (Arp 1/16)</span>
-                <span className="text-[8px] text-[#A78BFA]/60">Humanized + Flam</span>
+              <div className="w-1/2 h-full rounded bg-[#A78BFA]/15 border border-[#A78BFA]/40 flex flex-col justify-center px-2 text-[10px] font-mono text-[#A78BFA] overflow-hidden">
+                <span className="truncate">Cmaj7 ➔ Gsus4 (Arp 1/16)</span>
+                <span className="text-[8px] text-[#A78BFA]/60 truncate">Humanized + Flam</span>
               </div>
             </div>
           </div>

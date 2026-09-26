@@ -70,7 +70,7 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onOpenCadence 
   return (
     <section className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
       {/* Huge Typography */}
-      <h2 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-white uppercase leading-[0.92] mb-6">
+      <h2 className="text-4xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-white uppercase leading-[0.92] mb-6">
         MAKE SOMETHING
         <br />
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F5FF] via-[#38BDF8] to-[#CBD5E1]">
@@ -78,18 +78,18 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onOpenCadence 
         </span>
       </h2>
 
-      <p className="max-w-xl mx-auto text-[#94A3B8] text-base sm:text-lg font-normal mb-10 leading-relaxed">
+      <p className="max-w-xl mx-auto text-[#94A3B8] text-sm sm:text-lg font-normal mb-10 leading-relaxed px-2">
         Start composing in seconds directly in your browser, or install the native Windows workstation for offline studio power.
       </p>
 
       {/* Buttons */}
-      <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-        <MagneticButton size="lg" variant="primary" onClick={onOpenCadence} className="shadow-[0_0_35px_rgba(0,245,255,0.45)]">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-12 max-w-sm sm:max-w-none mx-auto">
+        <MagneticButton size="lg" variant="primary" onClick={onOpenCadence} className="w-full sm:w-auto shadow-[0_0_35px_rgba(0,245,255,0.45)]">
           OPEN CADENCE NOW
         </MagneticButton>
 
-        <a href={downloadUrl} download="Cadence_Setup_v0.1.0.exe">
-          <MagneticButton size="lg" variant="secondary">
+        <a href={downloadUrl} download="Cadence_Setup_v0.1.0.exe" className="w-full sm:w-auto">
+          <MagneticButton size="lg" variant="secondary" className="w-full sm:w-auto">
             DOWNLOAD FOR WINDOWS (.EXE)
           </MagneticButton>
         </a>

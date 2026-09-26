@@ -92,11 +92,11 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
       {/* The Master Studio Console Frame */}
       <div className="relative rounded-2xl bg-[#090C12] border border-[#1D2536] shadow-[0_30px_100px_rgba(0,0,0,0.95)] overflow-hidden">
         {/* Console Top Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-[#0B0F17] border-b border-[#1A2233]">
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 px-4 py-3 bg-[#0B0F17] border-b border-[#1A2233]">
+          <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2 sm:gap-3">
             <button
               onClick={handleTogglePlay}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold font-mono tracking-wider transition-all duration-150 ${
+              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg text-xs font-semibold font-mono tracking-wider transition-all duration-150 min-h-[40px] cursor-pointer ${
                 isPlaying
                   ? "bg-[#00F5FF] text-[#06080B] shadow-[0_0_20px_rgba(0,245,255,0.7)]"
                   : "bg-[#161D2B] hover:bg-[#1E273A] text-white border border-[#232F46]"
@@ -117,33 +117,33 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
               )}
             </button>
 
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#070A0F] border border-[#161D2B] text-xs font-mono text-[#94A3B8]">
+            <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#070A0F] border border-[#161D2B] text-xs font-mono text-[#94A3B8]">
               <span className="text-[#64748B]">BPM:</span>
               <span className="text-[#00F5FF] font-bold">104.0</span>
             </div>
 
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#070A0F] border border-[#161D2B] text-xs font-mono text-[#94A3B8]">
+            <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#070A0F] border border-[#161D2B] text-xs font-mono text-[#94A3B8]">
               <span className="text-[#64748B]">SWING:</span>
               <span className="text-[#F59E0B] font-bold">62%</span>
             </div>
-          </div>
 
-          {/* Timeline Zoom Controls */}
-          <div className="flex items-center gap-1 p-1 rounded-lg bg-[#070A0F] border border-[#161D2B] text-xs font-mono">
-            {(["1x", "2x", "4x"] as const).map((z) => (
-              <button
-                key={z}
-                onClick={() => {
-                  setZoomLevel(z);
-                  setHint(`TIMELINE ZOOM LEVEL: ${z}`);
-                }}
-                className={`px-2.5 py-1 rounded transition-colors ${
-                  zoomLevel === z ? "bg-[#1E273A] text-[#00F5FF] font-bold" : "text-[#64748B] hover:text-[#CBD5E1]"
-                }`}
-              >
-                {z}
-              </button>
-            ))}
+            {/* Timeline Zoom Controls */}
+            <div className="hidden md:flex items-center gap-1 p-1 rounded-lg bg-[#070A0F] border border-[#161D2B] text-xs font-mono">
+              {(["1x", "2x", "4x"] as const).map((z) => (
+                <button
+                  key={z}
+                  onClick={() => {
+                    setZoomLevel(z);
+                    setHint(`TIMELINE ZOOM LEVEL: ${z}`);
+                  }}
+                  className={`px-2.5 py-1 rounded transition-colors cursor-pointer ${
+                    zoomLevel === z ? "bg-[#1E273A] text-[#00F5FF] font-bold" : "text-[#64748B] hover:text-[#CBD5E1]"
+                  }`}
+                >
+                  {z}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Action CTA */}
@@ -151,7 +151,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
             size="sm"
             variant="primary"
             onClick={onOpenCadence}
-            className="shadow-[0_0_15px_rgba(0,245,255,0.4)]"
+            className="w-full sm:w-auto shadow-[0_0_15px_rgba(0,245,255,0.4)]"
           >
             LAUNCH FULL WORKSPACE
           </MagneticButton>
@@ -198,19 +198,19 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                 >
                   {/* Track Header Controls */}
                   <div className="w-full sm:w-44 shrink-0 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">{ch.icon}</span>
+                    <div className="flex items-center gap-2 truncate">
+                      <span className="text-sm shrink-0">{ch.icon}</span>
                       <div className="truncate">
                         <span className="text-xs font-semibold text-white block truncate">{ch.name}</span>
-                        <span className="text-[10px] font-mono text-[#64748B]">{ch.type}</span>
+                        <span className="text-[10px] font-mono text-[#64748B] block truncate">{ch.type}</span>
                       </div>
                     </div>
 
                     {/* Mute and Solo Buttons */}
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1.5 shrink-0 ml-2">
                       <button
                         onClick={(e) => toggleMute(idx, e)}
-                        className={`w-6 h-6 rounded flex items-center justify-center text-[10px] font-bold font-mono transition-colors ${
+                        className={`w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] font-bold font-mono transition-colors cursor-pointer ${
                           isMuted ? "bg-[#EF4444] text-white" : "bg-[#161D2B] text-[#64748B] hover:text-white"
                         }`}
                         title="Mute Track"
@@ -219,7 +219,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                       </button>
                       <button
                         onClick={(e) => toggleSolo(idx, e)}
-                        className={`w-6 h-6 rounded flex items-center justify-center text-[10px] font-bold font-mono transition-colors ${
+                        className={`w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] font-bold font-mono transition-colors cursor-pointer ${
                           isSolo ? "bg-[#F59E0B] text-[#06080B]" : "bg-[#161D2B] text-[#64748B] hover:text-white"
                         }`}
                         title="Solo Track"
@@ -302,7 +302,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                       });
                       setHint(`PANORAMA: ${val === 0 ? "CENTER" : val > 0 ? "RIGHT" : "LEFT"} (${val}%)`);
                     }}
-                    className="w-full accent-[#00F5FF] cursor-pointer"
+                    className="w-full accent-[#00F5FF] cursor-pointer py-1.5"
                   />
                 </div>
 
@@ -317,7 +317,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                     max="100"
                     value={faders[activeChannel]}
                     onChange={(e) => handleFaderChange(activeChannel, parseInt(e.target.value, 10))}
-                    className="w-full accent-[#00F5FF] cursor-pointer"
+                    className="w-full accent-[#00F5FF] cursor-pointer py-1.5"
                   />
                 </div>
               </div>
@@ -329,11 +329,11 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                 </span>
                 <div className="space-y-1.5 font-mono text-xs">
                   <div className="flex items-center justify-between p-2 rounded-lg bg-[#070A0F] border border-[#161D2B] text-white">
-                    <span className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#00F5FF]" />
-                      {channels[activeChannel].plugin}
+                    <span className="flex items-center gap-2 truncate">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00F5FF] shrink-0" />
+                      <span className="truncate">{channels[activeChannel].plugin}</span>
                     </span>
-                    <span className="text-[10px] text-[#34D399]">ACTIVE</span>
+                    <span className="text-[10px] text-[#34D399] shrink-0">ACTIVE</span>
                   </div>
                   <div className="flex items-center justify-between p-2 rounded-lg bg-[#070A0F] border border-[#161D2B] text-[#64748B]">
                     <span>2. SoftClipper Studio</span>
@@ -356,12 +356,12 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
         </div>
 
         {/* Live Hint Telemetry Bar */}
-        <div className="px-4 py-2.5 bg-[#06080C] border-t border-[#161D2B] flex items-center justify-between text-xs font-mono">
-          <div className="flex items-center gap-2">
-            <span className="text-[#00F5FF] font-bold">💡 TELEMETRY:</span>
+        <div className="px-4 py-2.5 bg-[#06080C] border-t border-[#161D2B] flex items-center justify-between text-xs font-mono gap-2">
+          <div className="flex items-center gap-2 truncate flex-1 min-w-0">
+            <span className="text-[#00F5FF] font-bold shrink-0">💡 TELEMETRY:</span>
             <span className="text-[#CBD5E1] truncate">{hint}</span>
           </div>
-          <span className="text-[10px] text-[#475569] hidden md:inline">
+          <span className="text-[10px] text-[#475569] hidden md:inline shrink-0">
             ZERO LATENCY • 24-BIT 48KHZ READY
           </span>
         </div>

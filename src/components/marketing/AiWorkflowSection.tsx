@@ -62,18 +62,20 @@ export const AiWorkflowSection: React.FC<AiWorkflowSectionProps> = ({ onOpenCade
 
         {/* Input Bar */}
         <div className="relative mb-4">
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-[#06080C] border border-[#1A2334] focus-within:border-[#00F5FF]/60 transition-colors shadow-inner">
-            <span className="text-[#00F5FF] font-mono text-sm pl-1">✦</span>
-            <input
-              type="text"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder="Describe a musical idea, chord progression, or drum groove..."
-              className="w-full bg-transparent text-sm text-white font-mono placeholder-[#475569] outline-none"
-            />
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl bg-[#06080C] border border-[#1A2334] focus-within:border-[#00F5FF]/60 transition-colors shadow-inner">
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              <span className="text-[#00F5FF] font-mono text-sm pl-1 shrink-0">✦</span>
+              <input
+                type="text"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="Describe a musical idea, chord progression, or drum groove..."
+                className="w-full bg-transparent text-xs sm:text-sm text-white font-mono placeholder-[#475569] outline-none"
+              />
+            </div>
             <button
               onClick={() => handleSelectPrompt(prompt)}
-              className="shrink-0 px-4 py-1.5 rounded-lg bg-[#00F5FF] text-[#06080B] text-xs font-mono font-bold hover:shadow-[0_0_15px_rgba(0,245,255,0.6)] transition-all cursor-pointer"
+              className="w-full sm:w-auto shrink-0 px-4 py-2 sm:py-1.5 rounded-lg bg-[#00F5FF] text-[#06080B] text-xs font-mono font-bold hover:shadow-[0_0_15px_rgba(0,245,255,0.6)] transition-all cursor-pointer min-h-[38px] flex items-center justify-center"
             >
               {isGenerating ? "GENERATING..." : "GENERATE"}
             </button>
@@ -97,14 +99,14 @@ export const AiWorkflowSection: React.FC<AiWorkflowSectionProps> = ({ onOpenCade
         {/* Generated Timeline & Stems Visual Response */}
         <div className="rounded-xl bg-[#06080C] border border-[#161D2B] p-4 flex flex-col gap-3 relative overflow-hidden">
           {/* Status Header */}
-          <div className="flex items-center justify-between text-xs font-mono border-b border-[#141A26] pb-2.5">
-            <div className="flex items-center gap-2">
-              <span className={`w-2 h-2 rounded-full ${isGenerating ? "bg-[#F59E0B] animate-ping" : "bg-[#10B981]"}`} />
-              <span className="text-[#CBD5E1]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono border-b border-[#141A26] pb-2.5 gap-1.5">
+            <div className="flex items-center gap-2 truncate">
+              <span className={`w-2 h-2 rounded-full shrink-0 ${isGenerating ? "bg-[#F59E0B] animate-ping" : "bg-[#10B981]"}`} />
+              <span className="text-[#CBD5E1] truncate text-[11px] sm:text-xs">
                 {isGenerating ? "SYNTHESIZING TO TIMELINE..." : "ARRANGEMENT GENERATED • 4 TRACKS POPULATED"}
               </span>
             </div>
-            <span className="text-[#00F5FF]">KEY: A MINOR • 104 BPM</span>
+            <span className="text-[#00F5FF] shrink-0 text-[10px] sm:text-xs">KEY: A MINOR • 104 BPM</span>
           </div>
 
           {/* Generated Tracks Preview */}
@@ -117,23 +119,23 @@ export const AiWorkflowSection: React.FC<AiWorkflowSectionProps> = ({ onOpenCade
             ].map((trk, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 p-2.5 rounded-lg bg-[#090D14] border border-[#141B26]"
+                className="flex items-center gap-2 sm:gap-3 p-2.5 rounded-lg bg-[#090D14] border border-[#141B26]"
               >
-                <div className="w-32 shrink-0 flex items-center gap-2 text-xs font-semibold text-white">
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: trk.color }} />
+                <div className="w-24 sm:w-32 shrink-0 flex items-center gap-1.5 sm:gap-2 text-xs font-semibold text-white truncate">
+                  <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: trk.color }} />
                   <span className="truncate">{trk.name}</span>
                 </div>
                 <div
-                  className="flex-1 h-7 rounded border flex items-center px-3 text-[11px] font-mono truncate"
+                  className="flex-1 h-7 rounded border flex items-center px-2 sm:px-3 text-[10px] sm:text-[11px] font-mono truncate"
                   style={{
                     backgroundColor: `${trk.color}10`,
                     borderColor: `${trk.color}40`,
                     color: trk.color,
                   }}
                 >
-                  {isGenerating ? "Synthesizing note stems..." : trk.pattern}
+                  <span className="truncate">{isGenerating ? "Synthesizing note stems..." : trk.pattern}</span>
                 </div>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#161D2B] text-[#94A3B8]">
+                <span className="text-[10px] font-mono px-1.5 sm:px-2 py-0.5 rounded bg-[#161D2B] text-[#94A3B8] shrink-0 hidden sm:inline">
                   {trk.type}
                 </span>
               </div>
@@ -141,10 +143,10 @@ export const AiWorkflowSection: React.FC<AiWorkflowSectionProps> = ({ onOpenCade
           </div>
 
           {/* Action Row */}
-          <div className="pt-3 border-t border-[#141A26] flex flex-wrap items-center justify-between gap-3">
+          <div className="pt-3 border-t border-[#141A26] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <button
               onClick={handlePlayGeneration}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#161D2B] hover:bg-[#1E273A] border border-[#232F46] text-xs font-mono text-white transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-3.5 py-2 sm:py-1.5 rounded-lg bg-[#161D2B] hover:bg-[#1E273A] border border-[#232F46] text-xs font-mono text-white transition-colors cursor-pointer min-h-[40px] sm:min-h-0"
             >
               <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 24 24">
                 <path d="M7 4.5v15l13-7.5z" />
@@ -152,7 +154,7 @@ export const AiWorkflowSection: React.FC<AiWorkflowSectionProps> = ({ onOpenCade
               {isPlayingDemo ? "PAUSE AUDIO" : "AUDITION SYNTHESIS"}
             </button>
 
-            <MagneticButton size="sm" variant="primary" onClick={onOpenCadence}>
+            <MagneticButton size="sm" variant="primary" onClick={onOpenCadence} className="w-full sm:w-auto">
               OPEN IN CADENCE WORKSPACE →
             </MagneticButton>
           </div>

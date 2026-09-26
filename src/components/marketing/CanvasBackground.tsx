@@ -30,7 +30,14 @@ export const CanvasBackground: React.FC = () => {
       mouse.targetX = e.clientX;
       mouse.targetY = e.clientY;
     };
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        mouse.targetX = e.touches[0].clientX;
+        mouse.targetY = e.touches[0].clientY;
+      }
+    };
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
 
     // Track scroll physics state
     let scrollVelocity = 0;
@@ -40,9 +47,10 @@ export const CanvasBackground: React.FC = () => {
       scrollY = state.scrollY;
     });
 
-    // Grid of subtle floating audio nodes
-    const cols = 28;
-    const rows = 18;
+    // Grid of subtle floating audio nodes (scaled for mobile performance)
+    const isMobile = width < 640;
+    const cols = isMobile ? 16 : 28;
+    const rows = isMobile ? 12 : 18;
     interface Node {
       origX: number;
       origY: number;
@@ -185,6 +193,7 @@ export const CanvasBackground: React.FC = () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleTouchMove);
       unsubscribeScroll();
     };
   }, []);

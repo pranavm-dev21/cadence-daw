@@ -69,10 +69,46 @@ export const FeatureEditorial: React.FC = () => {
         </h2>
       </div>
 
+      {/* Mobile Horizontal Pill Selector (Visible only on mobile/tablet < lg) */}
+      <div className="lg:hidden flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-4 -mx-4 px-4">
+        {features.map((feat, idx) => {
+          const isActive = activeFeature === idx;
+          return (
+            <button
+              key={feat.id}
+              onClick={() => setActiveFeature(idx)}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono whitespace-nowrap border transition-all cursor-pointer ${
+                isActive
+                  ? "bg-[#0F141F] border-[#00F5FF] text-[#00F5FF] shadow-[0_0_15px_rgba(0,245,255,0.15)]"
+                  : "bg-[#090C12] border-[#182030] text-[#94A3B8] hover:border-[#222E42]"
+              }`}
+            >
+              <span className="font-bold">{feat.num}</span>
+              <span>{feat.title}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Mobile Active Feature Summary Card (Visible only on < lg) */}
+      <div className="lg:hidden p-5 rounded-xl bg-[#0F141F] border border-[#00F5FF]/50 shadow-[0_10px_30px_rgba(0,245,255,0.08)] mb-6 text-left">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-mono font-bold text-[#00F5FF]">
+            {features[activeFeature].num} // {features[activeFeature].tag}
+          </span>
+          <span className="w-2 h-2 rounded-full bg-[#00F5FF] animate-pulse" />
+        </div>
+        <h3 className="text-lg font-bold tracking-tight text-white mb-1.5">{features[activeFeature].title}</h3>
+        <p className="text-xs text-[#94A3B8] leading-relaxed mb-3">{features[activeFeature].headline}</p>
+        <p className="text-xs text-[#CBD5E1] border-t border-[#1C2538] pt-3 leading-relaxed">
+          {features[activeFeature].description}
+        </p>
+      </div>
+
       {/* Main Editorial Dual-Pane Layout */}
       <div className="grid grid-cols-12 gap-8 items-start">
-        {/* Left Navigation Column (Cols 1-5) */}
-        <div className="col-span-12 lg:col-span-5 flex flex-col gap-2">
+        {/* Desktop Left Navigation Column (Hidden on mobile, visible on lg) */}
+        <div className="hidden lg:flex lg:col-span-5 flex-col gap-2">
           {features.map((feat, idx) => {
             const isActive = activeFeature === idx;
             return (
@@ -105,9 +141,9 @@ export const FeatureEditorial: React.FC = () => {
           })}
         </div>
 
-        {/* Right Interactive Visual Treatment Pane (Cols 6-12) */}
-        <div className="col-span-12 lg:col-span-7 sticky top-24">
-          <div className="rounded-2xl bg-[#090C12] border border-[#1D2536] p-6 sm:p-8 min-h-[460px] flex flex-col justify-between shadow-[0_20px_70px_rgba(0,0,0,0.8)] overflow-hidden relative">
+        {/* Right Interactive Visual Treatment Pane (Cols 6-12 on desktop, static on mobile) */}
+        <div className="col-span-12 lg:col-span-7 static lg:sticky lg:top-24">
+          <div className="rounded-2xl bg-[#090C12] border border-[#1D2536] p-5 sm:p-8 min-h-[400px] sm:min-h-[460px] flex flex-col justify-between shadow-[0_20px_70px_rgba(0,0,0,0.8)] overflow-hidden relative">
             {/* Visual Glass Sheen */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#00F5FF]/[0.03] to-transparent pointer-events-none" />
 
@@ -143,16 +179,16 @@ export const FeatureEditorial: React.FC = () => {
                   </div>
 
                   {/* Chord Stamper Piano Roll representation */}
-                  <div className="h-32 rounded-xl bg-[#080B10] border border-[#141A26] p-3 flex flex-col justify-between">
+                  <div className="h-auto sm:h-32 rounded-xl bg-[#080B10] border border-[#141A26] p-3 flex flex-col justify-between gap-2">
                     <div className="flex justify-between text-[10px] font-mono text-[#64748B]">
                       <span>CHORD STAMP ACTIVE</span>
-                      <span>15 CHORD TEMPLATES LOADED</span>
+                      <span className="hidden sm:inline">15 CHORD TEMPLATES LOADED</span>
                     </div>
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {["Am9", "Fmaj7", "Cmaj9", "Gsus4"].map((c, i) => (
                         <div
                           key={i}
-                          className="h-16 rounded-lg bg-[#00F5FF]/10 border border-[#00F5FF]/40 flex flex-col items-center justify-center text-xs font-mono text-[#00F5FF] font-bold"
+                          className="h-14 sm:h-16 rounded-lg bg-[#00F5FF]/10 border border-[#00F5FF]/40 flex flex-col items-center justify-center text-xs font-mono text-[#00F5FF] font-bold"
                         >
                           <span>{c}</span>
                           <span className="text-[9px] text-[#94A3B8] font-normal">Bar 0{i + 1}</span>
@@ -264,10 +300,10 @@ export const FeatureEditorial: React.FC = () => {
                     ].map((item, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center justify-between p-3 rounded-lg bg-[#070A0F] border border-[#161D2B]"
+                        className="flex items-center justify-between p-3 rounded-lg bg-[#070A0F] border border-[#161D2B] gap-2"
                       >
-                        <span className="text-white font-medium">{item.stem}</span>
-                        <div className="flex items-center gap-3 text-[10px] text-[#64748B]">
+                        <span className="text-white font-medium truncate">{item.stem}</span>
+                        <div className="flex items-center gap-3 text-[10px] text-[#64748B] shrink-0">
                           <span>{item.time}</span>
                           <span className="text-[#00F5FF]">{item.size}</span>
                         </div>
