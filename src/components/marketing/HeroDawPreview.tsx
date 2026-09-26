@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { demoAudio } from "./AudioDemoEngine";
+import { subscribeScrollPhysics } from "./useScrollPhysics";
 
 interface HeroDawPreviewProps {
   onOpenCadence: () => void;
@@ -11,6 +12,14 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
   const [meterLevel, setMeterLevel] = useState(0.42);
   const [activeTab, setActiveTab] = useState<"timeline" | "mixer" | "rack">("timeline");
   const [hoverParam, setHoverParam] = useState<string>("READY • HOVER CONTROLS FOR TELEMETRY");
+  const [scrollTilt, setScrollTilt] = useState(0);
+
+  useEffect(() => {
+    return subscribeScrollPhysics((state) => {
+      const tilt = Math.max(-2.5, Math.min(2.5, state.velocity * 0.22));
+      setScrollTilt(tilt);
+    });
+  }, []);
 
   useEffect(() => {
     const unsub = demoAudio.subscribeStep((step) => {
@@ -46,6 +55,10 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
   return (
     <div
       onClick={onOpenCadence}
+      style={{
+        transform: `perspective(1200px) rotateX(${scrollTilt}deg)`,
+        transition: "transform 0.12s cubic-bezier(0.2, 0, 0.2, 1)",
+      }}
       className="group relative w-full rounded-2xl bg-[#090C12]/95 border border-[#1E2536] hover:border-[#00F5FF]/40 shadow-[0_25px_80px_rgba(0,0,0,0.85)] hover:shadow-[0_0_60px_rgba(0,245,255,0.14)] transition-all duration-300 overflow-hidden cursor-pointer backdrop-blur-xl"
       title="Click to launch Cadence Workstation"
     >

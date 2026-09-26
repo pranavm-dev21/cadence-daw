@@ -34,6 +34,19 @@ html, body, #root {
   margin: 0;
 }
 
+html.landing-mode, body.landing-mode {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+html.landing-mode #root, body.landing-mode #root {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--color-ink-950);
   color: var(--color-ink-100);

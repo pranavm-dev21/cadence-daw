@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { subscribeScrollPhysics, ScrollPhysicsState } from "./useScrollPhysics";
 
 export const CanvasBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -30,6 +31,14 @@ export const CanvasBackground: React.FC = () => {
       mouse.targetY = e.clientY;
     };
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
+
+    // Track scroll physics state
+    let scrollVelocity = 0;
+    let scrollY = 0;
+    const unsubscribeScroll = subscribeScrollPhysics((state: ScrollPhysicsState) => {
+      scrollVelocity = state.velocity;
+      scrollY = state.scrollY;
+    });
 
     // Grid of subtle floating audio nodes
     const cols = 28;
@@ -72,7 +81,14 @@ export const CanvasBackground: React.FC = () => {
       ctx.clearRect(0, 0, width, height);
 
       // Deep atmospheric ambient glow behind mouse
-      const grad = ctx.createRadialGradient(mouse.x, mouse.y, 10, mouse.x, mouse.y, Math.max(width, height) * 0.55);
+      const grad = ctx.createRadialGradient(
+        mouse.x,
+        mouse.y,
+        10,
+        mouse.x,
+        mouse.y,
+        Math.max(width, height) * 0.55
+      );
       grad.addColorStop(0, "rgba(0, 245, 255, 0.045)");
       grad.addColorStop(0.35, "rgba(56, 189, 248, 0.02)");
       grad.addColorStop(1, "transparent");
@@ -83,11 +99,16 @@ export const CanvasBackground: React.FC = () => {
         return; // static ambient glow for reduced-motion
       }
 
-      // Update nodes with spring physics toward origin + mouse repulsion
+      // Smooth decay of scroll velocity influence
+      const kineticForce = scrollVelocity * 0.12;
+
+      // Update nodes with spring physics toward origin + mouse repulsion + scroll impulse
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
+        const col = i % cols;
+        const row = Math.floor(i / cols);
 
-        // Harmonic breath
+        // Harmonic oscillation breath
         const wave = Math.sin(time + n.phase) * 3;
 
         // Mouse displacement
@@ -102,9 +123,16 @@ export const CanvasBackground: React.FC = () => {
           n.vy += (dy / dist) * force * 0.2;
         }
 
-        // Hooke's law spring back to original position
-        const springK = 0.04;
-        const damping = 0.88;
+        // Kinetic scrolling impulse with harmonic wave delay across columns
+        if (Math.abs(scrollVelocity) > 0.05) {
+          const wavePhase = Math.sin(col * 0.35 + time * 3);
+          n.vy -= kineticForce * (0.8 + wavePhase * 0.3);
+          n.vx += kineticForce * 0.05 * Math.cos(row * 0.5);
+        }
+
+        // Hooke's law spring back to original equilibrium position
+        const springK = 0.042;
+        const damping = 0.86;
         n.vx += (n.origX - n.x) * springK;
         n.vy += (n.origY + wave - n.y) * springK;
 
@@ -115,9 +143,11 @@ export const CanvasBackground: React.FC = () => {
         n.y += n.vy;
       }
 
-      // Draw subtle grid connections
+      // Dynamic stroke color reacting to kinetic scroll velocity
+      const velocityEnergy = Math.min(0.35, Math.abs(scrollVelocity) * 0.035);
+      const strokeAlpha = 0.18 + velocityEnergy;
       ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(42, 54, 78, 0.25)";
+      ctx.strokeStyle = `rgba(0, 245, 255, ${strokeAlpha})`;
 
       // Draw horizontal harmonic lines
       for (let r = 0; r < rows; r++) {
@@ -138,22 +168,24 @@ export const CanvasBackground: React.FC = () => {
       for (let i = 0; i < nodes.length; i += 2) {
         const n = nodes[i];
         const distMouse = Math.hypot(n.x - mouse.x, n.y - mouse.y);
-        const alpha = Math.max(0.08, 0.45 * (1 - Math.min(distMouse, 300) / 300));
+        const mouseFactor = 1 - Math.min(distMouse, 300) / 300;
+        const alpha = Math.max(0.08, 0.45 * mouseFactor + velocityEnergy * 0.8);
         ctx.fillStyle = `rgba(0, 245, 255, ${alpha})`;
         ctx.beginPath();
-        ctx.arc(n.x, n.y, 1.2, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, 1.2 + velocityEnergy * 1.5, 0, Math.PI * 2);
         ctx.fill();
       }
 
       animId = requestAnimationFrame(render);
     };
 
-    render();
+    animId = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
+      unsubscribeScroll();
     };
   }, []);
 
