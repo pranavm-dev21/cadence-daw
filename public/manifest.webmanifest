@@ -1,0 +1,17 @@
+{
+  "name": "Cadence — Open-Source AI DAW",
+  "short_name": "Cadence",
+  "description": "A free, open-source, AI-native digital audio workstation. Beginner-friendly, producer-powerful, fast on low-spec hardware.",
+  "id": "./",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#090B0E",
+  "theme_color": "#090B0E",
+  "categories": ["music", "productivity"],
+  "icons": [
+    { "src": "app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

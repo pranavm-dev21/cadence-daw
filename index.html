@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadence — Open-Source AI DAW</title>
+    <meta name="description" content="Cadence is a free, open-source, AI-native digital audio workstation. Beginner-friendly, producer-powerful, fast on low-spec hardware." />
+
+    <!-- Renderer sandbox: strict CSP. No inline scripts, no eval, no outbound
+         connections from app code (connect-src 'none'), no plugins/objects.
+         No external fonts or analytics. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; worker-src 'self' blob:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#090B0E" />
+
+    <!-- One-click install (web build): browsers offer "Install Cadence" -->
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="app-icon.svg" />
+    <link rel="apple-touch-icon" href="app-icon.svg" />
+
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

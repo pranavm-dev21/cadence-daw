@@ -1,0 +1,11 @@
+node_modules/
+.next/
+dist/
+build/
+*.log
+.env
+.env.*
+!.env.example
+src-tauri/target
+src-tauri/WixTools
+src-tauri/gen
