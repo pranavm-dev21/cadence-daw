@@ -15,6 +15,8 @@ Download the latest release directly from GitHub Releases:
 
 Visit the **[GitHub Releases Page](https://github.com/pranavm-dev21/cadence-daw/releases)** for changelogs and release assets.
 
+📖 **New to Cadence?** Read the **[Complete User Manual & Production Guide](GUIDE.md)** for step-by-step tutorials on beatmaking, piano roll chord stamping, Edison audio slicing, 10-slot mixer sound design, and vocal recording.
+
 ---
 
 ## 🎹 Studio Feature Suite
