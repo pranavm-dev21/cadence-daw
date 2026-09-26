@@ -1,8 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Track, TrackFx, dbLabel } from "../types";
 import { useStore } from "../state/store";
 import { audio, RETURN_DEFS } from "../core";
 import { IconMixer } from "./icons";
+
+const AVAILABLE_PLUGINS = [
+  "Parametric EQ 2",
+  "Fruity Compressor",
+  "Fruity Limiter",
+  "Soft Clipper",
+  "Fruity Delay 3",
+  "Fruity Reeverb 2",
+  "Blood Overdrive",
+  "Vintage Chorus",
+  "Stereo Shaper",
+  "Utility / Polarity",
+];
 
 const cutoffToSlider = (f: number) => Math.round((100 * Math.log(f / 300)) / Math.log(60));
 const sliderToCutoff = (v: number) => Math.round(300 * Math.pow(60, v / 100));
@@ -10,6 +23,9 @@ const sliderToCutoff = (v: number) => Math.round(300 * Math.pow(60, v / 100));
 export default function Mixer() {
   const { state, apply, applySilent, snapshot, gate } = useStore();
   const p = state.project;
+  const [focusedTrackId, setFocusedTrackId] = useState<string | null>(p.tracks[0]?.id ?? null);
+  const [slots, setSlots] = useState<Record<string, { plugin: string | null; bypass: boolean; mix: number }[]>>({});
+  const focusedTrack = p.tracks.find((t) => t.id === focusedTrackId) ?? p.tracks[0];
   /* Meters are read-only realtime telemetry from the audio backend (never the
    * undo stack). All *writes* (volume/pan/mute/solo/fx) go through the bus. */
   const rmsRefs = useRef(new Map<string, HTMLDivElement>());
@@ -89,6 +105,8 @@ export default function Mixer() {
               rmsEl={(el) => { if (el) rmsRefs.current.set(t.id, el); else rmsRefs.current.delete(t.id); }}
               peakEl={(el) => { if (el) peakRefs.current.set(t.id, el); else peakRefs.current.delete(t.id); }}
               loadEl={(el) => { if (el) loadRefs.current.set(t.id, el); else loadRefs.current.delete(t.id); }}
+              focused={focusedTrackId === t.id}
+              onSelect={() => setFocusedTrackId(t.id)}
               volGesture={volGesture}
               apply={apply}
               applySilent={applySilent}
@@ -130,18 +148,92 @@ export default function Mixer() {
               <div className="flex-1 flex flex-col justify-center gap-1.5 text-[9px] font-mono text-ink-400">
                 <div className="text-teal">LIMITER ON</div>
                 <div>-0.1 dBFS ceil</div>
-                <div className="text-ink-300">44.1 kHz float</div>
+                <div className="text-amber-glow font-bold">-14.2 LUFS</div>
               </div>
             </div>
             <div className="px-2 pb-1.5 text-[9px] font-mono text-ink-400">0.0 dB</div>
           </div>
+
+          {/* FL Studio 10 Effect Slots Inspector */}
+          {focusedTrack && (
+            <div className="w-[200px] shrink-0 rounded-lg border border-ink-700 bg-ink-900/90 flex flex-col overflow-hidden anim-fade-up">
+              <div className="h-[3px]" style={{ background: focusedTrack.color }} />
+              <div className="px-2.5 py-1.5 border-b border-ink-800 flex items-center justify-between">
+                <span className="text-[11px] font-bold text-ink-100 truncate">{focusedTrack.name}</span>
+                <span className="text-[9px] font-mono text-ink-400 bg-ink-800 px-1 rounded">10 SLOTS</span>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-1.5 space-y-1">
+                {Array.from({ length: 10 }, (_, slotIdx) => {
+                  const trackSlots = slots[focusedTrack.id] || [];
+                  const slotData = trackSlots[slotIdx] || { plugin: null, bypass: false, mix: 1 };
+
+                  return (
+                    <div
+                      key={slotIdx}
+                      className="flex items-center gap-1.5 bg-ink-850 border border-ink-800 hover:border-ink-700 rounded px-1.5 py-1 text-[10px]"
+                    >
+                      {/* Bypass LED */}
+                      <button
+                        onClick={() => {
+                          const updated = [...(slots[focusedTrack.id] || Array(10).fill({ plugin: null, bypass: false, mix: 1 }))];
+                          updated[slotIdx] = { ...slotData, bypass: !slotData.bypass };
+                          setSlots({ ...slots, [focusedTrack.id]: updated });
+                        }}
+                        className={`w-2.5 h-2.5 rounded-full shrink-0 transition ${
+                          slotData.plugin && !slotData.bypass ? "bg-teal shadow-[0_0_6px_rgba(62,207,178,0.8)]" : "bg-ink-700"
+                        }`}
+                        title="Bypass slot"
+                      />
+
+                      <span className="font-mono text-[9px] text-ink-500 w-3">{slotIdx + 1}</span>
+
+                      {/* Plugin Selector Dropdown */}
+                      <select
+                        value={slotData.plugin || ""}
+                        onChange={(e) => {
+                          const updated = [...(slots[focusedTrack.id] || Array(10).fill({ plugin: null, bypass: false, mix: 1 }))];
+                          updated[slotIdx] = { ...slotData, plugin: e.target.value || null };
+                          setSlots({ ...slots, [focusedTrack.id]: updated });
+                        }}
+                        className="flex-1 bg-ink-900 border border-ink-700/80 rounded px-1 py-0.5 text-[9.5px] text-ink-200 focus:outline-none focus:border-amber-glow"
+                      >
+                        <option value="">(None)</option>
+                        {AVAILABLE_PLUGINS.map((plug) => (
+                          <option key={plug} value={plug}>{plug}</option>
+                        ))}
+                      </select>
+
+                      {/* Mix knob */}
+                      {slotData.plugin && (
+                        <input
+                          type="range"
+                          min={0}
+                          max={1}
+                          step={0.05}
+                          value={slotData.mix}
+                          onChange={(e) => {
+                            const updated = [...(slots[focusedTrack.id] || Array(10).fill({ plugin: null, bypass: false, mix: 1 }))];
+                            updated[slotIdx] = { ...slotData, mix: Number(e.target.value) };
+                            setSlots({ ...slots, [focusedTrack.id]: updated });
+                          }}
+                          className="w-8 h-1 accent-amber-glow"
+                          title={`Dry/Wet Mix: ${Math.round(slotData.mix * 100)}%`}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
     </section>
   );
 }
 
 function Strip({
-  t, fxOn, extended, rmsEl, peakEl, loadEl, volGesture, apply, applySilent, snapshot,
+  t, fxOn, extended, rmsEl, peakEl, loadEl, focused, onSelect, volGesture, apply, applySilent, snapshot,
 }: {
   t: Track;
   fxOn: boolean;
@@ -149,6 +241,8 @@ function Strip({
   rmsEl: (el: HTMLDivElement | null) => void;
   peakEl: (el: HTMLDivElement | null) => void;
   loadEl: (el: HTMLDivElement | null) => void;
+  focused: boolean;
+  onSelect: () => void;
   volGesture: (t: Track, v: number) => void;
   apply: (label: string, cmds: Parameters<ReturnType<typeof useStore>["apply"]>[1]) => void;
   applySilent: (cmds: Parameters<ReturnType<typeof useStore>["applySilent"]>[0]) => void;
@@ -170,7 +264,14 @@ function Strip({
 
   return (
     <div
-      className={`w-[96px] shrink-0 rounded-lg border flex flex-col overflow-hidden transition-colors ${t.mute ? "border-ink-700 bg-ink-900/60 opacity-70" : "border-ink-700 bg-ink-800/70"}`}
+      onClick={onSelect}
+      className={`w-[96px] shrink-0 rounded-lg border flex flex-col overflow-hidden transition-all cursor-pointer ${
+        focused
+          ? "border-amber-glow shadow-[0_0_12px_rgba(255,180,84,0.3)] bg-ink-800"
+          : t.mute
+          ? "border-ink-700 bg-ink-900/60 opacity-70"
+          : "border-ink-700 bg-ink-800/70"
+      }`}
       style={{ boxShadow: t.solo ? `0 0 0 1px ${t.color}88` : undefined }}
     >
       <div className="h-[3px]" style={{ background: t.color }} />
