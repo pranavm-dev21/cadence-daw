@@ -26,10 +26,31 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
+    "targets": "all",
+    "category": "AudioVideo",
+    "shortDescription": "Cadence Open-Source Digital Audio Workstation",
+    "longDescription": "Next-generation AI-powered digital audio workstation for music creation, recording, MIDI sequencing, and mixing across Windows, macOS, and Linux.",
+    "copyright": "Copyright 2026 Cadence Contributors. Licensed under MIT.",
     "windows": {
       "nsis": {
         "installMode": "both"
+      }
+    },
+    "macOS": {
+      "minimumSystemVersion": "10.15",
+      "infoPlist": "Info.plist"
+    },
+    "linux": {
+      "deb": {
+        "depends": [
+          "libwebkit2gtk-4.1-0",
+          "libasound2",
+          "libasound2-plugins"
+        ],
+        "section": "sound"
+      },
+      "appimage": {
+        "bundleMediaFramework": true
       }
     },
     "icon": [
@@ -38,9 +59,6 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ],
-    "android": {
-      "debugApplicationIdSuffix": ".debug"
-    }
+    ]
   }
 }

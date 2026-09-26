@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useStore } from "../state/store";
 import { NOTE_NAMES, ScaleType } from "../types";
+import { platform } from "../platform";
 
 interface Props {
   initialTab?: string;
@@ -12,10 +13,13 @@ export default function SettingsModal({ initialTab = "audio", onClose, onToast }
   const { state, apply } = useStore();
   const [tab, setTab] = useState(initialTab);
 
+  const availableDrivers = platform.getAudioDrivers();
+  const specs = platform.getPlatformSpecs();
+
   // Audio settings state
-  const [driver, setDriver] = useState("tauri_asio");
+  const [driver, setDriver] = useState(() => platform.getDefaultAudioDriver());
   const [sampleRate, setSampleRate] = useState("48000");
-  const [bufferSize, setBufferSize] = useState("256");
+  const [bufferSize, setBufferSize] = useState(() => String(platform.getRecommendedBufferSize()));
   const [multithread, setMultithread] = useState(true);
 
   // MIDI settings state
@@ -43,8 +47,17 @@ export default function SettingsModal({ initialTab = "audio", onClose, onToast }
     onClose();
   };
 
+  const audioTabLabel =
+    platform.os === "macos"
+      ? "Audio / Core Audio"
+      : platform.os === "linux"
+      ? "Audio / PipeWire"
+      : platform.os === "windows"
+      ? "Audio / ASIO"
+      : "Audio Engine";
+
   const tabs = [
-    { id: "audio", label: "Audio / ASIO" },
+    { id: "audio", label: audioTabLabel },
     { id: "midi", label: "MIDI Controllers" },
     { id: "project", label: "Project Info" },
     { id: "theme", label: "Theme & UI" },
@@ -88,17 +101,22 @@ export default function SettingsModal({ initialTab = "audio", onClose, onToast }
           {tab === "audio" && (
             <div className="space-y-4">
               <div>
-                <label className="block text-ink-400 font-semibold mb-1">Audio Device / Driver</label>
+                <label className="block text-ink-400 font-semibold mb-1">Audio Device / Driver ({specs.name})</label>
                 <select
                   value={driver}
                   onChange={(e) => setDriver(e.target.value)}
                   className="w-full bg-ink-800 border border-ink-700 rounded px-3 py-1.5 text-ink-100"
                 >
-                  <option value="tauri_asio">Tauri Native ASIO (Low Latency Windows)</option>
-                  <option value="wasapi">Windows WASAPI (Exclusive Mode)</option>
-                  <option value="webaudio">Standard Web Audio Context</option>
+                  {availableDrivers.map((d) => (
+                    <option key={d.id} value={d.id}>
+                      {d.label} {d.isHardwareExclusive ? "(Exclusive Low Latency)" : ""}
+                    </option>
+                  ))}
                 </select>
-                <p className="text-[10px] text-ink-400 mt-1">Native ASIO provides sub-5ms latency when running as a compiled desktop application.</p>
+                <p className="text-[10px] text-ink-400 mt-1">
+                  {availableDrivers.find((d) => d.id === driver)?.description ||
+                    `${specs.recommendedDriver} delivers high-performance low-latency DSP audio.`}
+                </p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -288,11 +306,13 @@ export default function SettingsModal({ initialTab = "audio", onClose, onToast }
               <div className="grid grid-cols-2 gap-2 border-b border-ink-800 pb-2">
                 <span className="text-ink-400">Space</span>
                 <span className="text-ink-100">Play / Pause</span>
-                <span className="text-ink-400">Ctrl+Z / Ctrl+Y</span>
+                <span className="text-ink-400">
+                  {platform.formatShortcut("Mod+Z")} / {platform.formatShortcut("Mod+Y")}
+                </span>
                 <span className="text-ink-100">Undo / Redo</span>
-                <span className="text-ink-400">Ctrl+S</span>
+                <span className="text-ink-400">{platform.formatShortcut("Mod+S")}</span>
                 <span className="text-ink-100">Save Project</span>
-                <span className="text-ink-400">Ctrl+Q</span>
+                <span className="text-ink-400">{platform.formatShortcut("Mod+Q")}</span>
                 <span className="text-ink-100">Quantize Clip</span>
                 <span className="text-ink-400">A – K</span>
                 <span className="text-ink-100">Musical Typing (White/Black keys)</span>
@@ -315,11 +335,15 @@ export default function SettingsModal({ initialTab = "audio", onClose, onToast }
           {tab === "about" && (
             <div className="space-y-2 text-center py-4">
               <h3 className="text-base font-bold text-amber-glow tracking-wider">CADENCE DAW PRO</h3>
-              <p className="text-ink-300">Next-generation native desktop audio workstation.</p>
-              <div className="text-[10px] text-ink-400 font-mono pt-3">
-                <p>Engine: Web Audio & Tauri CPAL Bridge</p>
-                <p>Version: 0.2.0-pro (Build 2026.09)</p>
-                <p>Architecture: React 18 + TypeScript + Rust / Tauri</p>
+              <p className="text-ink-300">Unified cross-platform music workstation.</p>
+              <div className="text-[10px] text-ink-400 font-mono pt-3 space-y-1">
+                <p>Platform: {specs.name} ({specs.architecture})</p>
+                <p>Audio Engine: {specs.audioSubsystem}</p>
+                <p>Version: 0.1.0 (Production Release)</p>
+                <p>Runtime: {platform.isDesktop ? "Tauri v2 Native Desktop" : "Web Studio Environment"}</p>
+                <p className="text-ink-500 text-[9px] pt-1">
+                  Default Projects: {platform.getDefaultPaths().projectsDir}
+                </p>
               </div>
             </div>
           )}

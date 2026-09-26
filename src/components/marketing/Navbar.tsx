@@ -74,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
             AI ENGINE
           </a>
           <a href="#desktop" className="hover:text-white transition-colors">
-            DESKTOP .EXE
+            DESKTOP APP
           </a>
           <a href="#opensource" className="hover:text-white transition-colors">
             SOURCE
@@ -158,7 +158,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
             onClick={() => handleMobileNavClick("#desktop")}
             className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#00F5FF] hover:bg-[#0E131E] transition-colors"
           >
-            DESKTOP .EXE // WINDOWS SETUP
+            DESKTOP APP // WIN • MAC • LINUX
           </button>
           <button
             onClick={() => handleMobileNavClick("#opensource")}

@@ -162,14 +162,14 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBack }) => {
           {/* Section 5 */}
           <section>
             <h2 className="text-lg sm:text-xl font-bold text-white mb-3 tracking-tight font-mono">
-              5. DESKTOP EXECUTABLE DOWNLOADS (.EXE)
+              5. DESKTOP APPLICATION DOWNLOADS (WINDOWS, MACOS, LINUX)
             </h2>
             <p className="mb-3">
-              The website provides direct download links to native Windows desktop installers and executables:
+              The website provides direct download links to native desktop installers and executables for Windows (.exe), macOS (.dmg), and Linux (.AppImage, .deb):
             </p>
             <div className="p-4 rounded-xl bg-[#090D14] border border-[#1A2536] text-xs font-mono space-y-2">
               <p>
-                <strong>Execution Context:</strong> Web browsers cannot execute `.exe` files. Downloads must be intentionally saved and run locally on a compatible Windows system.
+                <strong>Execution Context:</strong> Web browsers cannot execute desktop binaries directly. Downloads must be intentionally saved and run locally on a compatible operating system.
               </p>
               <p>
                 <strong>Official Source:</strong> All official binary packages are hosted on the project&rsquo;s verified GitHub Releases page ({LEGAL_CONFIG.organization.repositoryUrl}/releases).

@@ -109,7 +109,7 @@ export const Licenses: React.FC<LicensesProps> = ({ onBack }) => {
             <div className="p-4 rounded-xl bg-[#090D14] border border-[#182234]">
               <span className="text-[#38BDF8] font-bold block mb-1">Desktop Binary Builds</span>
               <p className="text-[#94A3B8]">
-                Compiled executables bundle the open-source Rust Tauri engine and WebAudio DSP pipeline for Windows.
+                Compiled executables bundle the open-source Rust Tauri engine and WebAudio DSP pipeline for Windows, macOS, and Linux.
               </p>
             </div>
             <div className="p-4 rounded-xl bg-[#090D14] border border-[#182234]">

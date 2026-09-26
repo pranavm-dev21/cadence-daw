@@ -69,6 +69,9 @@ export interface LegalConfig {
     licenseUrl: string;
     desktopExecutableUrl: string;
     portableExecutableUrl: string;
+    macOSDmgUrl: string;
+    linuxAppImageUrl: string;
+    linuxDebUrl: string;
     version: string;
     isCodeSigned: boolean;
     sha256Checksum: string;
@@ -145,6 +148,9 @@ export const LEGAL_CONFIG: LegalConfig = {
     licenseUrl: "https://github.com/pranavm-dev21/cadence-daw/blob/master/LICENSE",
     desktopExecutableUrl: "https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_Setup_v0.1.0.exe",
     portableExecutableUrl: "https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_Portable_v0.1.0.exe",
+    macOSDmgUrl: "https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_v0.1.0_universal.dmg",
+    linuxAppImageUrl: "https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_v0.1.0_amd64.AppImage",
+    linuxDebUrl: "https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_0.1.0_amd64.deb",
     version: "v0.1.0",
     isCodeSigned: false, // Honestly disclose until code-signing cert is provisioned
     sha256Checksum: "[VERIFY OFFICIAL SHA-256 HASH ON GITHUB RELEASE PAGE]",
