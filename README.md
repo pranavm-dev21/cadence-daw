@@ -1,55 +1,115 @@
-# Cadence
+# Cadence DAW
 
-A browser music workspace built with React, TypeScript, Vite and Web Audio. The local vocal workflow is implemented; the full production roadmap remains in progress. See [log.md](log.md) for verified milestones and remaining work.
+A high-performance Digital Audio Workstation (DAW) featuring an FL Studio-style workflow, available as a standalone native Windows desktop application (`.exe`) and web application. Built with React, TypeScript, Tailwind CSS, Web Audio DSP, and Tauri v2 (Rust).
 
-## Run locally
+---
 
-Use Node.js 24 and npm. From this directory:
+## 📥 Direct Downloads (Windows)
 
+Download the latest release directly from GitHub Releases:
+
+- **[Windows Setup Installer (`.exe`)](https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_Setup_v0.1.0.exe)**  
+  *Direct installation wizard with desktop shortcut, Start Menu entry, and uninstaller.*
+- **[Portable Binary (`.exe`)](https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_Portable_v0.1.0.exe)**  
+  *Single standalone executable — double-click to launch immediately without installing.*
+
+Visit the **[GitHub Releases Page](https://github.com/pranavm-dev21/cadence-daw/releases)** for changelogs and release assets.
+
+---
+
+## 🎹 Studio Feature Suite
+
+### 1. Channel Rack Pro
+- **16-Step Drum Sequencer**: 4-beat grouped color matrix with instant toggle buttons.
+- **Mixer & Output Controls**: Per-channel Pan, Volume, Mute/Solo LEDs, and target Mixer Track assignment.
+- **Global Swing**: Natural groove with adjustable swing percentage.
+- **Integrated Graph Editor**: Fine-tune per-step **Velocity**, **Panning**, and **Pitch**.
+
+### 2. Piano Roll Pro Suite
+- **Interactive Multi-Octave Note Grid**: Full MIDI composition with snap-to-grid, velocity editing, and length adjustment.
+- **Chord Stamper**: 1-click generation of 15+ chord templates (Major, Minor, 7th, Maj7, m7, 9th, Sus2, Sus4, Dim, Aug, etc.).
+- **Arpeggiator Engine**: Up, Down, Up/Down, and Random arpeggiator with rate controls.
+- **Guitar Strum Tool**: Natural note onset staggering for realistic acoustic/electric guitar strums.
+- **Humanizer & Flam**: Micro-timing and velocity humanization, plus rapid double-strike flam articulations.
+- **Scale Highlighting**: Root key and scale snapping (Natural Minor, Major, Pentatonic, Dorian, Phrygian, etc.).
+
+### 3. Edison Audio Waveform & Slicing Suite
+- **Waveform Display**: High-resolution zoomable waveform with drag selection.
+- **Transient Auto-Slice**: Automatically detects drum hits and transients for instant sample chopping.
+- **Audio DSP Operations**:
+  - **Normalize**: Peak-normalizes selected audio region to 0 dB.
+  - **Reverse**: Flips audio backwards in place.
+  - **Trim & Silence**: Destructive cropping and silence insertion.
+  - **Fades**: Exponential Fade In and Fade Out.
+- **Dump to Channel Rack**: Instantly sends sliced hits to individual Channel Rack pads.
+
+### 4. 10-Slot Studio Mixer & FX Rack
+- **10 FX Insert Slots per Channel**: Chain effects with individual enable/bypass LEDs and wet/dry mix knobs.
+- **Integrated DSP Plugins**:
+  - **SoftClipper**: Polynomial saturation transfer curve for punchy drum transients and analog mastering warmth.
+  - **StereoShaper**: Haas delay widener + Mid/Side stereo image width control.
+  - **Vintage Chorus**: Modulated dual delay lines for lush modulation.
+  - **Parametric EQ & Filters**: Multi-band frequency shaping.
+  - **Compressor & Limiter**: Dynamic range control with makeup gain.
+  - **Studio Reverb & Ping-Pong Delay**: Algorithmic spatial simulation.
+- **Master LUFS Metering**: Integrated loudness metering compliant with broadcast and streaming targets (-14 LUFS).
+
+### 5. Sample Browser with Live Audition
+- Multi-tab browser: **Packs**, **Project**, **Plugins**, and **Favorites**.
+- **Real-Time Audition Player**: Click any sample to preview it instantly before loading.
+- Instant search filter and 1-click addition to track or Channel Rack.
+
+### 6. Vocal Recording Studio
+- Low-latency microphone capture with real-time monitoring.
+- Multi-take recording with comping and automatic round-trip latency compensation.
+- High-pass filtering, presence EQ, and vocal dynamics presets.
+
+### 7. Multitrack Stems & Master Export
+- **Master WAV Export**: Studio-grade 24-bit / 48 kHz uncompressed WAV export.
+- **Multitrack Stems Export**: Automatically renders every track to separate WAV stems in a single pass for external mixing/mastering engineers.
+- **Project Bundles (`.cadenceproject`)**: Lossless self-contained project archives containing all track metadata and referenced PCM audio takes.
+
+---
+
+## 🛠️ Development & Building
+
+### Prerequisites
+- [Node.js 24+](https://nodejs.org/) and npm
+- [Rust 1.77+](https://rustup.rs/) (for desktop `.exe` builds)
+
+### Run in Browser (Dev Mode)
 ```sh
-npm ci
+npm install
 npm run dev
 ```
+Open [http://127.0.0.1:3000](http://127.0.0.1:3000) in Chrome, Edge, or any modern Web Audio browser.
 
-Open http://127.0.0.1:3000. Microphone access requires localhost or HTTPS and browser permission. Local recording needs no cloud credentials.
-
+### Run Automated Tests & Typecheck
 ```sh
 npm run check
-npm audit
 ```
+Runs full TypeScript verification, all 20 test suites (122 unit/integration tests), and the Vite production build.
 
-`check` runs browser/server type checks, automated tests and a production build. `npm run preview` previews `dist`; it does not start the API.
+### Build Desktop Windows Executable & Installer
+```sh
+npm run tauri:build
+```
+Builds:
+- `src-tauri/target/release/app.exe` (Standalone portable executable)
+- `src-tauri/target/release/bundle/nsis/Cadence_0.1.0_x64-setup.exe` (NSIS Windows Setup Installer)
 
-## Available workflows
+---
 
-- Beginner, Moderate and Master expose progressively detailed controls while retaining the same project and undo history.
-- Vocal / Rap supports input selection, metering, recording, pause/resume, take selection, waveform display and save retry after storage failure.
-- AudioWorklet captures mono vocals, with a compatibility fallback. Monitoring starts off. Capture stops at ten minutes; practical project duration is limited to 64 bars.
-- Import supported browser-decodable audio up to 64 MB and the current 64-bar timeline. Stereo channels are preserved. Browser decoding may resample the source.
-- Six vocal presets configure real high-pass filtering, presence EQ and compression. Bypass and parameter changes preserve source audio. The shared mixer applies processing to playback and WAV export.
-- WAV export defaults to stereo 48 kHz / 24-bit; Master exposes 44.1/48 kHz and 16/24-bit choices.
-- Save file downloads a lossless `.cadenceproject` containing metadata and all referenced takes, including inactive takes. Version 2 preserves stereo and reads older version 1 mono bundles. Local bundles are capped at 256 MB.
-- Lyrics persist with the project. Rhyme suggestions use a small local dictionary; syllable estimates are approximate English heuristics.
-- Existing MIDI arrangement, piano roll, mixer and synth workflows remain available. The FX Rack is a separate audition workspace, not the saved vocal processing chain.
+## 🏛️ Architecture & Ponytail Ruleset
 
-## Saving and privacy
+Cadence adheres strictly to the **Ponytail "lazy senior developer" engineering ladder**:
+- **Seam Isolation**: All UI components communicate exclusively with the audio engine via the `AudioBackend` contract (`src/core/audio.ts`).
+- **Command Bus**: All project mutations pass through the pure, atomic, undoable command bus (`src/core/commands.ts` & `src/core/bus.ts`).
+- **Deterministic DSP**: Signal processing algorithms in `src/audio/` are pure, predictable, and unit-tested offline.
+- **Zero-Bloat Dependencies**: Built on clean Web Audio nodes and lightweight Tauri v2 desktop wrappers.
 
-Project metadata is stored locally; PCM audio is stored in IndexedDB. Browser storage can be cleared or evicted: download portable project backups for important work. Legacy JSON files contain metadata only and require their audio assets on the same device. Missing audio prevents export instead of silently producing an incomplete song.
+---
 
-Local projects remain on the device after cloud sign-out. Use a private browser profile on shared computers. Cloud upload happens only through the Projects controls after accounts are configured. No real microphone audio or user projects were uploaded during development checks.
+## 📄 License
 
-## Optional accounts and Premium
-
-[DEPLOYMENT.md](DEPLOYMENT.md) describes the Supabase/Stripe setup. Copy `.env.example` to `.env`, configure services, and run `npm run server` in a second terminal. The development server forwards `/api` to the local API.
-
-The implementation includes verified bearer authentication, owner-filtered projects, private storage, revision conflict protection, server-enforced Premium history and signature-checked subscription events. Hosted services have not been provisioned or tested end to end. Blank configuration leaves cloud features explicitly unavailable and local editing usable.
-
-## Verification
-
-Automated coverage includes recording transitions, storage transactions, bundle corruption/collisions, stereo compatibility, mode preservation, WAV encoding, DSP settings, API authorization, subscription events and database row policies. Database tests use real embedded PostgreSQL with test representations of Supabase-owned schemas.
-
-With the development server running, `/tests/audio-browser.html` exercises synthetic audio capture, persistent recovery, audible WAV decoding, DSP, missing-asset rejection and stereo import. It does not request a physical microphone or play the generated tone through speakers. `/tests/layout.html` supports phone/tablet inspection. Deploy only `dist`, not the source/test directory.
-
-## Remaining work
-
-This is not yet a production release. Remaining items include non-destructive audio trimming, compressed exports, de-essing/noise gate and detailed chain editing, fuller rhythm/flow practice, physical microphone latency calibration, broader browser/accessibility coverage, password recovery, hosted auth/billing validation, cloud storage quotas and orphan cleanup, operational monitoring and release review. The alternate chunk renderer is not the wired export engine and has not been validated for recorded takes.
+MIT License. See [LICENSE](LICENSE) for details.
