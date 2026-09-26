@@ -98,5 +98,9 @@ export function getAllPlatformSpecs(): PlatformSpecs[] {
   const win = new WindowsPlatformAdapter(true);
   const mac = new MacOSPlatformAdapter(true);
   const lin = new LinuxPlatformAdapter(true);
-  return [win.getPlatformSpecs(), mac.getPlatformSpecs(), lin.getPlatformSpecs()];
+  return [win.getPlatformSpecs(), mac.getPlatformSpecs(), lin.getPlatformSpecs()].map((s) => ({
+    ...s,
+    releasePackageName: s.installerName,
+    binaryExtension: s.installerExtension,
+  }));
 }

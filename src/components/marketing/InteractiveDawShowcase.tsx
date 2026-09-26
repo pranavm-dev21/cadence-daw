@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { demoAudio } from "./AudioDemoEngine";
 import { MagneticButton } from "./MagneticButton";
+import { useInViewReveal } from "./motion/useInViewReveal";
+import { TactileKnob } from "./motion/TactileKnob";
+import { SoundwaveVisualizer } from "./motion/SoundwaveVisualizer";
+import { MotionCard } from "./motion/MotionCard";
 
 interface InteractiveDawShowcaseProps {
   onOpenCadence: () => void;
@@ -15,7 +19,12 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
   const [soloChannels, setSoloChannels] = useState<Record<number, boolean>>({});
   const [faders, setFaders] = useState([85, 92, 78, 88, 90]);
   const [panValues, setPanValues] = useState([0, -15, 20, -5, 10]);
-  const [hint, setHint] = useState<string>("CLICK PLAY TO HEAR REAL-TIME WEB AUDIO SYNTHESIS");
+  const [filterCutoffs, setFilterCutoffs] = useState([75, 90, 82, 64, 88]);
+  const [hint, setHint] = useState<string>("CLICK PLAY TO HEAR REAL-TIME WEB AUDIO SYNTHESIS • TWEAK KNOBS TO SHAPE SOUND");
+
+  const { ref: sectionRef, isRevealed: sectionRevealed } = useInViewReveal<HTMLElement>({
+    threshold: 0.15,
+  });
 
   useEffect(() => {
     const unsub = demoAudio.subscribeStep((step) => {
@@ -68,11 +77,15 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
   const playheadPercent = (currentStep / 64) * 100;
 
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="showcase">
+    <section ref={sectionRef} className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="showcase">
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+      <div
+        className={`flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 transition-all duration-700 ease-cinematic ${
+          sectionRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F5FF]/10 border border-[#00F5FF]/20 text-[11px] font-mono text-[#00F5FF] tracking-widest uppercase mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F5FF]/10 border border-[#00F5FF]/20 text-[11px] font-mono text-[#00F5FF] tracking-widest uppercase mb-4 anim-badge-float">
             LIVE INTERACTIVE PREVIEW
           </div>
           <h2 className="text-4xl sm:text-6xl font-bold tracking-tighter text-white uppercase leading-none">
@@ -85,26 +98,32 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
         </div>
 
         <p className="max-w-md text-[#94A3B8] text-sm sm:text-base leading-relaxed font-normal">
-          Experience the tactile response of an instrument designed for immediate creative capture. Try playing the demo, adjusting faders, and tweaking channel parameters below.
+          Experience the tactile response of an instrument designed for immediate creative capture. Try playing the demo, dragging tactile rotary encoders, and tweaking channel parameters below.
         </p>
       </div>
 
-      {/* The Master Studio Console Frame */}
-      <div className="relative rounded-2xl bg-[#090C12] border border-[#1D2536] shadow-[0_30px_100px_rgba(0,0,0,0.95)] overflow-hidden">
+      {/* The Master Studio Console Frame wrapped in MotionCard */}
+      <MotionCard
+        enableTilt={true}
+        spotlightColor="rgba(0, 245, 255, 0.10)"
+        className={`relative rounded-2xl bg-[#090C12] border border-[#1D2536] shadow-[0_30px_100px_rgba(0,0,0,0.95)] overflow-hidden transition-all duration-700 ease-cinematic ${
+          sectionRevealed ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-[0.98]"
+        }`}
+      >
         {/* Console Top Toolbar */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 px-4 py-3 bg-[#0B0F17] border-b border-[#1A2233]">
           <div className="flex flex-wrap items-center justify-between sm:justify-start gap-2 sm:gap-3">
             <button
               onClick={handleTogglePlay}
-              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg text-xs font-semibold font-mono tracking-wider transition-all duration-150 min-h-[40px] cursor-pointer ${
+              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg text-xs font-semibold font-mono tracking-wider active:scale-[0.94] transition-all duration-150 min-h-[40px] cursor-pointer ${
                 isPlaying
                   ? "bg-[#00F5FF] text-[#06080B] shadow-[0_0_20px_rgba(0,245,255,0.7)]"
-                  : "bg-[#161D2B] hover:bg-[#1E273A] text-white border border-[#232F46]"
+                  : "bg-[#161D2B] hover:bg-[#1E273A] text-white border border-[#232F46] hover:border-[#00F5FF]/30"
               }`}
             >
               {isPlaying ? (
                 <>
-                  <span className="w-2.5 h-2.5 bg-[#06080B] rounded-[2px]" />
+                  <span className="w-2.5 h-2.5 bg-[#06080B] rounded-[2px] animate-pulse" />
                   PAUSE DEMO
                 </>
               ) : (
@@ -136,7 +155,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                     setZoomLevel(z);
                     setHint(`TIMELINE ZOOM LEVEL: ${z}`);
                   }}
-                  className={`px-2.5 py-1 rounded transition-colors cursor-pointer ${
+                  className={`px-2.5 py-1 rounded transition-colors cursor-pointer active:scale-[0.95] ${
                     zoomLevel === z ? "bg-[#1E273A] text-[#00F5FF] font-bold" : "text-[#64748B] hover:text-[#CBD5E1]"
                   }`}
                 >
@@ -190,9 +209,9 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                     setActiveChannel(idx);
                     setHint(`FOCUSED TRACK: ${ch.name} • ${ch.plugin}`);
                   }}
-                  className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 rounded-xl border transition-all duration-150 cursor-pointer ${
+                  className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 rounded-xl border transition-all duration-200 cursor-pointer ${
                     isSelected
-                      ? "bg-[#101522] border-[#00F5FF]/50 shadow-[0_0_20px_rgba(0,245,255,0.06)]"
+                      ? "bg-[#101522] border-[#00F5FF]/60 shadow-[0_0_24px_rgba(0,245,255,0.08)] track-active-glow"
                       : "bg-[#0B0F17] hover:bg-[#0E131E] border-[#182030]"
                   }`}
                 >
@@ -206,12 +225,12 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                       </div>
                     </div>
 
-                    {/* Mute and Solo Buttons */}
+                    {/* Mute and Solo Buttons with tactile squash */}
                     <div className="flex items-center gap-1.5 shrink-0 ml-2">
                       <button
                         onClick={(e) => toggleMute(idx, e)}
-                        className={`w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] font-bold font-mono transition-colors cursor-pointer ${
-                          isMuted ? "bg-[#EF4444] text-white" : "bg-[#161D2B] text-[#64748B] hover:text-white"
+                        className={`w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] font-bold font-mono active:scale-[0.90] transition-all cursor-pointer ${
+                          isMuted ? "bg-[#EF4444] text-white shadow-[0_0_10px_rgba(239,68,68,0.5)]" : "bg-[#161D2B] text-[#64748B] hover:text-white"
                         }`}
                         title="Mute Track"
                       >
@@ -219,8 +238,8 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                       </button>
                       <button
                         onClick={(e) => toggleSolo(idx, e)}
-                        className={`w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] font-bold font-mono transition-colors cursor-pointer ${
-                          isSolo ? "bg-[#F59E0B] text-[#06080B]" : "bg-[#161D2B] text-[#64748B] hover:text-white"
+                        className={`w-7 h-7 sm:w-6 sm:h-6 rounded flex items-center justify-center text-[10px] font-bold font-mono active:scale-[0.90] transition-all cursor-pointer ${
+                          isSolo ? "bg-[#F59E0B] text-[#06080B] shadow-[0_0_10px_rgba(245,158,11,0.5)]" : "bg-[#161D2B] text-[#64748B] hover:text-white"
                         }`}
                         title="Solo Track"
                       >
@@ -233,7 +252,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                   <div className="w-full flex-1 h-12 rounded-lg bg-[#070A0F] border border-[#141A26] relative overflow-hidden flex items-center p-1.5 gap-2">
                     {/* Simulated Clip Block 1 */}
                     <div
-                      className="flex-1 h-full rounded border flex items-center px-2 text-[10px] font-mono transition-opacity"
+                      className="flex-1 h-full rounded border flex items-center px-2 text-[10px] font-mono transition-opacity relative overflow-hidden"
                       style={{
                         backgroundColor: `${ch.color}15`,
                         borderColor: `${ch.color}50`,
@@ -241,12 +260,17 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                         opacity: isMuted ? 0.35 : 1,
                       }}
                     >
-                      <span className="truncate">CLIP 01 [Loop]</span>
+                      <span className="truncate z-10">CLIP 01 [Loop]</span>
+                      {isSelected && isPlaying && !isMuted && (
+                        <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
+                          <SoundwaveVisualizer isPlaying={true} barCount={18} height={20} primaryColor={ch.color} />
+                        </div>
+                      )}
                     </div>
 
                     {/* Simulated Clip Block 2 */}
                     <div
-                      className="flex-1 h-full rounded border flex items-center px-2 text-[10px] font-mono transition-opacity"
+                      className="flex-1 h-full rounded border flex items-center px-2 text-[10px] font-mono transition-opacity relative overflow-hidden"
                       style={{
                         backgroundColor: `${ch.color}15`,
                         borderColor: `${ch.color}50`,
@@ -254,7 +278,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                         opacity: isMuted ? 0.35 : 1,
                       }}
                     >
-                      <span className="truncate">CLIP 02 [Variation]</span>
+                      <span className="truncate z-10">CLIP 02 [Variation]</span>
                     </div>
                   </div>
                 </div>
@@ -262,7 +286,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
             })}
           </div>
 
-          {/* Right: Focused Channel Strip & Interactive Mixer Inspector (Cols 9-12) */}
+          {/* Right: Focused Channel Strip & Interactive Tactile Encoders (Cols 9-12) */}
           <div className="col-span-12 lg:col-span-4 p-4 sm:p-6 bg-[#0B0F17] flex flex-col justify-between gap-6">
             <div>
               <div className="flex items-center justify-between pb-3 border-b border-[#1A2234]">
@@ -275,26 +299,21 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                 </span>
               </div>
 
-              {/* Pan & Volume Sliders */}
-              <div className="mt-6 flex flex-col gap-4">
-                <div>
-                  <div className="flex justify-between text-xs font-mono mb-1.5">
-                    <span className="text-[#94A3B8]">PANORAMA</span>
-                    <span className="text-[#00F5FF]">
-                      {panValues[activeChannel] === 0
-                        ? "CENTER"
-                        : panValues[activeChannel] > 0
-                        ? `R${panValues[activeChannel]}`
-                        : `L${-panValues[activeChannel]}`}
-                    </span>
-                  </div>
-                  <input
-                    type="range"
-                    min="-50"
-                    max="50"
+              {/* Rotary Encoders for Panorama & Cutoff */}
+              <div className="mt-5 p-3 rounded-xl bg-[#070A0F] border border-[#161D2B]">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-[#64748B] block mb-2 text-center">
+                  TACTILE ROTARY ENCODERS
+                </span>
+                <div className="grid grid-cols-2 gap-3 text-center">
+                  <TactileKnob
+                    label="Panorama"
                     value={panValues[activeChannel]}
-                    onChange={(e) => {
-                      const val = parseInt(e.target.value, 10);
+                    min={-50}
+                    max={50}
+                    unit="%"
+                    color="#00F5FF"
+                    size={58}
+                    onChange={(val) => {
                       setPanValues((prev) => {
                         const copy = [...prev];
                         copy[activeChannel] = val;
@@ -302,28 +321,45 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                       });
                       setHint(`PANORAMA: ${val === 0 ? "CENTER" : val > 0 ? "RIGHT" : "LEFT"} (${val}%)`);
                     }}
-                    className="w-full accent-[#00F5FF] cursor-pointer py-1.5"
                   />
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-xs font-mono mb-1.5">
-                    <span className="text-[#94A3B8]">LEVEL GAIN</span>
-                    <span className="text-[#00F5FF]">{faders[activeChannel]}%</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={faders[activeChannel]}
-                    onChange={(e) => handleFaderChange(activeChannel, parseInt(e.target.value, 10))}
-                    className="w-full accent-[#00F5FF] cursor-pointer py-1.5"
+                  <TactileKnob
+                    label="Cutoff"
+                    value={filterCutoffs[activeChannel]}
+                    min={20}
+                    max={100}
+                    unit="%"
+                    color={channels[activeChannel].color}
+                    size={58}
+                    onChange={(val) => {
+                      setFilterCutoffs((prev) => {
+                        const copy = [...prev];
+                        copy[activeChannel] = val;
+                        return copy;
+                      });
+                      setHint(`LPF CUTOFF: ${val}% (Resonance: 3.2 dB)`);
+                    }}
                   />
                 </div>
               </div>
 
+              {/* Volume Slider with tactile styling */}
+              <div className="mt-4">
+                <div className="flex justify-between text-xs font-mono mb-1.5">
+                  <span className="text-[#94A3B8]">LEVEL GAIN</span>
+                  <span className="text-[#00F5FF] font-bold">{faders[activeChannel]}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={faders[activeChannel]}
+                  onChange={(e) => handleFaderChange(activeChannel, parseInt(e.target.value, 10))}
+                  className="w-full accent-[#00F5FF] cursor-pointer py-1.5"
+                />
+              </div>
+
               {/* 10-Slot FX Inspector Showcase */}
-              <div className="mt-6">
+              <div className="mt-5">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#64748B] block mb-2">
                   ACTIVE FX CHAIN (SLOTS 1-10)
                 </span>
@@ -365,7 +401,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
             ZERO LATENCY • 24-BIT 48KHZ READY
           </span>
         </div>
-      </div>
+      </MotionCard>
     </section>
   );
 };

@@ -1,32 +1,45 @@
 import React from "react";
 import { MagneticButton } from "./MagneticButton";
+import { useInViewReveal } from "./motion/useInViewReveal";
+import { MotionCard } from "./motion/MotionCard";
 
 export const OpenSourceSection: React.FC = () => {
   const repoUrl = "https://github.com/pranavm-dev21/cadence-daw";
+
+  const { ref: sectionRef, isRevealed: sectionRevealed } = useInViewReveal<HTMLElement>({
+    threshold: 0.15,
+  });
 
   const pillars = [
     {
       title: "No Subscription Lock-In",
       desc: "Music software shouldn't require monthly rent. Cadence is 100% free and open source under the MIT License.",
       icon: "🔓",
+      accent: "#10B981",
     },
     {
       title: "Deterministic Audio Bus",
       desc: "Every parameter change, note placement, and FX automation is an atomic, undoable command in the core bus.",
       icon: "⚡",
+      accent: "#00F5FF",
     },
     {
       title: "Zero Telemetry & Tracking",
       desc: "Your recordings, audio takes, and session stems never leave your device. Complete local privacy by default.",
       icon: "🛡️",
+      accent: "#38BDF8",
     },
   ];
 
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="opensource">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+    <section ref={sectionRef} className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="opensource">
+      <div
+        className={`flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6 transition-all duration-700 ease-cinematic ${
+          sectionRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#10B981]/10 border border-[#10B981]/20 text-[11px] font-mono text-[#10B981] tracking-widest uppercase mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#10B981]/10 border border-[#10B981]/20 text-[11px] font-mono text-[#10B981] tracking-widest uppercase mb-4 anim-badge-float">
             TRANSPARENT ENGINEERING • MIT LICENSE
           </div>
           <h2 className="text-4xl sm:text-6xl font-bold tracking-tighter text-white uppercase leading-none">
@@ -44,37 +57,44 @@ export const OpenSourceSection: React.FC = () => {
         </a>
       </div>
 
-      {/* Grid of Open Source Pillars */}
+      {/* Grid of Open Source Pillars wrapped in MotionCards with staggered reveal */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {pillars.map((p, idx) => (
-          <div
+          <MotionCard
             key={idx}
+            staggerIndex={idx}
+            enableTilt={true}
+            spotlightColor={`${p.accent}20`}
             className="p-6 rounded-2xl bg-[#090C12] border border-[#1A2234] hover:border-[#00F5FF]/40 transition-colors"
           >
             <span className="text-2xl block mb-3">{p.icon}</span>
             <h3 className="text-lg font-bold text-white mb-2 tracking-tight">{p.title}</h3>
             <p className="text-xs text-[#94A3B8] leading-relaxed font-normal">{p.desc}</p>
-          </div>
+          </MotionCard>
         ))}
       </div>
 
       {/* Tech Stack Bar */}
-      <div className="p-6 rounded-2xl bg-[#0B0F17] border border-[#161D2B] flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+      <div
+        className={`p-6 rounded-2xl bg-[#0B0F17] border border-[#161D2B] flex flex-wrap items-center justify-between gap-4 font-mono text-xs transition-all duration-700 delay-300 ease-cinematic ${
+          sectionRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        }`}
+      >
         <span className="text-[#64748B] uppercase tracking-wider">CORE TECHNOLOGIES:</span>
         <div className="flex flex-wrap items-center gap-3">
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#38BDF8]">
+          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#38BDF8] hover:border-[#38BDF8]/50 transition-colors cursor-default">
             TypeScript 5.7
           </span>
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#FF6F61]">
+          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#FF6F61] hover:border-[#FF6F61]/50 transition-colors cursor-default">
             Rust 1.97
           </span>
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#00F5FF]">
+          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#00F5FF] hover:border-[#00F5FF]/50 transition-colors cursor-default">
             Tauri v2
           </span>
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#A78BFA]">
+          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#A78BFA] hover:border-[#A78BFA]/50 transition-colors cursor-default">
             Web Audio DSP
           </span>
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#10B981]">
+          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#10B981] hover:border-[#10B981]/50 transition-colors cursor-default">
             Tailwind CSS
           </span>
         </div>

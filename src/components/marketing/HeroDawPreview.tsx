@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { demoAudio } from "./AudioDemoEngine";
 import { subscribeScrollPhysics } from "./useScrollPhysics";
+import { TactileKnob } from "./motion/TactileKnob";
+import { SoundwaveVisualizer } from "./motion/SoundwaveVisualizer";
 
 interface HeroDawPreviewProps {
   onOpenCadence: () => void;
@@ -11,8 +13,11 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
   const [currentStep, setCurrentStep] = useState(0);
   const [meterLevel, setMeterLevel] = useState(0.42);
   const [activeTab, setActiveTab] = useState<"timeline" | "mixer" | "rack">("timeline");
-  const [hoverParam, setHoverParam] = useState<string>("READY • HOVER CONTROLS FOR TELEMETRY");
+  const [hoverParam, setHoverParam] = useState<string>("READY • DRAG ROTARY KNOBS OR TOGGLE TRANSPORT");
   const [scrollTilt, setScrollTilt] = useState(0);
+  const [selectedTrack, setSelectedTrack] = useState<number>(0);
+  const [softClipVal, setSoftClipVal] = useState(65);
+  const [haasWidthVal, setHaasWidthVal] = useState(140);
 
   useEffect(() => {
     return subscribeScrollPhysics((state) => {
@@ -57,7 +62,7 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
       onClick={onOpenCadence}
       style={{
         transform: `perspective(1200px) rotateX(${scrollTilt}deg)`,
-        transition: "transform 0.12s cubic-bezier(0.2, 0, 0.2, 1)",
+        transition: "transform 0.16s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
       className="group relative w-full rounded-2xl bg-[#090C12]/95 border border-[#1E2536] hover:border-[#00F5FF]/40 shadow-[0_25px_80px_rgba(0,0,0,0.85)] hover:shadow-[0_0_60px_rgba(0,245,255,0.14)] transition-all duration-300 overflow-hidden cursor-pointer backdrop-blur-xl"
       title="Click to launch Cadence Workstation"
@@ -77,14 +82,14 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
 
           <div className="h-4 w-[1px] bg-[#1E2536]" />
 
-          {/* Transport Button */}
+          {/* Transport Button with Tactile Physics */}
           <button
             onClick={handleTogglePlay}
             onMouseEnter={() => setHoverParam("TRANSPORT: TOGGLE SONG PLAYBACK [SPACE]")}
-            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[11px] font-semibold tracking-wider transition-all duration-150 ${
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[11px] font-semibold tracking-wider active:scale-[0.94] transition-all duration-150 cursor-pointer ${
               isPlaying
-                ? "bg-[#00F5FF] text-[#06080B] shadow-[0_0_15px_rgba(0,245,255,0.6)]"
-                : "bg-[#161D2B] text-[#E2E8F0] hover:bg-[#1E273A] border border-[#232F46]"
+                ? "bg-[#00F5FF] text-[#06080B] shadow-[0_0_18px_rgba(0,245,255,0.7)]"
+                : "bg-[#161D2B] text-[#E2E8F0] hover:bg-[#1E273A] border border-[#232F46] hover:border-[#00F5FF]/30"
             }`}
           >
             {isPlaying ? (
@@ -191,8 +196,16 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
 
           {/* Track 1: Kick & 808 */}
           <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedTrack(0);
+            }}
             onMouseEnter={() => setHoverParam("TRACK 1: 808 SUB • PAN C • VOL 92% • ROUTED TO MIXER TRK 1")}
-            className="flex items-center gap-2 p-2 rounded-lg bg-[#0C1018] border border-[#182030] hover:border-[#FF6F61]/40 transition-colors"
+            className={`flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 ${
+              selectedTrack === 0
+                ? "bg-[#0E1422] border-[#FF6F61]/60 shadow-[0_0_20px_rgba(255,111,97,0.12)]"
+                : "bg-[#0C1018] border-[#182030] hover:border-[#FF6F61]/40"
+            }`}
           >
             <div className="w-20 sm:w-24 shrink-0 flex items-center justify-between text-[11px] font-semibold text-[#CBD5E1]">
               <span className="flex items-center gap-1.5">
@@ -202,7 +215,6 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
               <span className="text-[9px] font-mono text-[#64748B]">TRK 1</span>
             </div>
             <div className="flex-1 h-12 rounded bg-[#080B10] border border-[#141A26] relative overflow-hidden flex items-center p-1.5 gap-1.5">
-              {/* Waveform Blocks */}
               <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61] px-1 overflow-hidden">
                 <span className="truncate">[ 808 Hit A ]</span>
               </div>
@@ -220,8 +232,16 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
 
           {/* Track 2: Drum Kit */}
           <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedTrack(1);
+            }}
             onMouseEnter={() => setHoverParam("TRACK 2: PULSE DRUM KIT • STEP SEQUENCER • 62% SWING")}
-            className="flex items-center gap-2 p-2 rounded-lg bg-[#0C1018] border border-[#182030] hover:border-[#38BDF8]/40 transition-colors"
+            className={`flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 ${
+              selectedTrack === 1
+                ? "bg-[#0E1422] border-[#38BDF8]/60 shadow-[0_0_20px_rgba(56,189,248,0.12)]"
+                : "bg-[#0C1018] border-[#182030] hover:border-[#38BDF8]/40"
+            }`}
           >
             <div className="w-20 sm:w-24 shrink-0 flex items-center justify-between text-[11px] font-semibold text-[#CBD5E1]">
               <span className="flex items-center gap-1.5">
@@ -231,7 +251,6 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
               <span className="text-[9px] font-mono text-[#64748B]">TRK 2</span>
             </div>
             <div className="flex-1 h-12 rounded bg-[#080B10] border border-[#141A26] relative overflow-hidden flex items-center p-1 gap-1">
-              {/* 16-step mini grid visual */}
               {Array.from({ length: 16 }).map((_, i) => (
                 <div
                   key={i}
@@ -249,8 +268,16 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
 
           {/* Track 3: Neon Pluck / Keys */}
           <div
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedTrack(2);
+            }}
             onMouseEnter={() => setHoverParam("TRACK 3: NEON KEYS • CHORD STAMPER: AM7 - FMAJ7 - CMAJ7")}
-            className="flex items-center gap-2 p-2 rounded-lg bg-[#0C1018] border border-[#182030] hover:border-[#A78BFA]/40 transition-colors"
+            className={`flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 ${
+              selectedTrack === 2
+                ? "bg-[#0E1422] border-[#A78BFA]/60 shadow-[0_0_20px_rgba(167,139,250,0.12)]"
+                : "bg-[#0C1018] border-[#182030] hover:border-[#A78BFA]/40"
+            }`}
           >
             <div className="w-20 sm:w-24 shrink-0 flex items-center justify-between text-[11px] font-semibold text-[#CBD5E1]">
               <span className="flex items-center gap-1.5">
@@ -271,10 +298,18 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
             </div>
           </div>
 
-          {/* Track 4: Vocal Stem */}
+          {/* Track 4: Vocal Stem with Reactive Soundwave Visualizer */}
           <div
-            onMouseEnter={() => setHoverParam("TRACK 4: VOCAL TAKE 01 • EDISON SLICE • 0.4MS LATENCY COMPENSATED")}
-            className="flex items-center gap-2 p-2 rounded-lg bg-[#0C1018] border border-[#182030] hover:border-[#00F5FF]/40 transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelectedTrack(3);
+            }}
+            onMouseEnter={() => setHoverParam("TRACK 4: VOCAL TAKE 01 • EDISON SLICE • REAL-TIME REACTIVE SPECTRUM")}
+            className={`flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 ${
+              selectedTrack === 3
+                ? "bg-[#0E1422] border-[#00F5FF]/60 shadow-[0_0_20px_rgba(0,245,255,0.12)]"
+                : "bg-[#0C1018] border-[#182030] hover:border-[#00F5FF]/40"
+            }`}
           >
             <div className="w-20 sm:w-24 shrink-0 flex items-center justify-between text-[11px] font-semibold text-[#CBD5E1]">
               <span className="flex items-center gap-1.5">
@@ -284,41 +319,55 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
               <span className="text-[9px] font-mono text-[#64748B]">TRK 4</span>
             </div>
             <div className="flex-1 h-12 rounded bg-[#080B10] border border-[#141A26] relative overflow-hidden flex items-center px-3">
-              {/* Simulated Audio Waveform SVG */}
-              <svg className="w-full h-8 stroke-[#00F5FF] fill-[#00F5FF]/10" viewBox="0 0 400 40" preserveAspectRatio="none">
-                <path d="M0,20 Q20,5 40,20 T80,20 Q100,2 120,20 T160,20 Q180,8 200,20 T240,20 Q260,1 280,20 T320,20 Q340,6 360,20 T400,20 L400,40 L0,40 Z" />
-              </svg>
+              <SoundwaveVisualizer
+                isPlaying={isPlaying}
+                barCount={28}
+                height={28}
+                primaryColor="#00F5FF"
+                secondaryColor="#38BDF8"
+              />
             </div>
           </div>
         </div>
 
-        {/* Right Strip: Channel Inspector & FX Preview (Cols 10-12 on desktop) */}
+        {/* Right Strip: Channel Inspector & Interactive Rotary Knobs (Cols 10-12 on desktop) */}
         <div className="hidden lg:flex col-span-3 flex-col gap-2 rounded-xl bg-[#0B0F17] border border-[#1A2234] p-3">
           <div className="flex items-center justify-between pb-2 border-b border-[#161D2B]">
             <span className="text-[10px] font-mono uppercase tracking-wider text-[#94A3B8]">Channel Strip</span>
             <span className="text-[9px] font-mono text-[#10B981] bg-[#10B981]/10 px-1.5 py-0.5 rounded">ACTIVE</span>
           </div>
 
-          {/* Quick Knobs Grid */}
-          <div className="grid grid-cols-2 gap-2 text-center text-[10px] font-mono">
-            <div
-              onMouseEnter={() => setHoverParam("SOFTCLIPPER: SATURATION 65% • ZERO DIGITAL DISTORTION")}
-              className="p-2 rounded bg-[#0D121B] border border-[#182030]"
-            >
-              <div className="w-7 h-7 mx-auto rounded-full border-2 border-[#00F5FF] flex items-center justify-center text-[9px] text-[#00F5FF] font-bold">
-                65
-              </div>
-              <span className="text-[#64748B] block mt-1">SoftClip</span>
-            </div>
-            <div
-              onMouseEnter={() => setHoverParam("STEREOSHAPER: HAAS WIDTH 140% • 3D PANORAMA")}
-              className="p-2 rounded bg-[#0D121B] border border-[#182030]"
-            >
-              <div className="w-7 h-7 mx-auto rounded-full border-2 border-[#38BDF8] flex items-center justify-center text-[9px] text-[#38BDF8] font-bold">
-                140
-              </div>
-              <span className="text-[#64748B] block mt-1">Width</span>
-            </div>
+          {/* Interactive Rotary Knobs (Tactile rotary encoders) */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="grid grid-cols-2 gap-2 text-center text-[10px] font-mono p-2 rounded bg-[#0D121B] border border-[#182030]"
+          >
+            <TactileKnob
+              label="SoftClip"
+              value={softClipVal}
+              min={0}
+              max={100}
+              unit="%"
+              color="#00F5FF"
+              size={56}
+              onChange={(val) => {
+                setSoftClipVal(val);
+                setHoverParam(`SOFTCLIPPER SATURATION: ${val}% • ZERO DIGITAL DISTORTION`);
+              }}
+            />
+            <TactileKnob
+              label="Width"
+              value={haasWidthVal}
+              min={50}
+              max={200}
+              unit="%"
+              color="#38BDF8"
+              size={56}
+              onChange={(val) => {
+                setHaasWidthVal(val);
+                setHoverParam(`STEREOSHAPER HAAS WIDTH: ${val}% • 3D PANORAMA`);
+              }}
+            />
           </div>
 
           {/* 10-Slot FX Rack Preview */}

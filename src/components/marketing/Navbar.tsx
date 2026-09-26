@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { MagneticButton } from "./MagneticButton";
+import { detectClientHostOs, getAllPlatformSpecs } from "../../platform";
 
 interface NavbarProps {
   onOpenCadence: () => void;
@@ -9,8 +10,15 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const hostOs = useMemo(() => detectClientHostOs(), []);
+  const allSpecs = useMemo(() => getAllPlatformSpecs(), []);
+  const currentSpecs = useMemo(
+    () => allSpecs.find((s) => s.os === hostOs) || allSpecs[0],
+    [allSpecs, hostOs]
+  );
+
   const repoUrl = "https://github.com/pranavm-dev21/cadence-daw";
-  const downloadUrl = `${repoUrl}/releases/download/v0.1.0/Cadence_Setup_v0.1.0.exe`;
+  const downloadUrl = currentSpecs.downloadUrl;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,9 +107,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
             GitHub
           </a>
 
-          <a href={downloadUrl} download="Cadence_Setup_v0.1.0.exe" className="hidden lg:inline-block">
+          <a href={downloadUrl} download={currentSpecs.installerName} className="hidden lg:inline-block">
             <MagneticButton size="sm" variant="secondary">
-              DOWNLOAD .EXE
+              DOWNLOAD {currentSpecs.installerExtension.toUpperCase()}
             </MagneticButton>
           </a>
 
@@ -170,14 +178,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
           <div className="pt-3 border-t border-[#161D2B] flex flex-col gap-2">
             <a
               href={downloadUrl}
-              download="Cadence_Setup_v0.1.0.exe"
+              download={currentSpecs.installerName}
               className="w-full"
             >
-              <button className="w-full py-3 rounded-lg bg-[#111726] border border-[#232F46] text-[#E0E7FF] font-semibold text-xs text-center flex items-center justify-center gap-2 cursor-pointer">
+              <button className="w-full py-3 rounded-lg bg-[#111726] border border-[#232F46] text-[#E0E7FF] font-semibold text-xs text-center flex items-center justify-center gap-2 cursor-pointer active:scale-[0.97] transition-transform">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M19 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
                 </svg>
-                DOWNLOAD WINDOWS SETUP (.EXE)
+                DOWNLOAD FOR {currentSpecs.name.toUpperCase()} ({currentSpecs.installerExtension.toUpperCase()})
               </button>
             </a>
 

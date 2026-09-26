@@ -1,7 +1,14 @@
 import React, { useState } from "react";
+import { useInViewReveal } from "./motion/useInViewReveal";
+import { MotionCard } from "./motion/MotionCard";
+import { SoundwaveVisualizer } from "./motion/SoundwaveVisualizer";
 
 export const FeatureEditorial: React.FC = () => {
   const [activeFeature, setActiveFeature] = useState<number>(0);
+
+  const { ref: sectionRef, isRevealed: sectionRevealed } = useInViewReveal<HTMLElement>({
+    threshold: 0.12,
+  });
 
   const features = [
     {
@@ -57,9 +64,13 @@ export const FeatureEditorial: React.FC = () => {
   ];
 
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="features">
-      <div className="mb-14">
-        <span className="text-[11px] font-mono tracking-widest text-[#00F5FF] uppercase block mb-3">
+    <section ref={sectionRef} className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="features">
+      <div
+        className={`mb-14 transition-all duration-700 ease-cinematic ${
+          sectionRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
+        <span className="text-[11px] font-mono tracking-widest text-[#00F5FF] uppercase block mb-3 anim-badge-float">
           SYSTEM ARCHITECTURE & CAPABILITIES
         </span>
         <h2 className="text-3xl sm:text-5xl font-bold tracking-tighter text-white uppercase max-w-2xl">
@@ -69,7 +80,7 @@ export const FeatureEditorial: React.FC = () => {
         </h2>
       </div>
 
-      {/* Mobile Horizontal Pill Selector (Visible only on mobile/tablet < lg) */}
+      {/* Mobile Horizontal Pill Selector */}
       <div className="lg:hidden flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-4 -mx-4 px-4">
         {features.map((feat, idx) => {
           const isActive = activeFeature === idx;
@@ -77,9 +88,9 @@ export const FeatureEditorial: React.FC = () => {
             <button
               key={feat.id}
               onClick={() => setActiveFeature(idx)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono whitespace-nowrap border transition-all cursor-pointer ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono whitespace-nowrap border active:scale-[0.95] transition-all cursor-pointer ${
                 isActive
-                  ? "bg-[#0F141F] border-[#00F5FF] text-[#00F5FF] shadow-[0_0_15px_rgba(0,245,255,0.15)]"
+                  ? "bg-[#0F141F] border-[#00F5FF] text-[#00F5FF] shadow-[0_0_15px_rgba(0,245,255,0.2)]"
                   : "bg-[#090C12] border-[#182030] text-[#94A3B8] hover:border-[#222E42]"
               }`}
             >
@@ -90,7 +101,7 @@ export const FeatureEditorial: React.FC = () => {
         })}
       </div>
 
-      {/* Mobile Active Feature Summary Card (Visible only on < lg) */}
+      {/* Mobile Active Feature Summary Card */}
       <div className="lg:hidden p-5 rounded-xl bg-[#0F141F] border border-[#00F5FF]/50 shadow-[0_10px_30px_rgba(0,245,255,0.08)] mb-6 text-left">
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs font-mono font-bold text-[#00F5FF]">
@@ -107,19 +118,22 @@ export const FeatureEditorial: React.FC = () => {
 
       {/* Main Editorial Dual-Pane Layout */}
       <div className="grid grid-cols-12 gap-8 items-start">
-        {/* Desktop Left Navigation Column (Hidden on mobile, visible on lg) */}
-        <div className="hidden lg:flex lg:col-span-5 flex-col gap-2">
+        {/* Desktop Left Navigation Column */}
+        <div className="hidden lg:flex lg:col-span-5 flex-col gap-3">
           {features.map((feat, idx) => {
             const isActive = activeFeature === idx;
             return (
-              <div
+              <MotionCard
                 key={feat.id}
-                onClick={() => setActiveFeature(idx)}
-                className={`p-5 rounded-xl border transition-all duration-200 cursor-pointer text-left ${
+                enableTilt={false}
+                staggerIndex={idx}
+                spotlightColor={isActive ? "rgba(0, 245, 255, 0.12)" : "rgba(255, 255, 255, 0.04)"}
+                className={`p-5 rounded-xl border transition-all duration-300 cursor-pointer text-left ${
                   isActive
-                    ? "bg-[#0F141F] border-[#00F5FF]/60 shadow-[0_10px_30px_rgba(0,245,255,0.08)]"
+                    ? "bg-[#0F141F] border-[#00F5FF]/60 shadow-[0_10px_30px_rgba(0,245,255,0.08)] track-active-glow"
                     : "bg-[#090C12] hover:bg-[#0C1018] border-[#182030]"
                 }`}
+                onClick={() => setActiveFeature(idx)}
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className={`text-xs font-mono font-bold ${isActive ? "text-[#00F5FF]" : "text-[#64748B]"}`}>
@@ -136,14 +150,18 @@ export const FeatureEditorial: React.FC = () => {
                     {feat.description}
                   </p>
                 )}
-              </div>
+              </MotionCard>
             );
           })}
         </div>
 
-        {/* Right Interactive Visual Treatment Pane (Cols 6-12 on desktop, static on mobile) */}
+        {/* Right Interactive Visual Treatment Pane */}
         <div className="col-span-12 lg:col-span-7 static lg:sticky lg:top-24">
-          <div className="rounded-2xl bg-[#090C12] border border-[#1D2536] p-5 sm:p-8 min-h-[400px] sm:min-h-[460px] flex flex-col justify-between shadow-[0_20px_70px_rgba(0,0,0,0.8)] overflow-hidden relative">
+          <MotionCard
+            enableTilt={true}
+            spotlightColor="rgba(0, 245, 255, 0.08)"
+            className="rounded-2xl bg-[#090C12] border border-[#1D2536] p-5 sm:p-8 min-h-[400px] sm:min-h-[460px] flex flex-col justify-between shadow-[0_20px_70px_rgba(0,0,0,0.8)] overflow-hidden relative"
+          >
             {/* Visual Glass Sheen */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#00F5FF]/[0.03] to-transparent pointer-events-none" />
 
@@ -188,7 +206,7 @@ export const FeatureEditorial: React.FC = () => {
                       {["Am9", "Fmaj7", "Cmaj9", "Gsus4"].map((c, i) => (
                         <div
                           key={i}
-                          className="h-14 sm:h-16 rounded-lg bg-[#00F5FF]/10 border border-[#00F5FF]/40 flex flex-col items-center justify-center text-xs font-mono text-[#00F5FF] font-bold"
+                          className="h-14 sm:h-16 rounded-lg bg-[#00F5FF]/10 border border-[#00F5FF]/40 flex flex-col items-center justify-center text-xs font-mono text-[#00F5FF] font-bold hover:scale-[1.03] transition-transform"
                         >
                           <span>{c}</span>
                           <span className="text-[9px] text-[#94A3B8] font-normal">Bar 0{i + 1}</span>
@@ -210,7 +228,7 @@ export const FeatureEditorial: React.FC = () => {
                     {["Intro (4b)", "Verse 1 (8b)", "Pre-Chorus (4b)", "Chorus Drop (8b)"].map((section, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center gap-3 p-3 rounded-xl bg-[#080B10] border border-[#182030]"
+                        className="flex items-center gap-3 p-3 rounded-xl bg-[#080B10] border border-[#182030] hover:border-[#38BDF8]/40 transition-colors"
                       >
                         <span className="w-6 text-center text-xs font-mono text-[#64748B]">0{idx + 1}</span>
                         <div className="flex-1 h-8 rounded-lg bg-[#38BDF8]/15 border border-[#38BDF8]/40 flex items-center justify-between px-3 text-xs font-mono text-white">
@@ -224,7 +242,7 @@ export const FeatureEditorial: React.FC = () => {
               )}
 
               {activeFeature === 2 && (
-                /* RECORD VISUAL */
+                /* RECORD VISUAL with Soundwave */
                 <div className="flex flex-col gap-4">
                   <div className="p-4 rounded-xl bg-[#080B10] border border-[#1E2536] flex items-center justify-between">
                     <div>
@@ -234,9 +252,12 @@ export const FeatureEditorial: React.FC = () => {
                         Microphone Input (48 kHz / 24-bit)
                       </div>
                     </div>
-                    <span className="text-xs font-mono text-[#10B981] bg-[#10B981]/10 px-2 py-1 rounded border border-[#10B981]/30">
-                      0.4ms COMPENSATED
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <SoundwaveVisualizer isPlaying={true} barCount={10} height={16} primaryColor="#10B981" />
+                      <span className="text-xs font-mono text-[#10B981] bg-[#10B981]/10 px-2 py-1 rounded border border-[#10B981]/30">
+                        0.4ms
+                      </span>
+                    </div>
                   </div>
 
                   {/* Multi-Take Stack */}
@@ -248,7 +269,7 @@ export const FeatureEditorial: React.FC = () => {
                     ].map((tk, idx) => (
                       <div
                         key={idx}
-                        className="p-3 rounded-lg bg-[#070A0F] border border-[#161D2B] flex items-center justify-between text-xs font-mono"
+                        className="p-3 rounded-lg bg-[#070A0F] border border-[#161D2B] flex items-center justify-between text-xs font-mono hover:border-[#00F5FF]/30 transition-colors"
                       >
                         <span className="text-white font-medium">{tk.name}</span>
                         <span className="text-[10px] px-2 py-0.5 rounded" style={{ color: tk.color, backgroundColor: `${tk.color}15` }}>
@@ -269,8 +290,7 @@ export const FeatureEditorial: React.FC = () => {
                       <span className="text-[10px] font-mono text-[#34D399]">POLYNOMIAL SATURATION</span>
                     </div>
                     <div className="h-28 rounded-lg bg-[#05070B] border border-[#141A26] relative overflow-hidden flex items-center justify-center">
-                      {/* Curved Saturation Transfer function SVG */}
-                      <svg className="w-full h-full stroke-[#00F5FF] fill-none" viewBox="0 0 200 80">
+                      <svg className="w-full h-full stroke-[#00F5FF] fill-none drop-shadow-[0_0_8px_rgba(0,245,255,0.4)]" viewBox="0 0 200 80">
                         <line x1="0" y1="40" x2="200" y2="40" stroke="#1A2234" strokeDasharray="4 4" />
                         <line x1="100" y1="0" x2="100" y2="80" stroke="#1A2234" strokeDasharray="4 4" />
                         <path d="M 10 75 Q 80 50 100 40 T 190 5" strokeWidth="2.5" />
@@ -300,7 +320,7 @@ export const FeatureEditorial: React.FC = () => {
                     ].map((item, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center justify-between p-3 rounded-lg bg-[#070A0F] border border-[#161D2B] gap-2"
+                        className="flex items-center justify-between p-3 rounded-lg bg-[#070A0F] border border-[#161D2B] gap-2 hover:border-[#34D399]/40 transition-colors"
                       >
                         <span className="text-white font-medium truncate">{item.stem}</span>
                         <div className="flex items-center gap-3 text-[10px] text-[#64748B] shrink-0">
@@ -319,7 +339,7 @@ export const FeatureEditorial: React.FC = () => {
               <span>OPEN ARCHITECTURE • NO DRM</span>
               <span className="text-[#00F5FF]">EXTENSIBLE</span>
             </div>
-          </div>
+          </MotionCard>
         </div>
       </div>
     </section>

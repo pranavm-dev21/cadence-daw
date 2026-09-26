@@ -63,6 +63,8 @@ export interface PlatformSpecs {
   binaryFormat: string;
   installerName: string;
   installerExtension: string;
+  releasePackageName?: string;
+  binaryExtension?: string;
   audioSubsystem: string;
   recommendedDriver: string;
   downloadUrl: string;
