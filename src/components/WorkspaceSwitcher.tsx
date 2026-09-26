@@ -1,7 +1,7 @@
 import { useRecordingBusy } from "../state/useRecordingBusy";
 import { WorkspaceView } from "../types";
 import { useStore } from "../state/store";
-import { IconArrangement, IconMixer, IconPiano, IconDrum, IconSynth, IconZap } from "./icons";
+import { IconArrangement, IconMixer, IconPiano, IconDrum, IconSynth, IconZap, IconScissors } from "./icons";
 
 /**
  * Segmented control that swaps the center workspace between
@@ -22,6 +22,7 @@ export default function WorkspaceSwitcher() {
     { id: "channelrack", label: "Channel Rack", icon: <IconDrum size={15} />, hint: "FL Studio style step sequencer & channel matrix" },
     { id: "pianoroll", label: isDrum ? "Drum Grid" : "Piano Roll", icon: isDrum ? <IconDrum size={15} /> : <IconPiano size={15} />, hint: "Edit the notes of the selected clip" },
     { id: "mixer", label: "Mixer", icon: <IconMixer size={15} />, hint: "Levels, pan, sends & effects" },
+    { id: "edison", label: "Edison", icon: <IconScissors size={15} />, hint: "Audio waveform editor, slicing, fades & sample processing" },
     { id: "synth", label: "Synth Lab", icon: <IconSynth size={15} />, hint: "Subtractive synth — presets, patch editor & voice headroom" },
     { id: "groove", label: "Groove Box", icon: <IconDrum size={15} />, hint: "Step-sequencer drum machine — patterns, swing & song chain" },
     { id: "fx", label: "FX Rack", icon: <IconZap size={15} />, hint: "Chainable effects — EQ, comp, reverb, delay & more, with live CPU cost" },

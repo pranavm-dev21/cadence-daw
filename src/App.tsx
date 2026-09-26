@@ -20,6 +20,7 @@ import AIPanel from "./components/AIPanel";
 import Browser from "./components/Browser";
 import BrowserPro from "./components/BrowserPro";
 import ChannelRackPro from "./components/ChannelRackPro";
+import EdisonEditor from "./components/EdisonEditor";
 import MenuBar from "./components/MenuBar";
 import StatusBar from "./components/StatusBar";
 import SettingsModal from "./components/SettingsModal";
@@ -355,6 +356,7 @@ function Workbench() {
             {state.workspaceView === "channelrack" && <ChannelRackPro />}
             {state.workspaceView === "pianoroll" && (isDrum ? <StepSequencer /> : <PianoRoll />)}
             {state.workspaceView === "mixer" && <Mixer />}
+            {state.workspaceView === "edison" && <EdisonEditor onToast={onToast} />}
             {state.workspaceView === "synth" && <SynthLab />}
             {state.workspaceView === "groove" && <GrooveBox />}
             {state.workspaceView === "fx" && <FxRack />}
