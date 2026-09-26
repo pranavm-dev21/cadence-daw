@@ -70,7 +70,7 @@ export const DesktopSection: React.FC = () => {
             </div>
 
             <span className="text-[11px] font-mono text-[#64748B] block mt-4">
-              Version 0.1.0 • Standalone Executable (~8.7 MB) • SHA-256 Verified
+              Version 0.1.0 • Standalone Executable (~8.7 MB) • Verify SHA-256 on GitHub Release
             </span>
           </div>
 

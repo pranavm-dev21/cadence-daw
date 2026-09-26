@@ -3,9 +3,10 @@ import { MagneticButton } from "./MagneticButton";
 
 interface NavbarProps {
   onOpenCadence: () => void;
+  onNavigate?: (view: "privacy" | "terms" | "licenses") => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const repoUrl = "https://github.com/pranavm-dev21/cadence-daw";
@@ -172,13 +173,45 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence }) => {
               download="Cadence_Setup_v0.1.0.exe"
               className="w-full"
             >
-              <button className="w-full py-3 rounded-lg bg-[#111726] border border-[#232F46] text-[#E0E7FF] font-semibold text-xs text-center flex items-center justify-center gap-2">
+              <button className="w-full py-3 rounded-lg bg-[#111726] border border-[#232F46] text-[#E0E7FF] font-semibold text-xs text-center flex items-center justify-center gap-2 cursor-pointer">
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                   <path d="M19 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
                 </svg>
                 DOWNLOAD WINDOWS SETUP (.EXE)
               </button>
             </a>
+
+            <div className="flex items-center justify-between text-xs text-[#64748B] pt-2 px-1">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onNavigate ? onNavigate("privacy") : window.location.assign("/privacy");
+                }}
+                className="hover:text-[#00F5FF] cursor-pointer"
+              >
+                Privacy Policy
+              </button>
+              <span>•</span>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onNavigate ? onNavigate("terms") : window.location.assign("/terms");
+                }}
+                className="hover:text-[#00F5FF] cursor-pointer"
+              >
+                Terms of Use
+              </button>
+              <span>•</span>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onNavigate ? onNavigate("licenses") : window.location.assign("/licenses");
+                }}
+                className="hover:text-[#00F5FF] cursor-pointer"
+              >
+                Licenses
+              </button>
+            </div>
 
             <a
               href={repoUrl}

@@ -13,9 +13,15 @@ import { useScrollPhysics, subscribeScrollPhysics } from "./useScrollPhysics";
 
 interface LandingPageProps {
   onOpenCadence: () => void;
+  onNavigate?: (view: "privacy" | "terms" | "licenses") => void;
+  onOpenDataModal?: () => void;
 }
 
-export const LandingPage: React.FC<LandingPageProps> = ({ onOpenCadence }) => {
+export const LandingPage: React.FC<LandingPageProps> = ({
+  onOpenCadence,
+  onNavigate,
+  onOpenDataModal,
+}) => {
   // Activate kinetic spring-momentum scroll physics engine
   useScrollPhysics(true);
 
@@ -53,7 +59,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenCadence }) => {
       <CanvasBackground />
 
       {/* Floating Glass Navigation */}
-      <Navbar onOpenCadence={onOpenCadence} />
+      <Navbar onOpenCadence={onOpenCadence} onNavigate={onNavigate} />
 
       {/* Page Content */}
       <main className="relative z-10">
@@ -79,8 +85,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenCadence }) => {
         <FinalCtaSection onOpenCadence={onOpenCadence} />
       </main>
 
-      {/* 8. Footer */}
-      <Footer onOpenCadence={onOpenCadence} />
+      {/* 8. Footer with Legal and Compliance Links */}
+      <Footer
+        onOpenCadence={onOpenCadence}
+        onNavigate={onNavigate}
+        onOpenDataModal={onOpenDataModal}
+      />
     </div>
   );
 };

@@ -1,13 +1,17 @@
 import React from "react";
+import { LEGAL_CONFIG } from "../../legal/legalConfig";
 
 interface FooterProps {
   onOpenCadence: () => void;
+  onNavigate?: (view: "privacy" | "terms" | "licenses") => void;
+  onOpenDataModal?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenCadence }) => {
-  const repoUrl = "https://github.com/pranavm-dev21/cadence-daw";
-  const downloadUrl = `${repoUrl}/releases/download/v0.1.0/Cadence_Setup_v0.1.0.exe`;
+export const Footer: React.FC<FooterProps> = ({ onOpenCadence, onNavigate, onOpenDataModal }) => {
+  const repoUrl = LEGAL_CONFIG.organization.repositoryUrl;
+  const downloadUrl = LEGAL_CONFIG.softwareDistribution.desktopExecutableUrl;
   const guideUrl = `${repoUrl}/blob/master/GUIDE.md`;
+  const contactEmail = LEGAL_CONFIG.organization.supportEmail;
 
   return (
     <footer className="border-t border-[#161D2B] bg-[#06080C] py-14 px-4 sm:px-6 lg:px-8 text-xs font-mono">
@@ -24,7 +28,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCadence }) => {
         </div>
 
         {/* Links Grid */}
-        <div className="flex flex-wrap items-center gap-x-6 sm:gap-x-10 gap-y-3 text-[#94A3B8]">
+        <div className="flex flex-wrap items-center gap-x-6 sm:gap-x-8 gap-y-3 text-[#94A3B8]">
           <button
             onClick={onOpenCadence}
             className="hover:text-[#00F5FF] transition-colors cursor-pointer py-1"
@@ -33,10 +37,37 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCadence }) => {
           </button>
           <a
             href={downloadUrl}
+            download="Cadence_Setup_v0.1.0.exe"
             className="hover:text-[#00F5FF] transition-colors py-1"
           >
-            Download for Windows
+            Windows (.exe)
           </a>
+          <button
+            onClick={() => onNavigate ? onNavigate("privacy") : window.location.assign("/privacy")}
+            className="hover:text-[#00F5FF] transition-colors cursor-pointer py-1"
+          >
+            Privacy
+          </button>
+          <button
+            onClick={() => onNavigate ? onNavigate("terms") : window.location.assign("/terms")}
+            className="hover:text-[#00F5FF] transition-colors cursor-pointer py-1"
+          >
+            Terms
+          </button>
+          {onOpenDataModal && (
+            <button
+              onClick={onOpenDataModal}
+              className="hover:text-[#00F5FF] transition-colors cursor-pointer py-1"
+            >
+              Cookies &amp; Storage
+            </button>
+          )}
+          <button
+            onClick={() => onNavigate ? onNavigate("licenses") : window.location.assign("/licenses")}
+            className="hover:text-[#00F5FF] transition-colors cursor-pointer py-1"
+          >
+            Licenses
+          </button>
           <a
             href={repoUrl}
             target="_blank"
@@ -46,20 +77,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCadence }) => {
             GitHub
           </a>
           <a
+            href={`mailto:${contactEmail}`}
+            className="hover:text-[#00F5FF] transition-colors py-1"
+          >
+            Contact
+          </a>
+          <a
             href={guideUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-[#00F5FF] transition-colors py-1"
+            className="hover:text-[#00F5FF] transition-colors py-1 text-[#64748B]"
           >
-            Documentation
-          </a>
-          <a
-            href={`${repoUrl}/blob/master/LICENSE`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[#00F5FF] transition-colors py-1"
-          >
-            License (MIT)
+            Docs
           </a>
         </div>
 

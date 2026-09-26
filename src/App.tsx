@@ -29,6 +29,10 @@ import { createProjectBundle, openProjectBundle } from "./core/bundle";
 import { parseProjectFile } from "./core";
 import RecoveryPrompt from "./components/RecoveryPrompt";
 import { LandingPage } from "./components/marketing/LandingPage";
+import { PrivacyPolicy } from "./legal/PrivacyPolicy";
+import { TermsOfUse } from "./legal/TermsOfUse";
+import { Licenses } from "./legal/Licenses";
+import { DataPreferencesModal } from "./legal/DataPreferencesModal";
 
 const NOTE_KEYS: Record<string, number> = { a: 0, w: 1, s: 2, e: 3, d: 4, f: 5, t: 6, g: 7, y: 8, h: 9, u: 10, j: 11, k: 12, o: 13, l: 14, p: 15 };
 const DRUM_KEYS: Record<string, number> = { z: 0, x: 1, c: 2, v: 3, b: 4 };
@@ -36,28 +40,32 @@ const DRUM_KEYS: Record<string, number> = { z: 0, x: 1, c: 2, v: 3, b: 4 };
 interface Toast { id: number; msg: string; }
 let toastId = 0;
 
+type AppView = "landing" | "daw" | "privacy" | "terms" | "licenses";
+
+function resolveView(): AppView {
+  if (typeof window === "undefined") return "landing";
+  if ("__TAURI_INTERNALS__" in window || "__TAURI__" in window) return "daw";
+
+  const path = window.location.pathname.toLowerCase();
+  const search = new URLSearchParams(window.location.search);
+  const hash = window.location.hash.toLowerCase();
+  const pageParam = search.get("page")?.toLowerCase() || search.get("view")?.toLowerCase();
+
+  if (path === "/privacy" || pageParam === "privacy" || hash === "#privacy") return "privacy";
+  if (path === "/terms" || pageParam === "terms" || hash === "#terms") return "terms";
+  if (path === "/licenses" || pageParam === "licenses" || hash === "#licenses") return "licenses";
+  if (path.startsWith("/app") || pageParam === "daw" || hash === "#app" || hash === "#daw") return "daw";
+
+  return "landing";
+}
+
 export default function App() {
-  const [view, setView] = useState<"landing" | "daw">(() => {
-    if (typeof window !== "undefined" && ("__TAURI_INTERNALS__" in window || "__TAURI__" in window)) {
-      return "daw";
-    }
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("view") === "daw" || window.location.pathname.startsWith("/app") || window.location.hash === "#app" || window.location.hash === "#daw") {
-        return "daw";
-      }
-    }
-    return "landing";
-  });
+  const [view, setView] = useState<AppView>(resolveView);
+  const [isDataModalOpen, setIsDataModalOpen] = useState(false);
 
   useEffect(() => {
     const handlePopState = () => {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("view") === "daw" || window.location.pathname.startsWith("/app") || window.location.hash === "#app" || window.location.hash === "#daw") {
-        setView("daw");
-      } else {
-        setView("landing");
-      }
+      setView(resolveView());
     };
     window.addEventListener("popstate", handlePopState);
     window.addEventListener("hashchange", handlePopState);
@@ -73,22 +81,49 @@ export default function App() {
   };
 
   const returnToLanding = () => {
-    window.history.pushState({}, "", window.location.pathname);
+    window.history.pushState({}, "", "/");
     setView("landing");
   };
 
-  if (view === "landing") {
-    return <LandingPage onOpenCadence={openCadence} />;
-  }
+  const navigateTo = (target: "privacy" | "terms" | "licenses") => {
+    window.history.pushState({}, "", `/${target}`);
+    setView(target);
+  };
 
   return (
-    <AccountProvider>
-      <StoreProvider>
-        <HintProvider>
-          <Workbench onReturnToLanding={returnToLanding} />
-        </HintProvider>
-      </StoreProvider>
-    </AccountProvider>
+    <>
+      {view === "privacy" && (
+        <PrivacyPolicy
+          onBack={returnToLanding}
+          onOpenDataModal={() => setIsDataModalOpen(true)}
+        />
+      )}
+      {view === "terms" && <TermsOfUse onBack={returnToLanding} />}
+      {view === "licenses" && <Licenses onBack={returnToLanding} />}
+      {view === "landing" && (
+        <LandingPage
+          onOpenCadence={openCadence}
+          onNavigate={navigateTo}
+          onOpenDataModal={() => setIsDataModalOpen(true)}
+        />
+      )}
+      {view === "daw" && (
+        <AccountProvider>
+          <StoreProvider>
+            <HintProvider>
+              <Workbench onReturnToLanding={returnToLanding} />
+            </HintProvider>
+          </StoreProvider>
+        </AccountProvider>
+      )}
+
+      {/* Global Data Preferences & Storage Inspector Modal */}
+      <DataPreferencesModal
+        isOpen={isDataModalOpen}
+        onClose={() => setIsDataModalOpen(false)}
+        onNavigateToPrivacy={() => navigateTo("privacy")}
+      />
+    </>
   );
 }
 
