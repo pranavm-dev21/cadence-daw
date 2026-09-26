@@ -28,6 +28,7 @@ import { HintProvider } from "./state/hintContext";
 import { createProjectBundle, openProjectBundle } from "./core/bundle";
 import { parseProjectFile } from "./core";
 import RecoveryPrompt from "./components/RecoveryPrompt";
+import { LandingPage } from "./components/marketing/LandingPage";
 
 const NOTE_KEYS: Record<string, number> = { a: 0, w: 1, s: 2, e: 3, d: 4, f: 5, t: 6, g: 7, y: 8, h: 9, u: 10, j: 11, k: 12, o: 13, l: 14, p: 15 };
 const DRUM_KEYS: Record<string, number> = { z: 0, x: 1, c: 2, v: 3, b: 4 };
@@ -36,18 +37,62 @@ interface Toast { id: number; msg: string; }
 let toastId = 0;
 
 export default function App() {
+  const [view, setView] = useState<"landing" | "daw">(() => {
+    if (typeof window !== "undefined" && ("__TAURI_INTERNALS__" in window || "__TAURI__" in window)) {
+      return "daw";
+    }
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("view") === "daw" || window.location.pathname.startsWith("/app") || window.location.hash === "#app" || window.location.hash === "#daw") {
+        return "daw";
+      }
+    }
+    return "landing";
+  });
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("view") === "daw" || window.location.pathname.startsWith("/app") || window.location.hash === "#app" || window.location.hash === "#daw") {
+        setView("daw");
+      } else {
+        setView("landing");
+      }
+    };
+    window.addEventListener("popstate", handlePopState);
+    window.addEventListener("hashchange", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+      window.removeEventListener("hashchange", handlePopState);
+    };
+  }, []);
+
+  const openCadence = () => {
+    window.history.pushState({}, "", "?view=daw");
+    setView("daw");
+  };
+
+  const returnToLanding = () => {
+    window.history.pushState({}, "", window.location.pathname);
+    setView("landing");
+  };
+
+  if (view === "landing") {
+    return <LandingPage onOpenCadence={openCadence} />;
+  }
+
   return (
     <AccountProvider>
       <StoreProvider>
         <HintProvider>
-          <Workbench />
+          <Workbench onReturnToLanding={returnToLanding} />
         </HintProvider>
       </StoreProvider>
     </AccountProvider>
   );
 }
 
-function Workbench() {
+function Workbench({ onReturnToLanding }: { onReturnToLanding?: () => void }) {
   const store = useStore();
   const { state } = store;
   const recordingBusy = useRecordingBusy();
@@ -306,7 +351,7 @@ function Workbench() {
 
   return (
     <div className="h-screen flex flex-col overflow-hidden relative">
-      <TopBar onToast={onToast} playing={playing} />
+      <TopBar onToast={onToast} playing={playing} onReturnToLanding={onReturnToLanding} />
 
       {/* Pro DAW Menu Bar */}
       <MenuBar

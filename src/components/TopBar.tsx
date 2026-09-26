@@ -12,7 +12,7 @@ const MODES: { id: Mode; label: string; hint: string }[] = [
   { id: "advanced", label: "Master", hint: "Sends, filters, drive, diagnostics" },
 ];
 
-export default function TopBar({ onToast, playing }: { onToast: (msg: string) => void; playing: boolean }) {
+export default function TopBar({ onToast, playing, onReturnToLanding }: { onToast: (msg: string) => void; playing: boolean; onReturnToLanding?: () => void }) {
   const { state, apply, undo, redo, setMode, loadProject, saveNow } = useStore();
   const [name, setName] = useState(state.project.name);
   const [exporting, setExporting] = useState(false);
@@ -93,10 +93,14 @@ export default function TopBar({ onToast, playing }: { onToast: (msg: string) =>
 
   return (
     <header className="flex items-center gap-3 px-3 py-2 min-h-14 flex-wrap border-b border-ink-700 bg-ink-900/90 shrink-0 anim-fade-up">
-      <div className="flex items-center gap-2.5 min-w-0">
+      <div
+        className="flex items-center gap-2.5 min-w-0 cursor-pointer group"
+        onClick={onReturnToLanding}
+        title="Return to Product Website & Tour"
+      >
         <BrandMark size={30} />
         <div className="leading-none">
-          <div className="font-display font-semibold tracking-[0.12em] text-[14px] text-ink-100">CADENCE</div>
+          <div className="font-display font-semibold tracking-[0.12em] text-[14px] text-ink-100 group-hover:text-amber-glow transition-colors">CADENCE</div>
           <div className="text-[9px] tracking-[0.14em] uppercase text-ink-400 mt-1">open-source AI DAW</div>
         </div>
         <div className={`flex items-end gap-[2.5px] h-4 ml-1 ${playing ? "eq-playing" : ""}`} aria-hidden>
@@ -190,6 +194,15 @@ export default function TopBar({ onToast, playing }: { onToast: (msg: string) =>
       <button className="btn btn-primary" onClick={exportWav} disabled={exporting || recordingBusy} title="Render the whole song to a WAV file">
         <IconDownload size={14} /> {exporting ? "Rendering…" : "Export WAV"}
       </button>
+      {onReturnToLanding && (
+        <button
+          onClick={onReturnToLanding}
+          className="btn btn-ghost text-xs text-ink-300 hover:text-amber-glow"
+          title="Return to Cadence Product Site & Features Tour"
+        >
+          ← Site & Tour
+        </button>
+      )}
     </header>
   );
 }
