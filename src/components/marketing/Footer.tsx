@@ -5,7 +5,7 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenCadence }) => {
-  const repoUrl = "https://github.com/pranav520214/cadence-music-workspace";
+  const repoUrl = "https://github.com/pranavm-dev21/cadence-daw";
   const downloadUrl = `${repoUrl}/releases/download/v0.1.0/Cadence_Setup_v0.1.0.exe`;
   const guideUrl = `${repoUrl}/blob/master/GUIDE.md`;
 

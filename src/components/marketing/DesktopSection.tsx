@@ -3,9 +3,9 @@ import { MagneticButton } from "./MagneticButton";
 
 export const DesktopSection: React.FC = () => {
   const downloadInstallerUrl =
-    "https://github.com/pranav520214/cadence-music-workspace/releases/download/v0.1.0/Cadence_Setup_v0.1.0.exe";
+    "https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_Setup_v0.1.0.exe";
   const downloadPortableUrl =
-    "https://github.com/pranav520214/cadence-music-workspace/releases/download/v0.1.0/Cadence_Portable_v0.1.0.exe";
+    "https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_Portable_v0.1.0.exe";
 
   return (
     <section className="relative py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="desktop">

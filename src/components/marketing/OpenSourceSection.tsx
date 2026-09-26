@@ -2,7 +2,7 @@ import React from "react";
 import { MagneticButton } from "./MagneticButton";
 
 export const OpenSourceSection: React.FC = () => {
-  const repoUrl = "https://github.com/pranav520214/cadence-music-workspace";
+  const repoUrl = "https://github.com/pranavm-dev21/cadence-daw";
 
   const pillars = [
     {

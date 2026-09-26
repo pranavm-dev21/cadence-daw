@@ -8,7 +8,7 @@ interface FinalCtaSectionProps {
 export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onOpenCadence }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const downloadUrl =
-    "https://github.com/pranav520214/cadence-music-workspace/releases/download/v0.1.0/Cadence_Setup_v0.1.0.exe";
+    "https://github.com/pranavm-dev21/cadence-daw/releases/download/v0.1.0/Cadence_Setup_v0.1.0.exe";
 
   useEffect(() => {
     const canvas = canvasRef.current;
