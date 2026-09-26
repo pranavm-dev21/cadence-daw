@@ -19,6 +19,7 @@ export default function WorkspaceSwitcher() {
     { id: "projects", label: "Projects", icon: <IconArrangement size={15} />, hint: "Private cloud projects and your account" },
     { id: "vocal", label: "Vocal / Rap", icon: <IconZap size={15} />, hint: "Record vocals, compare takes and practice your flow" },
     { id: "arrangement", label: "Arrangement", icon: <IconArrangement size={15} />, hint: "Timeline — place & move clip blocks" },
+    { id: "channelrack", label: "Channel Rack", icon: <IconDrum size={15} />, hint: "FL Studio style step sequencer & channel matrix" },
     { id: "pianoroll", label: isDrum ? "Drum Grid" : "Piano Roll", icon: isDrum ? <IconDrum size={15} /> : <IconPiano size={15} />, hint: "Edit the notes of the selected clip" },
     { id: "mixer", label: "Mixer", icon: <IconMixer size={15} />, hint: "Levels, pan, sends & effects" },
     { id: "synth", label: "Synth Lab", icon: <IconSynth size={15} />, hint: "Subtractive synth — presets, patch editor & voice headroom" },

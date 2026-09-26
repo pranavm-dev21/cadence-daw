@@ -19,6 +19,7 @@ import VocalWorkspace from "./components/VocalWorkspace";
 import AIPanel from "./components/AIPanel";
 import Browser from "./components/Browser";
 import BrowserPro from "./components/BrowserPro";
+import ChannelRackPro from "./components/ChannelRackPro";
 import MenuBar from "./components/MenuBar";
 import StatusBar from "./components/StatusBar";
 import SettingsModal from "./components/SettingsModal";
@@ -117,14 +118,15 @@ function Workbench() {
 
       const key = e.key.toLowerCase();
 
-      /* workspace view switching (1 / 2 / 3 / 4) */
-      if (key === "1") { s.setWorkspaceView("arrangement"); return; }
-      if (key === "2") { s.setWorkspaceView("pianoroll"); return; }
-      if (key === "3") { s.setWorkspaceView("mixer"); return; }
+      /* FL Studio & Cadence shortcuts */
+      if (e.code === "F5" || key === "1") { e.preventDefault(); s.setWorkspaceView("arrangement"); return; }
+      if (e.code === "F6") { e.preventDefault(); s.setWorkspaceView("channelrack"); return; }
+      if (e.code === "F7" || key === "2") { e.preventDefault(); s.setWorkspaceView("pianoroll"); return; }
+      if (e.code === "F9" || key === "3") { e.preventDefault(); s.setWorkspaceView("mixer"); return; }
       if (key === "4") { s.setWorkspaceView("synth"); return; }
       if (key === "5") { s.setWorkspaceView("groove"); return; }
-      if (key === "7") { s.setWorkspaceView("vocal"); return; }
       if (key === "6") { s.setWorkspaceView("fx"); return; }
+      if (key === "7") { s.setWorkspaceView("vocal"); return; }
 
       /* Synth Lab, Groove Box & FX Rack own the note/pad keys while open — don't double-trigger. */
       if (s.state.workspaceView === "vocal" || s.state.workspaceView === "synth" || s.state.workspaceView === "groove" || s.state.workspaceView === "fx") return;
@@ -350,6 +352,7 @@ function Workbench() {
           <WorkspaceSwitcher />
           <div className="flex-1 min-h-0 flex flex-col">
             {state.workspaceView === "arrangement" && <Timeline />}
+            {state.workspaceView === "channelrack" && <ChannelRackPro />}
             {state.workspaceView === "pianoroll" && (isDrum ? <StepSequencer /> : <PianoRoll />)}
             {state.workspaceView === "mixer" && <Mixer />}
             {state.workspaceView === "synth" && <SynthLab />}
