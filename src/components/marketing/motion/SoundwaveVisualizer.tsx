@@ -17,7 +17,7 @@ export const SoundwaveVisualizer: React.FC<SoundwaveVisualizerProps> = ({
   barCount = 36,
   height = 42,
   className = "",
-  color = "#00F5FF",
+  color = "#7C5CBF",
   primaryColor,
   secondaryColor,
   interactive = true,

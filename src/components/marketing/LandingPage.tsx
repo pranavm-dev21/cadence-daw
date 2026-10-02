@@ -44,10 +44,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#07090E] text-[#F1F5F9] font-sans selection:bg-[#00F5FF]/30 selection:text-white overflow-x-hidden w-full">
+    <div className="relative min-h-screen bg-[#08080C] text-[#EDE9F6] font-sans selection:bg-[#7C5CBF]/30 selection:text-white overflow-x-hidden w-full">
       {/* Kinetic Scroll Progress Hairline Indicator */}
       <div
-        className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[#00F5FF] via-[#38BDF8] to-[#00F5FF] origin-left z-50 pointer-events-none shadow-[0_0_12px_rgba(0,245,255,0.8)]"
+        className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-[#7C5CBF] via-[#B79A62] to-[#7C5CBF] origin-left z-50 pointer-events-none shadow-[0_0_12px_rgba(183,154,98,0.4)]"
         style={{
           transform: `scaleX(${scrollProgress})`,
           transition: "transform 0.05s linear",

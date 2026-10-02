@@ -15,7 +15,7 @@ export const MotionCard: React.FC<MotionCardProps> = ({
   children,
   className = "",
   staggerIndex = 0,
-  glowColor = "rgba(0, 245, 255, 0.12)",
+  glowColor = "rgba(124, 92, 191, 0.12)",
   spotlightColor,
   enableTilt = true,
   style: propStyle,
@@ -76,7 +76,7 @@ export const MotionCard: React.FC<MotionCardProps> = ({
           ? "transform 0.1s ease-out, border-color 0.2s ease, box-shadow 0.2s ease"
           : `transform 0.4s ${MOTION_TOKENS.easing.smooth}, opacity 0.6s ${MOTION_TOKENS.easing.cinematic}, border-color 0.3s ease`,
       }}
-      className={`group relative rounded-2xl bg-[#090C12]/90 border border-[#1A2234] hover:border-[#00F5FF]/40 shadow-[0_12px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_60px_rgba(0,245,255,0.08)] overflow-hidden transition-all duration-300 ${className}`}
+      className={`group relative rounded-2xl bg-[#0C0C14]/90 border border-[#1E1E2A] hover:border-[#7C5CBF]/40 shadow-[0_12px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_60px_rgba(124,92,191,0.08)] overflow-hidden transition-all duration-300 ${className}`}
       {...rest}
     >
       {/* Secondary Layer: Cursor-Following Radial Spotlight */}
@@ -89,7 +89,7 @@ export const MotionCard: React.FC<MotionCardProps> = ({
       />
 
       {/* Top 1px Sheen highlight */}
-      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#00F5FF]/30 to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#7C5CBF]/30 to-transparent opacity-40 group-hover:opacity-100 transition-opacity" />
 
       {/* Card Content */}
       <div className="relative z-10">{children}</div>

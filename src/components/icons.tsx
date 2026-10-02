@@ -55,7 +55,7 @@ export const IconUpload = (p: P) => <S {...p}><path d="M21 15v4a2 2 0 0 1-2 2H5a
 
 export const BrandMark = ({ size = 26 }: P) => (
   <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden>
-    <rect width="32" height="32" rx="8" fill="#1d2330" stroke="#39415a" />
-    <path d="M5 16h3l2-7 3 14 3-10 2 5 2-2h7" fill="none" stroke="#00f5ff" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" />
+    <rect width="32" height="32" rx="8" fill="#141120" stroke="#281B46" />
+    <path d="M5 16h3l2-7 3 14 3-10 2 5 2-2h7" fill="none" stroke="#7C5CBF" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );

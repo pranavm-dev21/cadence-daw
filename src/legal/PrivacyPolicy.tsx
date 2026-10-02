@@ -12,25 +12,25 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, onOpenData
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#07090E] text-[#E2E8F0] font-sans selection:bg-[#00F5FF]/30 selection:text-white pb-24">
+    <div className="min-h-screen bg-[#08080C] text-[#EDE9F6] font-sans selection:bg-[#7C5CBF]/30 selection:text-white pb-24">
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-[#07090E]/90 backdrop-blur-xl border-b border-[#1A2234] px-4 sm:px-8 py-4">
+      <header className="sticky top-0 z-40 bg-[#08080C]/90 backdrop-blur-xl border-b border-[#1E1A2B] px-4 sm:px-8 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
               onClick={onBack}
-              className="flex items-center gap-2 text-xs font-mono text-[#94A3B8] hover:text-[#00F5FF] transition-colors cursor-pointer"
+              className="flex items-center gap-2 text-xs font-mono text-[#9C96A8] hover:text-[#B79A62] transition-colors cursor-pointer"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
               BACK TO CADENCE
             </button>
-            <span className="text-[#334155]">•</span>
-            <span className="text-xs font-mono text-[#00F5FF] uppercase tracking-wider">LEGAL DOCUMENTATION</span>
+            <span className="text-[#332D42]">•</span>
+            <span className="text-xs font-mono text-[#B79A62] uppercase tracking-wider">LEGAL DOCUMENTATION</span>
           </div>
 
-          <div className="text-[11px] font-mono text-[#64748B]">
+          <div className="text-[11px] font-mono text-[#686273]">
             v{LEGAL_CONFIG.meta.version} • {LEGAL_CONFIG.meta.effectiveDate}
           </div>
         </div>
@@ -39,29 +39,29 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, onOpenData
       {/* Main Content Area */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
         {/* Document Header */}
-        <div className="mb-10 pb-8 border-b border-[#182030]">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F5FF]/10 border border-[#00F5FF]/20 text-[10px] font-mono text-[#00F5FF] tracking-widest uppercase mb-4">
+        <div className="mb-10 pb-8 border-b border-[#1E1A2B]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7C5CBF]/10 border border-[#7C5CBF]/20 text-[10px] font-mono text-[#9B7FD4] tracking-widest uppercase mb-4">
             TRANSPARENCY & DATA PROTECTION NOTICE
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white uppercase mb-4">
             PRIVACY POLICY
           </h1>
-          <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed max-w-3xl">
+          <p className="text-[#9C96A8] text-sm sm:text-base leading-relaxed max-w-3xl">
             This Privacy Policy describes how personal data and project telemetry are handled by {LEGAL_CONFIG.organization.tradeName} (&ldquo;Cadence&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;). We treat user privacy, data minimization, and consent as core engineering commitments.
           </p>
 
-          <div className="mt-6 p-4 rounded-xl bg-[#0B0F17] border border-[#1A2536] text-xs font-mono text-[#94A3B8] flex flex-wrap items-center justify-between gap-4">
+          <div className="mt-6 p-4 rounded-xl bg-[#0D0D14] border border-[#1E1A2B] text-xs font-mono text-[#9C96A8] flex flex-wrap items-center justify-between gap-4">
             <div>
-              <span className="text-[#64748B] block text-[10px] uppercase">Effective Date:</span>
+              <span className="text-[#686273] block text-[10px] uppercase">Effective Date:</span>
               <span className="text-white font-semibold">{LEGAL_CONFIG.meta.effectiveDate}</span>
             </div>
             <div>
-              <span className="text-[#64748B] block text-[10px] uppercase">Last Updated:</span>
+              <span className="text-[#686273] block text-[10px] uppercase">Last Updated:</span>
               <span className="text-white font-semibold">{LEGAL_CONFIG.meta.lastUpdatedDate}</span>
             </div>
             <div>
-              <span className="text-[#64748B] block text-[10px] uppercase">Compliance Framework:</span>
-              <span className="text-[#00F5FF]">Aligned with India DPDP Act, 2023 Principles</span>
+              <span className="text-[#686273] block text-[10px] uppercase">Compliance Framework:</span>
+              <span className="text-[#B79A62]">Aligned with India DPDP Act, 2023 Principles</span>
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, onOpenData
 
             <div className="space-y-3 font-mono text-xs">
               <div className="p-3.5 rounded-lg bg-[#090D14] border border-[#182234]">
-                <span className="text-[#00F5FF] font-bold block mb-1">A. Local Browser Storage (Essential)</span>
+                <span className="text-[#9B7FD4] font-bold block mb-1">A. Local Browser Storage (Essential)</span>
                 <p className="text-[#94A3B8] mb-1">
                   <strong>Data:</strong> Saved DAW projects, MIDI tracks, automation curves, audio take buffers, and editor view preferences.
                 </p>
@@ -124,7 +124,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, onOpenData
               </div>
 
               <div className="p-3.5 rounded-lg bg-[#090D14] border border-[#182234]">
-                <span className="text-[#38BDF8] font-bold block mb-1">B. Infrastructure &amp; Network Security Logs (Incidental)</span>
+                <span className="text-[#B79A62] font-bold block mb-1">B. Infrastructure &amp; Network Security Logs (Incidental)</span>
                 <p className="text-[#94A3B8] mb-1">
                   <strong>Data:</strong> Standard HTTP request metadata (IP address, browser user-agent, requested URL, timestamp) logged transiently by our edge hosting network (Vercel).
                 </p>
@@ -165,7 +165,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, onOpenData
               <div className="mt-4">
                 <button
                   onClick={onOpenDataModal}
-                  className="px-4 py-2 rounded-lg bg-[#161D2B] hover:bg-[#1E273A] border border-[#232F46] text-xs font-mono text-[#00F5FF] transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-lg bg-[#141120] hover:bg-[#1E1A2B] border border-[#281B46] text-xs font-mono text-[#B79A62] transition-colors cursor-pointer"
                 >
                   ⚙ Inspect / Clear Local Device Storage →
                 </button>
@@ -214,7 +214,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, onOpenData
               </li>
             </ul>
             <div className="p-4 rounded-lg bg-[#090D14] border border-[#161F2E] font-mono text-xs">
-              <span className="text-[#00F5FF] font-bold block mb-1">How to completely delete your local data:</span>
+              <span className="text-[#9B7FD4] font-bold block mb-1">How to completely delete your local data:</span>
               <p className="text-[#94A3B8]">
                 In your browser, navigate to Developer Tools / Settings ➔ Storage / Clear Site Data ➔ Clear IndexedDB &amp; LocalStorage for this domain.
               </p>
@@ -238,7 +238,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, onOpenData
                   </div>
                   <div className="text-right shrink-0">
                     <span className="text-[#64748B] block text-[10px]">{sub.country}</span>
-                    <a href={sub.privacyPolicyUrl} target="_blank" rel="noopener noreferrer" className="text-[#00F5FF] text-[10px] hover:underline">
+                    <a href={sub.privacyPolicyUrl} target="_blank" rel="noopener noreferrer" className="text-[#B79A62] text-[10px] hover:underline">
                       Privacy Policy ↗
                     </a>
                   </div>
@@ -312,12 +312,12 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, onOpenData
                 </thead>
                 <tbody className="divide-y divide-[#141A26] text-[#CBD5E1]">
                   <tr>
-                    <td className="py-2 text-[#00F5FF]">IndexedDB</td>
+                    <td className="py-2 text-[#9B7FD4]">IndexedDB</td>
                     <td className="py-2">Essential</td>
                     <td className="py-2">Local multi-track audio project storage on your device</td>
                   </tr>
                   <tr>
-                    <td className="py-2 text-[#00F5FF]">localStorage</td>
+                    <td className="py-2 text-[#9B7FD4]">localStorage</td>
                     <td className="py-2">Essential</td>
                     <td className="py-2">Remembers UI mode, mixer volume state, and editor zoom</td>
                   </tr>
@@ -364,7 +364,7 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack, onOpenData
               </div>
               <div className="flex justify-between py-1 border-b border-[#141A26]">
                 <span className="text-[#64748B]">Privacy Email:</span>
-                <span className="text-[#00F5FF]">{LEGAL_CONFIG.organization.privacyEmail}</span>
+                <span className="text-[#B79A62]">{LEGAL_CONFIG.organization.privacyEmail}</span>
               </div>
               <div className="flex justify-between py-1 border-b border-[#141A26]">
                 <span className="text-[#64748B]">Postal Address:</span>

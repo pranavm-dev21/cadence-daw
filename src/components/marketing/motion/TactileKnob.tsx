@@ -20,7 +20,7 @@ export const TactileKnob: React.FC<TactileKnobProps> = ({
   value: controlledValue,
   defaultValue = 50,
   unit = "%",
-  color = "#00F5FF",
+  color = "#7C5CBF",
   size = 54,
   onChange,
 }) => {
@@ -93,7 +93,7 @@ export const TactileKnob: React.FC<TactileKnobProps> = ({
           transform: isDragging ? "scale(0.96)" : "scale(1)",
           transition: `transform ${MOTION_TOKENS.duration.instant}ms ${MOTION_TOKENS.easing.tactilePop}`,
         }}
-        className="relative cursor-ns-resize flex items-center justify-center rounded-full bg-gradient-to-b from-[#1C2538] to-[#0A0D14] border border-[#26334D] shadow-[0_4px_16px_rgba(0,0,0,0.6)] hover:border-[#38BDF8]/60 transition-colors"
+        className="relative cursor-ns-resize flex items-center justify-center rounded-full bg-gradient-to-b from-[#1C2538] to-[#0A0D14] border border-[#26334D] shadow-[0_4px_16px_rgba(0,0,0,0.6)] hover:border-[#9B7FD4]/60 transition-colors"
         title={`Drag up/down to adjust ${label}: ${displayValue}${unit}`}
       >
         {/* SVG Progress Arc */}
@@ -146,7 +146,7 @@ export const TactileKnob: React.FC<TactileKnobProps> = ({
           >
             <div
               style={{ backgroundColor: color }}
-              className="w-1 h-2 rounded-full shadow-[0_0_6px_rgba(0,245,255,0.8)]"
+              className="w-1 h-2 rounded-full shadow-[0_0_6px_rgba(124,92,191,0.8)]"
             />
           </div>
         </div>

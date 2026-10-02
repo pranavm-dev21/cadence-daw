@@ -64,23 +64,23 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
         transform: `perspective(1200px) rotateX(${scrollTilt}deg)`,
         transition: "transform 0.16s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
-      className="group relative w-full rounded-2xl bg-[#090C12]/95 border border-[#1E2536] hover:border-[#00F5FF]/40 shadow-[0_25px_80px_rgba(0,0,0,0.85)] hover:shadow-[0_0_60px_rgba(0,245,255,0.14)] transition-all duration-300 overflow-hidden cursor-pointer backdrop-blur-xl"
+      className="group relative w-full rounded-2xl bg-[#0D0D14]/95 border border-[#211C30] hover:border-[#6B46A8]/50 shadow-[0_25px_80px_rgba(0,0,0,0.9)] hover:shadow-[0_0_60px_rgba(107,70,168,0.14)] transition-all duration-300 overflow-hidden cursor-pointer backdrop-blur-xl"
       title="Click to launch Cadence Workstation"
     >
       {/* Top Glass Refraction Sheen */}
-      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#00F5FF]/50 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#7C5CBF]/40 to-transparent" />
 
       {/* Top Transport & Status Header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-[#0B0F17] border-b border-[#1A2233] text-[11px] font-mono">
+      <div className="flex items-center justify-between px-4 py-3 bg-[#11111A] border-b border-[#1E1A2B] text-[11px] font-mono">
         <div className="flex items-center gap-3">
           {/* Traffic light LEDs */}
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-[#EF4444]/80 border border-[#F87171]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B]/80 border border-[#FBBF24]" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#10B981]/80 border border-[#34D399]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#B79A62]/80 border border-[#D8C7A3]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#4CAF82]/80 border border-[#6EE7B7]" />
           </div>
 
-          <div className="h-4 w-[1px] bg-[#1E2536]" />
+          <div className="h-4 w-[1px] bg-[#1E1A2B]" />
 
           {/* Transport Button with Tactile Physics */}
           <button
@@ -88,13 +88,13 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
             onMouseEnter={() => setHoverParam("TRANSPORT: TOGGLE SONG PLAYBACK [SPACE]")}
             className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-[11px] font-semibold tracking-wider active:scale-[0.94] transition-all duration-150 cursor-pointer ${
               isPlaying
-                ? "bg-[#00F5FF] text-[#06080B] shadow-[0_0_18px_rgba(0,245,255,0.7)]"
-                : "bg-[#161D2B] text-[#E2E8F0] hover:bg-[#1E273A] border border-[#232F46] hover:border-[#00F5FF]/30"
+                ? "bg-gradient-to-b from-[#9B7FD4] to-[#7C5CBF] text-[#0C0C14] shadow-[0_0_18px_rgba(124,92,191,0.6)]"
+                : "bg-[#161622] text-[#EDE9F6] hover:bg-[#1E1B30] border border-[#281B46] hover:border-[#7C5CBF]/40"
             }`}
           >
             {isPlaying ? (
               <>
-                <span className="w-2 h-2 bg-[#06080B] rounded-[1px] animate-pulse" />
+                <span className="w-2 h-2 bg-[#0C0C14] rounded-[1px] animate-pulse" />
                 PAUSE
               </>
             ) : (
@@ -108,10 +108,10 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
           </button>
 
           {/* BPM & Clock */}
-          <span className="text-[#94A3B8] hidden sm:inline-block">
-            104 <span className="text-[#475569]">BPM</span>
+          <span className="text-[#9C96A8] hidden sm:inline-block">
+            104 <span className="text-[#686273]">BPM</span>
           </span>
-          <span className="text-[#38BDF8] hidden md:inline-block font-mono">
+          <span className="text-[#9B7FD4] hidden md:inline-block font-mono">
             {String(Math.floor(currentStep / 16) + 1).padStart(2, "0")}:
             {String(Math.floor((currentStep % 16) / 4) + 1).padStart(2, "0")}:
             {String((currentStep % 4) + 1).padStart(2, "0")}
@@ -119,14 +119,14 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
         </div>
 
         {/* Center Workspace Switcher Preview */}
-        <div className="hidden lg:flex items-center gap-1 p-0.5 rounded-md bg-[#070A0F] border border-[#161D2B]">
+        <div className="hidden lg:flex items-center gap-1 p-0.5 rounded-md bg-[#08080C] border border-[#1E1A2B]">
           <button
             onClick={(e) => {
               e.stopPropagation();
               setActiveTab("timeline");
             }}
             className={`px-2.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
-              activeTab === "timeline" ? "bg-[#1E273A] text-[#00F5FF]" : "text-[#64748B] hover:text-[#CBD5E1]"
+              activeTab === "timeline" ? "bg-[#1E1B30] text-[#B79A62] font-semibold" : "text-[#686273] hover:text-[#EDE9F6]"
             }`}
           >
             Timeline
@@ -137,7 +137,7 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
               setActiveTab("rack");
             }}
             className={`px-2.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
-              activeTab === "rack" ? "bg-[#1E273A] text-[#00F5FF]" : "text-[#64748B] hover:text-[#CBD5E1]"
+              activeTab === "rack" ? "bg-[#1E1B30] text-[#B79A62] font-semibold" : "text-[#686273] hover:text-[#EDE9F6]"
             }`}
           >
             Channel Rack
@@ -148,7 +148,7 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
               setActiveTab("mixer");
             }}
             className={`px-2.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
-              activeTab === "mixer" ? "bg-[#1E273A] text-[#00F5FF]" : "text-[#64748B] hover:text-[#CBD5E1]"
+              activeTab === "mixer" ? "bg-[#1E1B30] text-[#B79A62] font-semibold" : "text-[#686273] hover:text-[#EDE9F6]"
             }`}
           >
             Mixer
@@ -158,17 +158,17 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
         {/* Master Meter & Open Button */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1.5" title="Master Output Meter">
-            <span className="text-[9px] uppercase tracking-wider text-[#64748B]">MSTR</span>
-            <div className="w-16 sm:w-20 h-2 rounded bg-[#070A0F] border border-[#1E273A] overflow-hidden flex">
+            <span className="text-[9px] uppercase tracking-wider text-[#686273]">MSTR</span>
+            <div className="w-16 sm:w-20 h-2 rounded bg-[#08080C] border border-[#1E1A2B] overflow-hidden flex">
               <div
-                className="h-full bg-gradient-to-r from-[#10B981] via-[#00F5FF] to-[#EF4444] transition-all duration-75"
+                className="h-full bg-gradient-to-r from-[#4CAF82] via-[#B79A62] to-[#C75B4E] transition-all duration-75"
                 style={{ width: `${Math.round(meterLevel * 100)}%` }}
               />
             </div>
-            <span className="text-[10px] text-[#00F5FF] hidden sm:inline">-14 LUFS</span>
+            <span className="text-[10px] text-[#B79A62] hidden sm:inline">-14 LUFS</span>
           </div>
 
-          <span className="text-[10px] text-[#00F5FF] group-hover:translate-x-0.5 transition-transform flex items-center gap-1 font-semibold">
+          <span className="text-[10px] text-[#B79A62] group-hover:translate-x-0.5 transition-transform flex items-center gap-1 font-semibold">
             LAUNCH DAW →
           </span>
         </div>
@@ -179,7 +179,7 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
         {/* Timeline Tracks (Cols 1-9 on desktop) */}
         <div className="col-span-12 lg:col-span-9 flex flex-col gap-2 relative">
           {/* Timeline Bar Ruler */}
-          <div className="h-6 rounded bg-[#0D121B] border border-[#161D2B] flex items-center justify-between px-3 text-[10px] font-mono text-[#64748B] select-none">
+          <div className="h-6 rounded bg-[#0A0A10] border border-[#1E1A2B] flex items-center justify-between px-3 text-[10px] font-mono text-[#686273] select-none">
             <span>BAR 01</span>
             <span>BAR 02</span>
             <span>BAR 03</span>
@@ -188,10 +188,10 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
 
           {/* Laser Playhead Line */}
           <div
-            className="absolute top-0 bottom-0 w-[2px] bg-[#00F5FF] shadow-[0_0_12px_#00F5FF] z-20 pointer-events-none transition-all duration-75"
+            className="absolute top-0 bottom-0 w-[2px] bg-[#B79A62] shadow-[0_0_12px_#B79A62] z-20 pointer-events-none transition-all duration-75"
             style={{ left: `${playheadPercent}%` }}
           >
-            <div className="w-2.5 h-2.5 -ml-1 bg-[#00F5FF] rounded-[2px] shadow-[0_0_8px_#00F5FF]" />
+            <div className="w-2.5 h-2.5 -ml-1 bg-[#B79A62] rounded-[2px] shadow-[0_0_8px_#B79A62]" />
           </div>
 
           {/* Track 1: Kick & 808 */}
@@ -203,28 +203,28 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
             onMouseEnter={() => setHoverParam("TRACK 1: 808 SUB • PAN C • VOL 92% • ROUTED TO MIXER TRK 1")}
             className={`flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 ${
               selectedTrack === 0
-                ? "bg-[#0E1422] border-[#FF6F61]/60 shadow-[0_0_20px_rgba(255,111,97,0.12)]"
-                : "bg-[#0C1018] border-[#182030] hover:border-[#FF6F61]/40"
+                ? "bg-[#161622] border-[#C75B4E]/60 shadow-[0_0_20px_rgba(199,91,78,0.12)]"
+                : "bg-[#111119] border-[#1E1E2A] hover:border-[#C75B4E]/40"
             }`}
           >
-            <div className="w-20 sm:w-24 shrink-0 flex items-center justify-between text-[11px] font-semibold text-[#CBD5E1]">
+            <div className="w-20 sm:w-24 shrink-0 flex items-center justify-between text-[11px] font-semibold text-[#EDE9F6]">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#FF6F61]" />
+                <span className="w-2 h-2 rounded-full bg-[#C75B4E]" />
                 808 Sub
               </span>
-              <span className="text-[9px] font-mono text-[#64748B]">TRK 1</span>
+              <span className="text-[9px] font-mono text-[#686273]">TRK 1</span>
             </div>
-            <div className="flex-1 h-12 rounded bg-[#080B10] border border-[#141A26] relative overflow-hidden flex items-center p-1.5 gap-1.5">
-              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61] px-1 overflow-hidden">
+            <div className="flex-1 h-12 rounded bg-[#0A0A10] border border-[#1A1A26] relative overflow-hidden flex items-center p-1.5 gap-1.5">
+              <div className="w-1/4 h-full rounded bg-[#C75B4E]/15 border border-[#C75B4E]/40 flex items-center justify-center text-[10px] font-mono text-[#C75B4E] px-1 overflow-hidden">
                 <span className="truncate">[ 808 Hit A ]</span>
               </div>
-              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61] px-1 overflow-hidden">
+              <div className="w-1/4 h-full rounded bg-[#C75B4E]/15 border border-[#C75B4E]/40 flex items-center justify-center text-[10px] font-mono text-[#C75B4E] px-1 overflow-hidden">
                 <span className="truncate">[ 808 Slide ]</span>
               </div>
-              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61] px-1 overflow-hidden">
+              <div className="w-1/4 h-full rounded bg-[#C75B4E]/15 border border-[#C75B4E]/40 flex items-center justify-center text-[10px] font-mono text-[#C75B4E] px-1 overflow-hidden">
                 <span className="truncate">[ 808 Hit B ]</span>
               </div>
-              <div className="w-1/4 h-full rounded bg-[#FF6F61]/15 border border-[#FF6F61]/40 flex items-center justify-center text-[10px] font-mono text-[#FF6F61] px-1 overflow-hidden">
+              <div className="w-1/4 h-full rounded bg-[#C75B4E]/15 border border-[#C75B4E]/40 flex items-center justify-center text-[10px] font-mono text-[#C75B4E] px-1 overflow-hidden">
                 <span className="truncate">[ Sub Drop ]</span>
               </div>
             </div>
@@ -239,13 +239,13 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
             onMouseEnter={() => setHoverParam("TRACK 2: PULSE DRUM KIT • STEP SEQUENCER • 62% SWING")}
             className={`flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 ${
               selectedTrack === 1
-                ? "bg-[#0E1422] border-[#38BDF8]/60 shadow-[0_0_20px_rgba(56,189,248,0.12)]"
-                : "bg-[#0C1018] border-[#182030] hover:border-[#38BDF8]/40"
+                ? "bg-[#0E1422] border-[#9B7FD4]/60 shadow-[0_0_20px_rgba(155,127,212,0.12)]"
+                : "bg-[#0C1018] border-[#182030] hover:border-[#9B7FD4]/40"
             }`}
           >
             <div className="w-20 sm:w-24 shrink-0 flex items-center justify-between text-[11px] font-semibold text-[#CBD5E1]">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#38BDF8]" />
+                <span className="w-2 h-2 rounded-full bg-[#9B7FD4]" />
                 Drums
               </span>
               <span className="text-[9px] font-mono text-[#64748B]">TRK 2</span>
@@ -256,7 +256,7 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
                   key={i}
                   className={`flex-1 h-7 rounded-[3px] border transition-colors ${
                     i % 4 === 0
-                      ? "bg-[#38BDF8]/30 border-[#38BDF8]/60 shadow-[0_0_8px_rgba(56,189,248,0.3)]"
+                      ? "bg-[#9B7FD4]/30 border-[#9B7FD4]/60 shadow-[0_0_8px_rgba(155,127,212,0.3)]"
                       : i % 2 === 0
                       ? "bg-[#182234] border-[#24314A]"
                       : "bg-[#0E131E] border-[#161D2B]"
@@ -307,13 +307,13 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
             onMouseEnter={() => setHoverParam("TRACK 4: VOCAL TAKE 01 • EDISON SLICE • REAL-TIME REACTIVE SPECTRUM")}
             className={`flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 ${
               selectedTrack === 3
-                ? "bg-[#0E1422] border-[#00F5FF]/60 shadow-[0_0_20px_rgba(0,245,255,0.12)]"
-                : "bg-[#0C1018] border-[#182030] hover:border-[#00F5FF]/40"
+                ? "bg-[#0E1422] border-[#7C5CBF]/60 shadow-[0_0_20px_rgba(124,92,191,0.12)]"
+                : "bg-[#0C1018] border-[#182030] hover:border-[#7C5CBF]/40"
             }`}
           >
             <div className="w-20 sm:w-24 shrink-0 flex items-center justify-between text-[11px] font-semibold text-[#CBD5E1]">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#00F5FF]" />
+                <span className="w-2 h-2 rounded-full bg-[#7C5CBF]" />
                 Lead Vox
               </span>
               <span className="text-[9px] font-mono text-[#64748B]">TRK 4</span>
@@ -323,8 +323,8 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
                 isPlaying={isPlaying}
                 barCount={28}
                 height={28}
-                primaryColor="#00F5FF"
-                secondaryColor="#38BDF8"
+                primaryColor="#7C5CBF"
+                secondaryColor="#9B7FD4"
               />
             </div>
           </div>
@@ -348,7 +348,7 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
               min={0}
               max={100}
               unit="%"
-              color="#00F5FF"
+              color="#7C5CBF"
               size={56}
               onChange={(val) => {
                 setSoftClipVal(val);
@@ -361,7 +361,7 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
               min={50}
               max={200}
               unit="%"
-              color="#38BDF8"
+              color="#9B7FD4"
               size={56}
               onChange={(val) => {
                 setHaasWidthVal(val);
@@ -380,7 +380,7 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
                   className="flex items-center justify-between px-2 py-1 rounded bg-[#070A0F] border border-[#141A26] text-[10px] font-mono text-[#CBD5E1]"
                 >
                   <span className="truncate">{fx}</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00F5FF]" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#7C5CBF]" />
                 </div>
               )
             )}
@@ -391,7 +391,7 @@ export const HeroDawPreview: React.FC<HeroDawPreviewProps> = ({ onOpenCadence })
       {/* Bottom Reactive Hint Bar */}
       <div className="px-4 py-2 bg-[#070A0F] border-t border-[#161D2B] flex items-center justify-between text-[11px] font-mono text-[#64748B]">
         <div className="flex items-center gap-2 truncate">
-          <span className="text-[#00F5FF]">💡 HINT:</span>
+          <span className="text-[#B59A62]">💡 HINT:</span>
           <span className="text-[#94A3B8] truncate">{hoverParam}</span>
         </div>
         <div className="hidden sm:flex items-center gap-3 shrink-0 text-[10px] text-[#475569]">

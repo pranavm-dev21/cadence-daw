@@ -58,11 +58,11 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
 
   const variantClasses = {
     primary:
-      "relative bg-gradient-to-b from-[#00F5FF] to-[#00C2D6] text-[#06080B] font-semibold rounded-lg shadow-[0_0_30px_rgba(0,245,255,0.28)] hover:shadow-[0_0_40px_rgba(0,245,255,0.48)] border border-[#38BDF8] active:scale-[0.97] transition-all duration-150",
+      "relative bg-gradient-to-b from-[#9B7FD4] to-[#7C5CBF] text-[#0C0C14] font-semibold rounded-lg shadow-[0_0_30px_rgba(124,92,191,0.28)] hover:shadow-[0_0_40px_rgba(124,92,191,0.48)] border border-[#5B3D96] active:scale-[0.97] transition-all duration-150",
     secondary:
-      "bg-[#111622]/90 hover:bg-[#161D2E] text-[#E0E7FF] border border-[#232B3E] hover:border-[#38BDF8]/50 rounded-lg backdrop-blur-md active:scale-[0.97] transition-all duration-150",
+      "bg-[#111622]/90 hover:bg-[#161D2E] text-[#E0E7FF] border border-[#232B3E] hover:border-[#9B7FD4]/50 rounded-lg backdrop-blur-md active:scale-[0.97] transition-all duration-150",
     subtle:
-      "bg-transparent text-[#94A3B8] hover:text-[#00F5FF] border border-transparent hover:border-[#1E293B] rounded-lg active:scale-[0.97] transition-all duration-150",
+      "bg-transparent text-[#94A3B8] hover:text-[#9B7FD4] border border-transparent hover:border-[#1E293B] rounded-lg active:scale-[0.97] transition-all duration-150",
     ghost:
       "bg-[#0F141F]/60 text-[#CBD5E1] hover:text-white border border-[#1E2536] hover:border-[#2D374D] rounded-lg backdrop-blur-sm active:scale-[0.97] transition-all duration-150",
   };
@@ -80,7 +80,7 @@ export const MagneticButton: React.FC<MagneticButtonProps> = ({
             : `translate3d(${position.x}px, ${position.y}px, 0)`,
         transition: position.x === 0 ? "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)" : "transform 0.08s ease-out",
       }}
-      className={`inline-flex items-center justify-center gap-2 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#00F5FF]/60 touch-manipulation ${sizeClasses[size]} ${variantClasses[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 cursor-pointer select-none outline-none focus-visible:ring-2 focus-visible:ring-[#7C5CBF]/60 touch-manipulation ${sizeClasses[size]} ${variantClasses[variant]} ${className}`}
       {...rest}
     >
       {children}

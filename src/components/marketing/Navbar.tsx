@@ -56,7 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
               <path
                 d="M5 16h3l2-7 3 14 3-10 2 5 2-2h7"
                 fill="none"
-                stroke="#00F5FF"
+                stroke="#7C5CBF"
                 strokeWidth="2.3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -65,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
             <span className="text-sm sm:text-base font-bold text-white tracking-widest uppercase">CADENCE</span>
           </div>
 
-          <div className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full bg-[#101726] border border-[#1E293B] text-[9px] font-mono text-[#00F5FF] tracking-wider uppercase">
+          <div className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full bg-[#101726] border border-[#1E293B] text-[9px] font-mono text-[#9B7FD4] tracking-wider uppercase">
             OPEN SOURCE • AI
           </div>
         </div>
@@ -146,31 +146,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
         <div className="md:hidden px-4 pt-4 pb-6 mt-3 bg-[#07090E]/98 border-t border-b border-[#1A2234] backdrop-blur-2xl flex flex-col gap-3 font-mono text-sm">
           <button
             onClick={() => handleMobileNavClick("#showcase")}
-            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#00F5FF] hover:bg-[#0E131E] transition-colors"
+            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#9B7FD4] hover:bg-[#0E131E] transition-colors"
           >
             SHOWCASE // STUDIO CONSOLE
           </button>
           <button
             onClick={() => handleMobileNavClick("#features")}
-            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#00F5FF] hover:bg-[#0E131E] transition-colors"
+            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#9B7FD4] hover:bg-[#0E131E] transition-colors"
           >
             WORKFLOW // 5 DEEP DIVES
           </button>
           <button
             onClick={() => handleMobileNavClick("#ai")}
-            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#00F5FF] hover:bg-[#0E131E] transition-colors"
+            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#9B7FD4] hover:bg-[#0E131E] transition-colors"
           >
             AI ENGINE // PROMPT TIMELINE
           </button>
           <button
             onClick={() => handleMobileNavClick("#desktop")}
-            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#00F5FF] hover:bg-[#0E131E] transition-colors"
+            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#9B7FD4] hover:bg-[#0E131E] transition-colors"
           >
             DESKTOP APP // WIN • MAC • LINUX
           </button>
           <button
             onClick={() => handleMobileNavClick("#opensource")}
-            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#00F5FF] hover:bg-[#0E131E] transition-colors"
+            className="text-left py-2.5 px-3 rounded-lg text-[#CBD5E1] hover:text-[#9B7FD4] hover:bg-[#0E131E] transition-colors"
           >
             SOURCE // MIT GITHUB REPO
           </button>
@@ -195,7 +195,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
                   setMobileMenuOpen(false);
                   onNavigate ? onNavigate("privacy") : window.location.assign("/privacy");
                 }}
-                className="hover:text-[#00F5FF] cursor-pointer"
+                className="hover:text-[#B59A62] cursor-pointer"
               >
                 Privacy Policy
               </button>
@@ -205,7 +205,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
                   setMobileMenuOpen(false);
                   onNavigate ? onNavigate("terms") : window.location.assign("/terms");
                 }}
-                className="hover:text-[#00F5FF] cursor-pointer"
+                className="hover:text-[#B59A62] cursor-pointer"
               >
                 Terms of Use
               </button>
@@ -215,7 +215,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCadence, onNavigate }) => 
                   setMobileMenuOpen(false);
                   onNavigate ? onNavigate("licenses") : window.location.assign("/licenses");
                 }}
-                className="hover:text-[#00F5FF] cursor-pointer"
+                className="hover:text-[#B59A62] cursor-pointer"
               >
                 Licenses
               </button>

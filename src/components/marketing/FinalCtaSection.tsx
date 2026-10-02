@@ -45,11 +45,11 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onOpenCadence 
       phase += 0.035;
       ctx.clearRect(0, 0, width, height);
 
-      // Multi-layer sine harmonics simulating live audio master bus with neon glow
+      // Multi-layer sine harmonics simulating live audio master bus with royal lighting
       const layers = [
-        { freq: 0.012, amp: 38, speed: 1.2, color: "rgba(0, 245, 255, 0.5)", lw: 2.2, shadow: "rgba(0, 245, 255, 0.4)" },
-        { freq: 0.018, amp: 26, speed: -1.0, color: "rgba(56, 189, 248, 0.35)", lw: 1.6, shadow: "rgba(56, 189, 248, 0.3)" },
-        { freq: 0.024, amp: 18, speed: 0.8, color: "rgba(167, 139, 250, 0.25)", lw: 1.2, shadow: "rgba(167, 139, 250, 0.2)" },
+        { freq: 0.012, amp: 38, speed: 1.2, color: "rgba(107, 70, 168, 0.5)", lw: 2.2, shadow: "rgba(107, 70, 168, 0.35)" },
+        { freq: 0.018, amp: 26, speed: -1.0, color: "rgba(183, 154, 98, 0.38)", lw: 1.6, shadow: "rgba(183, 154, 98, 0.25)" },
+        { freq: 0.024, amp: 18, speed: 0.8, color: "rgba(91, 58, 145, 0.3)", lw: 1.2, shadow: "rgba(91, 58, 145, 0.2)" },
       ];
 
       layers.forEach((l) => {
@@ -85,10 +85,10 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onOpenCadence 
 
   return (
     <section ref={sectionRef} className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[300px] bg-[#00F5FF]/[0.04] blur-[120px] rounded-full pointer-events-none anim-halo-breathe" />
+      {/* Ambient royal background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[300px] bg-[#4A2A78]/[0.08] blur-[120px] rounded-full pointer-events-none anim-halo-breathe" />
 
-      {/* Huge Typography with cinematic reveal */}
+      {/* Huge Editorial Typography with cinematic reveal */}
       <h2
         className={`text-4xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-white uppercase leading-[0.92] mb-6 transition-all duration-700 ease-cinematic ${
           sectionRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -96,13 +96,13 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onOpenCadence 
       >
         MAKE SOMETHING
         <br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F5FF] via-[#38BDF8] to-[#CBD5E1]">
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EDE9F6] via-[#C5A86D] to-[#9B7FD4]">
           WORTH HEARING.
         </span>
       </h2>
 
       <p
-        className={`max-w-xl mx-auto text-[#94A3B8] text-sm sm:text-lg font-normal mb-10 leading-relaxed px-2 transition-all duration-700 delay-150 ease-cinematic ${
+        className={`max-w-xl mx-auto text-[#9C96A8] text-sm sm:text-lg font-normal mb-10 leading-relaxed px-2 transition-all duration-700 delay-150 ease-cinematic ${
           sectionRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
@@ -115,7 +115,7 @@ export const FinalCtaSection: React.FC<FinalCtaSectionProps> = ({ onOpenCadence 
           sectionRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        <MagneticButton size="lg" variant="primary" onClick={onOpenCadence} className="w-full sm:w-auto shadow-[0_0_35px_rgba(0,245,255,0.45)]">
+        <MagneticButton size="lg" variant="primary" onClick={onOpenCadence} className="w-full sm:w-auto shadow-[0_0_35px_rgba(107,70,168,0.35)]">
           OPEN CADENCE NOW
         </MagneticButton>
 

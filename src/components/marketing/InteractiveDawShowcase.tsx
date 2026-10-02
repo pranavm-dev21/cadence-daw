@@ -68,8 +68,8 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
 
   const channels = [
     { name: "Pulse Kick 808", color: "#FF6F61", type: "Drum / Bass", plugin: "SoftClipper", icon: "🥁" },
-    { name: "Snare & Rimshot", color: "#38BDF8", type: "Transient", plugin: "Parametric EQ", icon: "💥" },
-    { name: "Crisp Hats (1/16)", color: "#00F5FF", type: "Cymbal", plugin: "StereoShaper", icon: "✨" },
+    { name: "Snare & Rimshot", color: "#9B7FD4", type: "Transient", plugin: "Parametric EQ", icon: "💥" },
+    { name: "Crisp Hats (1/16)", color: "#7C5CBF", type: "Cymbal", plugin: "StereoShaper", icon: "✨" },
     { name: "Neon Pluck Synth", color: "#A78BFA", type: "Poly Synth", plugin: "Vintage Chorus", icon: "🎹" },
     { name: "Lead Vocal Comp", color: "#34D399", type: "Audio Take", plugin: "De-Esser & Comp", icon: "🎤" },
   ];
@@ -85,13 +85,13 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
         }`}
       >
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00F5FF]/10 border border-[#00F5FF]/20 text-[11px] font-mono text-[#00F5FF] tracking-widest uppercase mb-4 anim-badge-float">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7C5CBF]/10 border border-[#7C5CBF]/20 text-[11px] font-mono text-[#9B7FD4] tracking-widest uppercase mb-4 anim-badge-float">
             LIVE INTERACTIVE PREVIEW
           </div>
           <h2 className="text-4xl sm:text-6xl font-bold tracking-tighter text-white uppercase leading-none">
             YOUR STUDIO.
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F5FF] via-[#38BDF8] to-[#CBD5E1]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9B7FD4] via-[#7C5CBF] to-[#E8E4F0]">
               IN THE FLOW.
             </span>
           </h2>
@@ -105,7 +105,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
       {/* The Master Studio Console Frame wrapped in MotionCard */}
       <MotionCard
         enableTilt={true}
-        spotlightColor="rgba(0, 245, 255, 0.10)"
+        spotlightColor="rgba(124, 92, 191, 0.10)"
         className={`relative rounded-2xl bg-[#090C12] border border-[#1D2536] shadow-[0_30px_100px_rgba(0,0,0,0.95)] overflow-hidden transition-all duration-700 ease-cinematic ${
           sectionRevealed ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-12 scale-[0.98]"
         }`}
@@ -117,8 +117,8 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
               onClick={handleTogglePlay}
               className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg text-xs font-semibold font-mono tracking-wider active:scale-[0.94] transition-all duration-150 min-h-[40px] cursor-pointer ${
                 isPlaying
-                  ? "bg-[#00F5FF] text-[#06080B] shadow-[0_0_20px_rgba(0,245,255,0.7)]"
-                  : "bg-[#161D2B] hover:bg-[#1E273A] text-white border border-[#232F46] hover:border-[#00F5FF]/30"
+                  ? "bg-[#7C5CBF] text-[#06080B] shadow-[0_0_20px_rgba(124,92,191,0.7)]"
+                  : "bg-[#161D2B] hover:bg-[#1E273A] text-white border border-[#232F46] hover:border-[#7C5CBF]/30"
               }`}
             >
               {isPlaying ? (
@@ -138,7 +138,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
 
             <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#070A0F] border border-[#161D2B] text-xs font-mono text-[#94A3B8]">
               <span className="text-[#64748B]">BPM:</span>
-              <span className="text-[#00F5FF] font-bold">104.0</span>
+              <span className="text-[#9B7FD4] font-bold">104.0</span>
             </div>
 
             <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#070A0F] border border-[#161D2B] text-xs font-mono text-[#94A3B8]">
@@ -156,7 +156,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                     setHint(`TIMELINE ZOOM LEVEL: ${z}`);
                   }}
                   className={`px-2.5 py-1 rounded transition-colors cursor-pointer active:scale-[0.95] ${
-                    zoomLevel === z ? "bg-[#1E273A] text-[#00F5FF] font-bold" : "text-[#64748B] hover:text-[#CBD5E1]"
+                    zoomLevel === z ? "bg-[#1E273A] text-[#9B7FD4] font-bold" : "text-[#64748B] hover:text-[#CBD5E1]"
                   }`}
                 >
                   {z}
@@ -170,7 +170,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
             size="sm"
             variant="primary"
             onClick={onOpenCadence}
-            className="w-full sm:w-auto shadow-[0_0_15px_rgba(0,245,255,0.4)]"
+            className="w-full sm:w-auto shadow-[0_0_15px_rgba(124,92,191,0.4)]"
           >
             LAUNCH FULL WORKSPACE
           </MagneticButton>
@@ -190,10 +190,10 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
 
             {/* Playhead Laser Line */}
             <div
-              className="absolute top-4 bottom-4 w-[2px] bg-[#00F5FF] shadow-[0_0_15px_#00F5FF] z-20 pointer-events-none transition-all duration-75"
+              className="absolute top-4 bottom-4 w-[2px] bg-[#B59A62] shadow-[0_0_15px_#B59A62] z-20 pointer-events-none transition-all duration-75"
               style={{ left: `${Math.max(2, Math.min(97, playheadPercent))}%` }}
             >
-              <div className="w-3 h-3 -ml-1 bg-[#00F5FF] rounded-[2px] shadow-[0_0_10px_#00F5FF]" />
+              <div className="w-3 h-3 -ml-1 bg-[#B59A62] rounded-[2px] shadow-[0_0_10px_#B59A62]" />
             </div>
 
             {/* Track Rows */}
@@ -211,7 +211,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                   }}
                   className={`flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 rounded-xl border transition-all duration-200 cursor-pointer ${
                     isSelected
-                      ? "bg-[#101522] border-[#00F5FF]/60 shadow-[0_0_24px_rgba(0,245,255,0.08)] track-active-glow"
+                      ? "bg-[#101522] border-[#7C5CBF]/60 shadow-[0_0_24px_rgba(124,92,191,0.08)] track-active-glow"
                       : "bg-[#0B0F17] hover:bg-[#0E131E] border-[#182030]"
                   }`}
                 >
@@ -291,10 +291,10 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
             <div>
               <div className="flex items-center justify-between pb-3 border-b border-[#1A2234]">
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#00F5FF]">CHANNEL STRIP</span>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#9B7FD4]">CHANNEL STRIP</span>
                   <h3 className="text-base font-bold text-white tracking-tight">{channels[activeChannel].name}</h3>
                 </div>
-                <span className="text-xs font-mono text-[#38BDF8] bg-[#38BDF8]/10 px-2 py-0.5 rounded-md border border-[#38BDF8]/20">
+                <span className="text-xs font-mono text-[#9B7FD4] bg-[#9B7FD4]/10 px-2 py-0.5 rounded-md border border-[#9B7FD4]/20">
                   TRK {activeChannel + 1}
                 </span>
               </div>
@@ -311,7 +311,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                     min={-50}
                     max={50}
                     unit="%"
-                    color="#00F5FF"
+                    color="#7C5CBF"
                     size={58}
                     onChange={(val) => {
                       setPanValues((prev) => {
@@ -346,7 +346,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
               <div className="mt-4">
                 <div className="flex justify-between text-xs font-mono mb-1.5">
                   <span className="text-[#94A3B8]">LEVEL GAIN</span>
-                  <span className="text-[#00F5FF] font-bold">{faders[activeChannel]}%</span>
+                  <span className="text-[#9B7FD4] font-bold">{faders[activeChannel]}%</span>
                 </div>
                 <input
                   type="range"
@@ -354,7 +354,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                   max="100"
                   value={faders[activeChannel]}
                   onChange={(e) => handleFaderChange(activeChannel, parseInt(e.target.value, 10))}
-                  className="w-full accent-[#00F5FF] cursor-pointer py-1.5"
+                  className="w-full accent-[#7C5CBF] cursor-pointer py-1.5"
                 />
               </div>
 
@@ -366,18 +366,18 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
                 <div className="space-y-1.5 font-mono text-xs">
                   <div className="flex items-center justify-between p-2 rounded-lg bg-[#070A0F] border border-[#161D2B] text-white">
                     <span className="flex items-center gap-2 truncate">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#00F5FF] shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#7C5CBF] shrink-0" />
                       <span className="truncate">{channels[activeChannel].plugin}</span>
                     </span>
                     <span className="text-[10px] text-[#34D399] shrink-0">ACTIVE</span>
                   </div>
                   <div className="flex items-center justify-between p-2 rounded-lg bg-[#070A0F] border border-[#161D2B] text-[#64748B]">
                     <span>2. SoftClipper Studio</span>
-                    <span className="text-[10px] text-[#00F5FF]">45%</span>
+                    <span className="text-[10px] text-[#9B7FD4]">45%</span>
                   </div>
                   <div className="flex items-center justify-between p-2 rounded-lg bg-[#070A0F] border border-[#161D2B] text-[#64748B]">
                     <span>3. Master Limiter</span>
-                    <span className="text-[10px] text-[#00F5FF]">0.0 dB</span>
+                    <span className="text-[10px] text-[#9B7FD4]">0.0 dB</span>
                   </div>
                 </div>
               </div>
@@ -394,7 +394,7 @@ export const InteractiveDawShowcase: React.FC<InteractiveDawShowcaseProps> = ({ 
         {/* Live Hint Telemetry Bar */}
         <div className="px-4 py-2.5 bg-[#06080C] border-t border-[#161D2B] flex items-center justify-between text-xs font-mono gap-2">
           <div className="flex items-center gap-2 truncate flex-1 min-w-0">
-            <span className="text-[#00F5FF] font-bold shrink-0">💡 TELEMETRY:</span>
+            <span className="text-[#B59A62] font-bold shrink-0">💡 TELEMETRY:</span>
             <span className="text-[#CBD5E1] truncate">{hint}</span>
           </div>
           <span className="text-[10px] text-[#475569] hidden md:inline shrink-0">

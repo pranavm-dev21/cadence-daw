@@ -52,9 +52,9 @@ export const DataPreferencesModal: React.FC<DataPreferencesModalProps> = ({
       aria-labelledby="data-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in"
     >
-      <div className="relative w-full max-w-lg rounded-2xl bg-[#0A0E17] border border-[#1E293B] shadow-[0_25px_80px_rgba(0,0,0,0.9)] p-6 text-xs font-mono text-[#CBD5E1] overflow-hidden">
+      <div className="relative w-full max-w-lg rounded-2xl bg-[#0D0D14] border border-[#1E1A2B] shadow-[0_25px_80px_rgba(0,0,0,0.9)] p-6 text-xs font-mono text-[#CBD5E1] overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-[#1A2334] mb-4">
+        <div className="flex items-center justify-between pb-3 border-b border-[#1E1A2B] mb-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#10B981]" />
             <h3 id="data-modal-title" className="text-sm font-bold text-white uppercase tracking-wider">
@@ -63,7 +63,7 @@ export const DataPreferencesModal: React.FC<DataPreferencesModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="w-7 h-7 rounded-lg bg-[#141C2B] hover:bg-[#1E2A3F] text-[#94A3B8] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+            className="w-7 h-7 rounded-lg bg-[#141120] hover:bg-[#1E1A2B] text-[#9C96A8] hover:text-white flex items-center justify-center transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             ✕
@@ -71,7 +71,7 @@ export const DataPreferencesModal: React.FC<DataPreferencesModalProps> = ({
         </div>
 
         {/* Status Callout */}
-        <div className="p-3.5 rounded-xl bg-[#06080C] border border-[#151D2A] mb-4 space-y-2">
+        <div className="p-3.5 rounded-xl bg-[#08080C] border border-[#1E1A2B] mb-4 space-y-2">
           <div className="flex items-center justify-between text-[11px]">
             <span className="text-[#64748B]">Third-Party Tracking:</span>
             <span className="text-[#10B981] font-bold">0 TRACKERS ACTIVE (DISABLED)</span>
@@ -82,7 +82,7 @@ export const DataPreferencesModal: React.FC<DataPreferencesModalProps> = ({
           </div>
           <div className="flex items-center justify-between text-[11px]">
             <span className="text-[#64748B]">Telemetry / Analytics:</span>
-            <span className="text-[#38BDF8] font-bold">OFFLINE ONLY (NO TELEMETRY)</span>
+            <span className="text-[#B79A62] font-bold">OFFLINE ONLY (NO TELEMETRY)</span>
           </div>
         </div>
 
@@ -91,12 +91,12 @@ export const DataPreferencesModal: React.FC<DataPreferencesModalProps> = ({
         </p>
 
         {/* Local Storage Inspector */}
-        <div className="p-3.5 rounded-xl bg-[#080B12] border border-[#172030] mb-4">
+        <div className="p-3.5 rounded-xl bg-[#08080C] border border-[#1E1A2B] mb-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-white font-bold uppercase text-[10px] tracking-wider">
               Active Local Device Storage
             </span>
-            <span className="text-[#00F5FF] text-[10px]">
+            <span className="text-[#B79A62] text-[10px]">
               {localStorageKeys.length} {localStorageKeys.length === 1 ? "key" : "keys"} detected
             </span>
           </div>
@@ -140,7 +140,7 @@ export const DataPreferencesModal: React.FC<DataPreferencesModalProps> = ({
                   onClose();
                   onNavigateToPrivacy();
                 }}
-                className="text-[11px] text-[#00F5FF] hover:underline cursor-pointer"
+                className="text-[11px] text-[#B79A62] hover:underline cursor-pointer"
               >
                 Read Full Privacy Policy →
               </button>
@@ -149,7 +149,7 @@ export const DataPreferencesModal: React.FC<DataPreferencesModalProps> = ({
 
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded-lg bg-[#161D2B] hover:bg-[#1E273A] text-white transition-colors cursor-pointer font-bold"
+            className="px-4 py-1.5 rounded-lg bg-[#141120] hover:bg-[#1E1A2B] text-white transition-colors cursor-pointer font-bold"
           >
             Dismiss
           </button>

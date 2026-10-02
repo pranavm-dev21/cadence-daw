@@ -34,21 +34,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCadence }) => {
   return (
     <section className="relative min-h-[92vh] pt-24 sm:pt-32 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col justify-center">
       {/* Ambient Radial Glow Layer (Pillar 3: Ambient Motion) */}
-      <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[320px] sm:w-[700px] h-[220px] sm:h-[350px] bg-[#00F5FF]/[0.05] blur-[100px] sm:blur-[140px] rounded-full pointer-events-none anim-halo-breathe" />
+      <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[320px] sm:w-[700px] h-[220px] sm:h-[350px] bg-[#4A2A78]/[0.08] blur-[100px] sm:blur-[140px] rounded-full pointer-events-none anim-halo-breathe" />
 
       {/* Hero Typography & Eyebrow */}
       <div ref={heroTextRef} className="text-center max-w-4xl mx-auto mb-8 sm:mb-14">
         {/* Technical Eyebrow Badge with mini Soundwave */}
         <div
           style={getStaggerStyle(0)}
-          className={`inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#00F5FF]/10 border border-[#00F5FF]/20 text-[9px] sm:text-[11px] font-mono font-semibold tracking-[0.2em] text-[#00F5FF] uppercase mb-4 sm:mb-6 shadow-[0_0_20px_rgba(0,245,255,0.15)] anim-badge-float transition-all duration-600 ${
+          className={`inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#161324] border border-[#281B46] text-[9px] sm:text-[11px] font-mono font-semibold tracking-[0.2em] text-[#D8C7A3] uppercase mb-4 sm:mb-6 shadow-[0_0_20px_rgba(40,27,70,0.5)] anim-badge-float transition-all duration-600 ${
             heroTextRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00F5FF] animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#B79A62] animate-pulse" />
           <span>OPEN SOURCE • AI MUSIC WORKSPACE</span>
           <div className="hidden sm:inline-block ml-1 opacity-75">
-            <SoundwaveVisualizer isPlaying={true} barCount={10} height={12} primaryColor="#00F5FF" />
+            <SoundwaveVisualizer isPlaying={true} barCount={10} height={12} primaryColor="#B79A62" />
           </div>
         </div>
 
@@ -61,7 +61,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCadence }) => {
         >
           MAKE MUSIC
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F5FF] via-[#38BDF8] to-[#CBD5E1]">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#EDE9F6] via-[#B79A62] to-[#9B7FD4]">
             IN A NEW FLOW.
           </span>
         </h1>
@@ -69,7 +69,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCadence }) => {
         {/* Subheadline */}
         <p
           style={getStaggerStyle(2)}
-          className={`max-w-2xl mx-auto text-[#94A3B8] text-sm sm:text-xl font-normal leading-relaxed mb-6 sm:mb-8 px-2 transition-all duration-700 ease-cinematic ${
+          className={`max-w-2xl mx-auto text-[#9C96A8] text-sm sm:text-xl font-normal leading-relaxed mb-6 sm:mb-8 px-2 transition-all duration-700 ease-cinematic ${
             heroTextRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
@@ -83,7 +83,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCadence }) => {
             heroTextRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          <MagneticButton size="lg" variant="primary" onClick={onOpenCadence} className="w-full sm:w-auto shadow-[0_0_25px_rgba(0,245,255,0.35)]">
+          <MagneticButton size="lg" variant="primary" onClick={onOpenCadence} className="w-full sm:w-auto shadow-[0_0_25px_rgba(107,70,168,0.3)]">
             OPEN CADENCE
           </MagneticButton>
 
@@ -102,7 +102,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenCadence }) => {
 
         <span
           style={getStaggerStyle(4)}
-          className={`text-[11px] font-mono text-[#64748B] block transition-all duration-700 ${
+          className={`text-[11px] font-mono text-[#686273] block transition-all duration-700 ${
             heroTextRevealed ? "opacity-100" : "opacity-0"
           }`}
         >

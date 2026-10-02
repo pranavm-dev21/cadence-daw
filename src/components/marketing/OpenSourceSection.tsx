@@ -21,13 +21,13 @@ export const OpenSourceSection: React.FC = () => {
       title: "Deterministic Audio Bus",
       desc: "Every parameter change, note placement, and FX automation is an atomic, undoable command in the core bus.",
       icon: "⚡",
-      accent: "#00F5FF",
+      accent: "#7C5CBF",
     },
     {
       title: "Zero Telemetry & Tracking",
       desc: "Your recordings, audio takes, and session stems never leave your device. Complete local privacy by default.",
       icon: "🛡️",
-      accent: "#38BDF8",
+      accent: "#9B7FD4",
     },
   ];
 
@@ -48,7 +48,7 @@ export const OpenSourceSection: React.FC = () => {
         </div>
 
         <a href={repoUrl} target="_blank" rel="noopener noreferrer">
-          <MagneticButton size="md" variant="secondary" className="border-[#38BDF8]/40 text-[#38BDF8]">
+          <MagneticButton size="md" variant="secondary" className="border-[#B79A62]/40 text-[#B79A62] hover:border-[#B79A62]/80">
             <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
               <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
             </svg>
@@ -65,36 +65,36 @@ export const OpenSourceSection: React.FC = () => {
             staggerIndex={idx}
             enableTilt={true}
             spotlightColor={`${p.accent}20`}
-            className="p-6 rounded-2xl bg-[#090C12] border border-[#1A2234] hover:border-[#00F5FF]/40 transition-colors"
+            className="p-6 rounded-2xl bg-[#0D0D14] border border-[#1E1A2B] hover:border-[#6B46A8]/50 transition-colors"
           >
             <span className="text-2xl block mb-3">{p.icon}</span>
             <h3 className="text-lg font-bold text-white mb-2 tracking-tight">{p.title}</h3>
-            <p className="text-xs text-[#94A3B8] leading-relaxed font-normal">{p.desc}</p>
+            <p className="text-xs text-[#9C96A8] leading-relaxed font-normal">{p.desc}</p>
           </MotionCard>
         ))}
       </div>
 
       {/* Tech Stack Bar */}
       <div
-        className={`p-6 rounded-2xl bg-[#0B0F17] border border-[#161D2B] flex flex-wrap items-center justify-between gap-4 font-mono text-xs transition-all duration-700 delay-300 ease-cinematic ${
+        className={`p-6 rounded-2xl bg-[#0D0D14] border border-[#1E1A2B] flex flex-wrap items-center justify-between gap-4 font-mono text-xs transition-all duration-700 delay-300 ease-cinematic ${
           sectionRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
         }`}
       >
-        <span className="text-[#64748B] uppercase tracking-wider">CORE TECHNOLOGIES:</span>
+        <span className="text-[#686273] uppercase tracking-wider">CORE TECHNOLOGIES:</span>
         <div className="flex flex-wrap items-center gap-3">
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#38BDF8] hover:border-[#38BDF8]/50 transition-colors cursor-default">
+          <span className="px-3 py-1 rounded bg-[#11111A] border border-[#211C30] text-[#9B7FD4] hover:border-[#9B7FD4]/50 transition-colors cursor-default">
             TypeScript 5.7
           </span>
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#FF6F61] hover:border-[#FF6F61]/50 transition-colors cursor-default">
+          <span className="px-3 py-1 rounded bg-[#11111A] border border-[#211C30] text-[#C75B4E] hover:border-[#C75B4E]/50 transition-colors cursor-default">
             Rust 1.97
           </span>
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#00F5FF] hover:border-[#00F5FF]/50 transition-colors cursor-default">
+          <span className="px-3 py-1 rounded bg-[#11111A] border border-[#211C30] text-[#B79A62] hover:border-[#B79A62]/50 transition-colors cursor-default">
             Tauri v2
           </span>
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#A78BFA] hover:border-[#A78BFA]/50 transition-colors cursor-default">
+          <span className="px-3 py-1 rounded bg-[#11111A] border border-[#211C30] text-[#8B6FB0] hover:border-[#8B6FB0]/50 transition-colors cursor-default">
             Web Audio DSP
           </span>
-          <span className="px-3 py-1 rounded bg-[#070A0F] border border-[#1A2336] text-[#10B981] hover:border-[#10B981]/50 transition-colors cursor-default">
+          <span className="px-3 py-1 rounded bg-[#11111A] border border-[#211C30] text-[#4CAF82] hover:border-[#4CAF82]/50 transition-colors cursor-default">
             Tailwind CSS
           </span>
         </div>

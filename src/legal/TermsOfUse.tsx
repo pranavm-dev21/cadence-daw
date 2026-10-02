@@ -11,25 +11,25 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBack }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#07090E] text-[#E2E8F0] font-sans selection:bg-[#00F5FF]/30 selection:text-white pb-24">
+    <div className="min-h-screen bg-[#08080C] text-[#EDE9F6] font-sans selection:bg-[#7C5CBF]/30 selection:text-white pb-24">
       {/* Top Header */}
-      <header className="sticky top-0 z-40 bg-[#07090E]/90 backdrop-blur-xl border-b border-[#1A2234] px-4 sm:px-8 py-4">
+      <header className="sticky top-0 z-40 bg-[#08080C]/90 backdrop-blur-xl border-b border-[#1E1A2B] px-4 sm:px-8 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
               onClick={onBack}
-              className="flex items-center gap-2 text-xs font-mono text-[#94A3B8] hover:text-[#00F5FF] transition-colors cursor-pointer"
+              className="flex items-center gap-2 text-xs font-mono text-[#9C96A8] hover:text-[#B79A62] transition-colors cursor-pointer"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
               BACK TO CADENCE
             </button>
-            <span className="text-[#334155]">•</span>
-            <span className="text-xs font-mono text-[#00F5FF] uppercase tracking-wider">USER AGREEMENT</span>
+            <span className="text-[#332D42]">•</span>
+            <span className="text-xs font-mono text-[#B79A62] uppercase tracking-wider">USER AGREEMENT</span>
           </div>
 
-          <div className="text-[11px] font-mono text-[#64748B]">
+          <div className="text-[11px] font-mono text-[#686273]">
             v{LEGAL_CONFIG.meta.version} • {LEGAL_CONFIG.meta.effectiveDate}
           </div>
         </div>
@@ -38,35 +38,35 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBack }) => {
       {/* Main Body */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
         {/* Title */}
-        <div className="mb-10 pb-8 border-b border-[#182030]">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 text-[10px] font-mono text-[#38BDF8] tracking-widest uppercase mb-4">
+        <div className="mb-10 pb-8 border-b border-[#1E1A2B]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7C5CBF]/10 border border-[#7C5CBF]/20 text-[10px] font-mono text-[#9B7FD4] tracking-widest uppercase mb-4">
             FAIR CREATIVE TERMS
           </div>
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white uppercase mb-4">
             TERMS OF USE
           </h1>
-          <p className="text-[#94A3B8] text-sm sm:text-base leading-relaxed max-w-3xl">
+          <p className="text-[#9C96A8] text-sm sm:text-base leading-relaxed max-w-3xl">
             Welcome to {LEGAL_CONFIG.organization.tradeName}. These Terms of Use govern your access to the Cadence web application, documentation, and native desktop software. By using Cadence, you agree to these fair terms.
           </p>
 
-          <div className="mt-6 p-4 rounded-xl bg-[#0B0F17] border border-[#1A2536] text-xs font-mono text-[#94A3B8] flex flex-wrap items-center justify-between gap-4">
+          <div className="mt-6 p-4 rounded-xl bg-[#0D0D14] border border-[#1E1A2B] text-xs font-mono text-[#9C96A8] flex flex-wrap items-center justify-between gap-4">
             <div>
-              <span className="text-[#64748B] block text-[10px] uppercase">Effective Date:</span>
+              <span className="text-[#686273] block text-[10px] uppercase">Effective Date:</span>
               <span className="text-white font-semibold">{LEGAL_CONFIG.meta.effectiveDate}</span>
             </div>
             <div>
-              <span className="text-[#64748B] block text-[10px] uppercase">Governing Jurisdiction:</span>
+              <span className="text-[#686273] block text-[10px] uppercase">Governing Jurisdiction:</span>
               <span className="text-white font-semibold">{LEGAL_CONFIG.organization.jurisdiction}</span>
             </div>
             <div>
-              <span className="text-[#64748B] block text-[10px] uppercase">Software License:</span>
-              <span className="text-[#00F5FF]">{LEGAL_CONFIG.softwareDistribution.licenseType}</span>
+              <span className="text-[#686273] block text-[10px] uppercase">Software License:</span>
+              <span className="text-[#B79A62]">{LEGAL_CONFIG.softwareDistribution.licenseType}</span>
             </div>
           </div>
         </div>
 
         {/* Advisory */}
-        <div className="p-4 rounded-xl bg-[#131926] border border-[#223048] text-xs text-[#CBD5E1] mb-10 leading-relaxed">
+        <div className="p-4 rounded-xl bg-[#141120] border border-[#281B46] text-xs text-[#CBD5E1] mb-10 leading-relaxed">
           <strong className="text-white block mb-1 uppercase font-mono tracking-wider text-[11px]">
             Technical Baseline Notice
           </strong>
@@ -80,8 +80,8 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBack }) => {
             <h2 className="text-lg sm:text-xl font-bold text-white mb-3 tracking-tight font-mono">
               1. OWNERSHIP OF YOUR MUSIC &amp; CREATIVE CONTENT
             </h2>
-            <div className="p-4 rounded-xl bg-[#090E17] border border-[#00F5FF]/30 mb-3 space-y-2">
-              <strong className="text-[#00F5FF] font-mono text-xs uppercase block">
+            <div className="p-4 rounded-xl bg-[#0D0D14] border border-[#7C5CBF]/40 mb-3 space-y-2">
+              <strong className="text-[#B79A62] font-mono text-xs uppercase block">
                 The Cadence Golden Rule: You Own What You Make
               </strong>
               <p className="text-sm text-white">
@@ -192,7 +192,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBack }) => {
               The Cadence source code is made available under the <strong>MIT License</strong>.
             </p>
             <p className="text-xs text-[#94A3B8] mb-3">
-              You are free to view, fork, modify, and build upon the source code in accordance with the MIT License terms. Third-party libraries (e.g. React, Tailwind CSS, Tauri, Supabase) remain subject to their respective open-source licenses. Detailed license disclosures are accessible on our <a href="/licenses" className="text-[#00F5FF] underline">Licenses Page</a>.
+              You are free to view, fork, modify, and build upon the source code in accordance with the MIT License terms. Third-party libraries (e.g. React, Tailwind CSS, Tauri, Supabase) remain subject to their respective open-source licenses. Detailed license disclosures are accessible on our <a href="/licenses" className="text-[#B79A62] underline">Licenses Page</a>.
             </p>
           </section>
 
@@ -234,7 +234,7 @@ export const TermsOfUse: React.FC<TermsOfUseProps> = ({ onBack }) => {
             <p className="mb-2">For inquiries regarding these Terms of Use, please contact:</p>
             <div className="p-4 rounded-lg bg-[#090C12] border border-[#1A2336] text-xs font-mono space-y-1">
               <div><span className="text-[#64748B]">Entity:</span> <span className="text-white">{LEGAL_CONFIG.organization.legalEntityName}</span></div>
-              <div><span className="text-[#64748B]">Support:</span> <span className="text-[#00F5FF]">{LEGAL_CONFIG.organization.supportEmail}</span></div>
+              <div><span className="text-[#64748B]">Support:</span> <span className="text-[#B79A62]">{LEGAL_CONFIG.organization.supportEmail}</span></div>
               <div><span className="text-[#64748B]">Address:</span> <span className="text-white">{LEGAL_CONFIG.organization.businessAddress}</span></div>
             </div>
           </section>

@@ -97,8 +97,8 @@ export const CanvasBackground: React.FC = () => {
         mouse.y,
         Math.max(width, height) * 0.55
       );
-      grad.addColorStop(0, "rgba(0, 245, 255, 0.045)");
-      grad.addColorStop(0.35, "rgba(56, 189, 248, 0.02)");
+      grad.addColorStop(0, "rgba(74, 42, 120, 0.055)");
+      grad.addColorStop(0.35, "rgba(23, 36, 74, 0.03)");
       grad.addColorStop(1, "transparent");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
@@ -155,7 +155,7 @@ export const CanvasBackground: React.FC = () => {
       const velocityEnergy = Math.min(0.35, Math.abs(scrollVelocity) * 0.035);
       const strokeAlpha = 0.18 + velocityEnergy;
       ctx.lineWidth = 1;
-      ctx.strokeStyle = `rgba(0, 245, 255, ${strokeAlpha})`;
+      ctx.strokeStyle = `rgba(107, 70, 168, ${strokeAlpha * 0.75})`;
 
       // Draw horizontal harmonic lines
       for (let r = 0; r < rows; r++) {
@@ -178,7 +178,7 @@ export const CanvasBackground: React.FC = () => {
         const distMouse = Math.hypot(n.x - mouse.x, n.y - mouse.y);
         const mouseFactor = 1 - Math.min(distMouse, 300) / 300;
         const alpha = Math.max(0.08, 0.45 * mouseFactor + velocityEnergy * 0.8);
-        ctx.fillStyle = `rgba(0, 245, 255, ${alpha})`;
+        ctx.fillStyle = `rgba(183, 154, 98, ${alpha * 0.55})`;
         ctx.beginPath();
         ctx.arc(n.x, n.y, 1.2 + velocityEnergy * 1.5, 0, Math.PI * 2);
         ctx.fill();

@@ -70,7 +70,7 @@ export const FeatureEditorial: React.FC = () => {
           sectionRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        <span className="text-[11px] font-mono tracking-widest text-[#00F5FF] uppercase block mb-3 anim-badge-float">
+        <span className="text-[11px] font-mono tracking-widest text-[#9B7FD4] uppercase block mb-3 anim-badge-float">
           SYSTEM ARCHITECTURE & CAPABILITIES
         </span>
         <h2 className="text-3xl sm:text-5xl font-bold tracking-tighter text-white uppercase max-w-2xl">
@@ -90,7 +90,7 @@ export const FeatureEditorial: React.FC = () => {
               onClick={() => setActiveFeature(idx)}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono whitespace-nowrap border active:scale-[0.95] transition-all cursor-pointer ${
                 isActive
-                  ? "bg-[#0F141F] border-[#00F5FF] text-[#00F5FF] shadow-[0_0_15px_rgba(0,245,255,0.2)]"
+                  ? "bg-[#0F141F] border-[#7C5CBF] text-[#9B7FD4] shadow-[0_0_15px_rgba(124,92,191,0.2)]"
                   : "bg-[#090C12] border-[#182030] text-[#94A3B8] hover:border-[#222E42]"
               }`}
             >
@@ -102,12 +102,12 @@ export const FeatureEditorial: React.FC = () => {
       </div>
 
       {/* Mobile Active Feature Summary Card */}
-      <div className="lg:hidden p-5 rounded-xl bg-[#0F141F] border border-[#00F5FF]/50 shadow-[0_10px_30px_rgba(0,245,255,0.08)] mb-6 text-left">
+      <div className="lg:hidden p-5 rounded-xl bg-[#0F141F] border border-[#7C5CBF]/50 shadow-[0_10px_30px_rgba(124,92,191,0.08)] mb-6 text-left">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-mono font-bold text-[#00F5FF]">
+          <span className="text-xs font-mono font-bold text-[#9B7FD4]">
             {features[activeFeature].num} // {features[activeFeature].tag}
           </span>
-          <span className="w-2 h-2 rounded-full bg-[#00F5FF] animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-[#7C5CBF] animate-pulse" />
         </div>
         <h3 className="text-lg font-bold tracking-tight text-white mb-1.5">{features[activeFeature].title}</h3>
         <p className="text-xs text-[#94A3B8] leading-relaxed mb-3">{features[activeFeature].headline}</p>
@@ -127,19 +127,19 @@ export const FeatureEditorial: React.FC = () => {
                 key={feat.id}
                 enableTilt={false}
                 staggerIndex={idx}
-                spotlightColor={isActive ? "rgba(0, 245, 255, 0.12)" : "rgba(255, 255, 255, 0.04)"}
+                spotlightColor={isActive ? "rgba(124, 92, 191, 0.12)" : "rgba(255, 255, 255, 0.04)"}
                 className={`p-5 rounded-xl border transition-all duration-300 cursor-pointer text-left ${
                   isActive
-                    ? "bg-[#0F141F] border-[#00F5FF]/60 shadow-[0_10px_30px_rgba(0,245,255,0.08)] track-active-glow"
+                    ? "bg-[#0F141F] border-[#7C5CBF]/60 shadow-[0_10px_30px_rgba(124,92,191,0.08)] track-active-glow"
                     : "bg-[#090C12] hover:bg-[#0C1018] border-[#182030]"
                 }`}
                 onClick={() => setActiveFeature(idx)}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className={`text-xs font-mono font-bold ${isActive ? "text-[#00F5FF]" : "text-[#64748B]"}`}>
+                  <span className={`text-xs font-mono font-bold ${isActive ? "text-[#9B7FD4]" : "text-[#64748B]"}`}>
                     {feat.num} // {feat.tag}
                   </span>
-                  {isActive && <span className="w-2 h-2 rounded-full bg-[#00F5FF] animate-pulse" />}
+                  {isActive && <span className="w-2 h-2 rounded-full bg-[#7C5CBF] animate-pulse" />}
                 </div>
 
                 <h3 className="text-lg font-bold tracking-tight text-white mb-1.5">{feat.title}</h3>
@@ -159,15 +159,15 @@ export const FeatureEditorial: React.FC = () => {
         <div className="col-span-12 lg:col-span-7 static lg:sticky lg:top-24">
           <MotionCard
             enableTilt={true}
-            spotlightColor="rgba(0, 245, 255, 0.08)"
+            spotlightColor="rgba(124, 92, 191, 0.08)"
             className="rounded-2xl bg-[#090C12] border border-[#1D2536] p-5 sm:p-8 min-h-[400px] sm:min-h-[460px] flex flex-col justify-between shadow-[0_20px_70px_rgba(0,0,0,0.8)] overflow-hidden relative"
           >
             {/* Visual Glass Sheen */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#00F5FF]/[0.03] to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#7C5CBF]/[0.03] to-transparent pointer-events-none" />
 
             {/* Top Meta Header */}
             <div className="flex items-center justify-between border-b border-[#182030] pb-4 mb-6 text-xs font-mono">
-              <span className="text-[#00F5FF]">{features[activeFeature].tag}</span>
+              <span className="text-[#9B7FD4]">{features[activeFeature].tag}</span>
               <span className="text-[#64748B]">CADENCE DSP ENGINE v0.1</span>
             </div>
 
@@ -184,10 +184,10 @@ export const FeatureEditorial: React.FC = () => {
                       Progression: Am9 ➔ Fmaj7(#11) ➔ Cmaj9 ➔ Gsus4
                     </div>
                     <div className="flex flex-wrap gap-2 text-xs font-mono">
-                      <span className="px-2.5 py-1 rounded bg-[#00F5FF]/10 text-[#00F5FF] border border-[#00F5FF]/30">
+                      <span className="px-2.5 py-1 rounded bg-[#7C5CBF]/10 text-[#9B7FD4] border border-[#7C5CBF]/30">
                         KEY: A MINOR (100% MATCH)
                       </span>
-                      <span className="px-2.5 py-1 rounded bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/30">
+                      <span className="px-2.5 py-1 rounded bg-[#9B7FD4]/10 text-[#9B7FD4] border border-[#9B7FD4]/30">
                         TENSION: RESOLVED
                       </span>
                       <span className="px-2.5 py-1 rounded bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/30">
@@ -206,7 +206,7 @@ export const FeatureEditorial: React.FC = () => {
                       {["Am9", "Fmaj7", "Cmaj9", "Gsus4"].map((c, i) => (
                         <div
                           key={i}
-                          className="h-14 sm:h-16 rounded-lg bg-[#00F5FF]/10 border border-[#00F5FF]/40 flex flex-col items-center justify-center text-xs font-mono text-[#00F5FF] font-bold hover:scale-[1.03] transition-transform"
+                          className="h-14 sm:h-16 rounded-lg bg-[#7C5CBF]/10 border border-[#7C5CBF]/40 flex flex-col items-center justify-center text-xs font-mono text-[#9B7FD4] font-bold hover:scale-[1.03] transition-transform"
                         >
                           <span>{c}</span>
                           <span className="text-[9px] text-[#94A3B8] font-normal">Bar 0{i + 1}</span>
@@ -222,18 +222,18 @@ export const FeatureEditorial: React.FC = () => {
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between text-xs font-mono text-[#94A3B8]">
                     <span>ARRANGEMENT PLAYLIST</span>
-                    <span className="text-[#00F5FF]">NON-DESTRUCTIVE RAZOR</span>
+                    <span className="text-[#9B7FD4]">NON-DESTRUCTIVE RAZOR</span>
                   </div>
                   <div className="space-y-2">
                     {["Intro (4b)", "Verse 1 (8b)", "Pre-Chorus (4b)", "Chorus Drop (8b)"].map((section, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center gap-3 p-3 rounded-xl bg-[#080B10] border border-[#182030] hover:border-[#38BDF8]/40 transition-colors"
+                        className="flex items-center gap-3 p-3 rounded-xl bg-[#080B10] border border-[#182030] hover:border-[#9B7FD4]/40 transition-colors"
                       >
                         <span className="w-6 text-center text-xs font-mono text-[#64748B]">0{idx + 1}</span>
-                        <div className="flex-1 h-8 rounded-lg bg-[#38BDF8]/15 border border-[#38BDF8]/40 flex items-center justify-between px-3 text-xs font-mono text-white">
+                        <div className="flex-1 h-8 rounded-lg bg-[#9B7FD4]/15 border border-[#9B7FD4]/40 flex items-center justify-between px-3 text-xs font-mono text-white">
                           <span>{section}</span>
-                          <span className="text-[10px] text-[#38BDF8]">16-STEP MATRIX PINNED</span>
+                          <span className="text-[10px] text-[#9B7FD4]">16-STEP MATRIX PINNED</span>
                         </div>
                       </div>
                     ))}
@@ -263,13 +263,13 @@ export const FeatureEditorial: React.FC = () => {
                   {/* Multi-Take Stack */}
                   <div className="space-y-2">
                     {[
-                      { name: "Take 01 — Hook Verse", status: "Active (Master Comp)", color: "#00F5FF" },
-                      { name: "Take 02 — High Harmony", status: "Layered", color: "#38BDF8" },
+                      { name: "Take 01 — Hook Verse", status: "Active (Master Comp)", color: "#7C5CBF" },
+                      { name: "Take 02 — High Harmony", status: "Layered", color: "#9B7FD4" },
                       { name: "Take 03 — Ad-lib Accent", status: "Overdub", color: "#A78BFA" },
                     ].map((tk, idx) => (
                       <div
                         key={idx}
-                        className="p-3 rounded-lg bg-[#070A0F] border border-[#161D2B] flex items-center justify-between text-xs font-mono hover:border-[#00F5FF]/30 transition-colors"
+                        className="p-3 rounded-lg bg-[#070A0F] border border-[#161D2B] flex items-center justify-between text-xs font-mono hover:border-[#7C5CBF]/30 transition-colors"
                       >
                         <span className="text-white font-medium">{tk.name}</span>
                         <span className="text-[10px] px-2 py-0.5 rounded" style={{ color: tk.color, backgroundColor: `${tk.color}15` }}>
@@ -286,11 +286,11 @@ export const FeatureEditorial: React.FC = () => {
                 <div className="flex flex-col gap-4">
                   <div className="p-4 rounded-xl bg-[#070A0F] border border-[#1E273A]">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs font-mono font-bold text-[#00F5FF]">SOFTCLIPPER TRANSFER CURVE</span>
+                      <span className="text-xs font-mono font-bold text-[#9B7FD4]">SOFTCLIPPER TRANSFER CURVE</span>
                       <span className="text-[10px] font-mono text-[#34D399]">POLYNOMIAL SATURATION</span>
                     </div>
                     <div className="h-28 rounded-lg bg-[#05070B] border border-[#141A26] relative overflow-hidden flex items-center justify-center">
-                      <svg className="w-full h-full stroke-[#00F5FF] fill-none drop-shadow-[0_0_8px_rgba(0,245,255,0.4)]" viewBox="0 0 200 80">
+                      <svg className="w-full h-full stroke-[#9B7FD4] fill-none drop-shadow-[0_0_8px_rgba(155,127,212,0.4)]" viewBox="0 0 200 80">
                         <line x1="0" y1="40" x2="200" y2="40" stroke="#1A2234" strokeDasharray="4 4" />
                         <line x1="100" y1="0" x2="100" y2="80" stroke="#1A2234" strokeDasharray="4 4" />
                         <path d="M 10 75 Q 80 50 100 40 T 190 5" strokeWidth="2.5" />
@@ -325,7 +325,7 @@ export const FeatureEditorial: React.FC = () => {
                         <span className="text-white font-medium truncate">{item.stem}</span>
                         <div className="flex items-center gap-3 text-[10px] text-[#64748B] shrink-0">
                           <span>{item.time}</span>
-                          <span className="text-[#00F5FF]">{item.size}</span>
+                          <span className="text-[#B59A62]">{item.size}</span>
                         </div>
                       </div>
                     ))}
@@ -337,7 +337,7 @@ export const FeatureEditorial: React.FC = () => {
             {/* Bottom Insight Footer */}
             <div className="pt-4 border-t border-[#182030] flex items-center justify-between text-[11px] font-mono text-[#64748B]">
               <span>OPEN ARCHITECTURE • NO DRM</span>
-              <span className="text-[#00F5FF]">EXTENSIBLE</span>
+              <span className="text-[#B59A62]">EXTENSIBLE</span>
             </div>
           </MotionCard>
         </div>

@@ -57,13 +57,13 @@ export const DesktopSection: React.FC = () => {
         }`}
       >
         {/* Ambient Radial Lighting */}
-        <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-[#00F5FF]/[0.05] blur-[100px] rounded-full pointer-events-none anim-halo-breathe" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[250px] bg-[#38BDF8]/[0.03] blur-[90px] rounded-full pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-[#7C5CBF]/[0.05] blur-[100px] rounded-full pointer-events-none anim-halo-breathe" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[250px] bg-[#9B7FD4]/[0.03] blur-[90px] rounded-full pointer-events-none" />
 
         {/* Platform Selection Segmented Tabs */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 border-b border-[#1E273A] pb-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#38BDF8]/10 border border-[#38BDF8]/20 text-[11px] font-mono text-[#38BDF8] tracking-widest uppercase mb-2 anim-badge-float">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#9B7FD4]/10 border border-[#9B7FD4]/20 text-[11px] font-mono text-[#9B7FD4] tracking-widest uppercase mb-2 anim-badge-float">
               CROSS-PLATFORM DESKTOP WORKSTATION
             </div>
             <p className="text-xs text-[#94A3B8]">
@@ -80,7 +80,7 @@ export const DesktopSection: React.FC = () => {
                   onClick={() => setSelectedOs(osKey)}
                   className={`px-3 sm:px-4 py-2 rounded-lg text-xs font-mono transition-all flex items-center gap-2 cursor-pointer active:scale-[0.96] ${
                     isSelected
-                      ? "bg-[#162032] text-[#00F5FF] shadow-inner font-semibold border border-[#00F5FF]/20"
+                      ? "bg-[#162032] text-[#9B7FD4] shadow-inner font-semibold border border-[#7C5CBF]/20"
                       : "text-[#94A3B8] hover:text-white"
                   }`}
                 >
@@ -101,7 +101,7 @@ export const DesktopSection: React.FC = () => {
                   )}
                   <span className="capitalize">{osKey === "macos" ? "macOS" : osKey}</span>
                   {detectedOs === osKey && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00F5FF] animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#7C5CBF] animate-pulse" />
                   )}
                 </button>
               );
@@ -122,7 +122,7 @@ export const DesktopSection: React.FC = () => {
             <h2 className="text-3xl sm:text-6xl font-bold tracking-tighter text-white uppercase leading-none mb-6">
               THE FULL STUDIO.
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00F5FF] to-[#38BDF8]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9B7FD4] to-[#7C5CBF]">
                 ON YOUR MACHINE.
               </span>
             </h2>
@@ -136,16 +136,16 @@ export const DesktopSection: React.FC = () => {
 
             {/* Hardware Specs Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 font-mono text-xs">
-              <div className="p-3 rounded-xl bg-[#090C12] border border-[#172030] hover:border-[#00F5FF]/30 transition-colors">
+              <div className="p-3 rounded-xl bg-[#090C12] border border-[#172030] hover:border-[#7C5CBF]/30 transition-colors">
                 <span className="text-[10px] text-[#64748B] block uppercase">
                   Platform
                 </span>
                 <span className="text-white font-bold">{currentSpecs.name}</span>
-                <span className="text-[9px] text-[#00F5FF] block mt-0.5 truncate">
+                <span className="text-[9px] text-[#9B7FD4] block mt-0.5 truncate">
                   {currentSpecs.architecture}
                 </span>
               </div>
-              <div className="p-3 rounded-xl bg-[#090C12] border border-[#172030] hover:border-[#38BDF8]/30 transition-colors">
+              <div className="p-3 rounded-xl bg-[#090C12] border border-[#172030] hover:border-[#9B7FD4]/30 transition-colors">
                 <span className="text-[10px] text-[#64748B] block uppercase">
                   Drivers
                 </span>
@@ -156,12 +156,12 @@ export const DesktopSection: React.FC = () => {
                   {currentSpecs.recommendedDriver}
                 </span>
               </div>
-              <div className="p-3 rounded-xl bg-[#090C12] border border-[#172030] hover:border-[#38BDF8]/30 transition-colors">
+              <div className="p-3 rounded-xl bg-[#090C12] border border-[#172030] hover:border-[#9B7FD4]/30 transition-colors">
                 <span className="text-[10px] text-[#64748B] block uppercase">
                   Privacy
                 </span>
                 <span className="text-white font-bold">100% Offline</span>
-                <span className="text-[9px] text-[#38BDF8] block mt-0.5">
+                <span className="text-[9px] text-[#9B7FD4] block mt-0.5">
                   Zero Telemetry
                 </span>
               </div>
@@ -177,7 +177,7 @@ export const DesktopSection: React.FC = () => {
                 <MagneticButton
                   size="lg"
                   variant="primary"
-                  className="w-full sm:w-auto shadow-[0_0_25px_rgba(0,245,255,0.4)]"
+                  className="w-full sm:w-auto shadow-[0_0_25px_rgba(124,92,191,0.4)]"
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                     <path d="M19 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
@@ -216,7 +216,7 @@ export const DesktopSection: React.FC = () => {
                 href={currentSpecs.releaseNotesUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="text-[#00F5FF] hover:underline"
+                className="text-[#B59A62] hover:underline"
               >
                 Verify SHA-256 Checksum on GitHub
               </a>
@@ -227,11 +227,11 @@ export const DesktopSection: React.FC = () => {
           <div className="col-span-12 lg:col-span-5">
             <MotionCard
               enableTilt={true}
-              spotlightColor="rgba(56, 189, 248, 0.12)"
+              spotlightColor="rgba(155, 127, 212, 0.12)"
               className="rounded-2xl bg-[#090D14] border border-[#1C2536] p-6 shadow-2xl font-mono text-xs text-[#CBD5E1]"
             >
               <div className="flex items-center justify-between pb-3 border-b border-[#161D2B] mb-4">
-                <span className="text-[10px] text-[#00F5FF] uppercase tracking-wider">
+                <span className="text-[10px] text-[#9B7FD4] uppercase tracking-wider">
                   TAURI v2 + RUST ENGINE
                 </span>
                 <span className="text-[10px] text-[#34D399]">
@@ -264,7 +264,7 @@ export const DesktopSection: React.FC = () => {
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-[#141A26]">
                   <span className="text-[#64748B]">Packaging:</span>
-                  <span className="text-[#00F5FF] font-bold">
+                  <span className="text-[#9B7FD4] font-bold">
                     {currentSpecs.binaryFormat}
                   </span>
                 </div>
@@ -277,7 +277,7 @@ export const DesktopSection: React.FC = () => {
               </div>
 
               <div className="mt-5 p-3 rounded-lg bg-[#07090E] border border-[#141A26] text-[10px] text-[#64748B] leading-relaxed">
-                <span className="text-[#00F5FF] font-bold block mb-1">
+                <span className="text-[#B59A62] font-bold block mb-1">
                   Installation Guide ({currentSpecs.name}):
                 </span>
                 {getInstallTip(selectedOs)}
